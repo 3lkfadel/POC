@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commissions — Conseil IC — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","surface-container-lowest":"#fff","on-primary":"#fff","surface-container-high":"#e6e8eb","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary":"#193743","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-surface":"#191c1e","error-container":"#ffdad6","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","on-primary-fixed-variant":"#07497d"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]}}}}</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}body{font-family:'Geist',sans-serif;background:#f7f9fc}</style>
+</head>
+<body>
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <div id="sidebar-immobilier" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div><a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a><a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a></div>
+    <div id="sidebar-production" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div><a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles & familles</a><a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a><a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks</a></div>
+    <div id="sidebar-hotellerie" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Hôtellerie SW</span></div><a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a><a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pré-écritures</a><a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a></div>
+    <div id="sidebar-conseil" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+      <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+      <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs & KYC</a>
+      <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+      <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF</a>
+    </div>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div class="flex items-center gap-2">
+    <span class="text-[12px] text-on-surface-variant">Conseil IC</span>
+    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">chevron_right</span>
+    <span class="text-[13px] font-semibold text-primary">Commissions</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div id="access-denied" class="hidden bg-error-container border border-error/20 rounded-2xl p-8 text-center">
+    <span class="material-symbols-outlined text-[48px] text-error">lock</span>
+    <h2 class="text-[20px] font-bold text-error mt-2">Module réservé à ISF Conseil (IC)</h2>
+    <p class="text-[14px] text-on-surface-variant mt-1">Sélectionnez l'entité <strong>ISF Conseil</strong> pour accéder.</p>
+  </div>
+
+  <div id="page-content">
+    <div class="mb-6">
+      <h1 class="text-[28px] font-bold text-primary">Commissions</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">Contrats, barèmes multi-niveaux et suivi des versements</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-1 border-b border-outline-variant mb-6">
+      <button onclick="setTab('commissions')" id="tab-commissions" class="px-4 py-2.5 text-[13px] font-semibold text-primary border-b-2 border-primary">Commissions calculées</button>
+      <button onclick="setTab('contrats')" id="tab-contrats" class="px-4 py-2.5 text-[13px] font-semibold text-on-surface-variant hover:text-primary">Contrats & barèmes</button>
+    </div>
+
+    <!-- Panel commissions -->
+    <div id="panel-commissions">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex gap-2">
+          <button onclick="setCF('all')" id="cf-all" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white">Toutes</button>
+          <button onclick="setCF('calculee')" id="cf-calculee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Calculées</button>
+          <button onclick="setCF('versee')" id="cf-versee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Versées</button>
+        </div>
+        <button onclick="calcAll()" id="btn-calc" class="hidden flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg text-[13px] font-semibold hover:bg-secondary/80">
+          <span class="material-symbols-outlined text-[18px]">calculate</span>Recalculer tout
+        </button>
+      </div>
+      <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+        <table class="w-full">
+          <thead><tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Dossier</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Apporteur</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Niveau</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Base</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Taux</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Montant</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Action</th>
+          </tr></thead>
+          <tbody id="tbody-comm"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Panel contrats -->
+    <div id="panel-contrats" class="hidden">
+      <div class="flex justify-end mb-4">
+        <button onclick="openContratModal()" id="btn-contrat" class="hidden flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container">
+          <span class="material-symbols-outlined text-[18px]">add</span>Nouveau contrat
+        </button>
+      </div>
+      <div id="contrats-grid" class="grid grid-cols-2 gap-4"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal nouveau contrat -->
+<div id="modal-contrat" class="hidden fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 my-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-[20px] font-bold text-primary">Nouveau contrat de commission</h2>
+      <button onclick="document.getElementById('modal-contrat').classList.add('hidden')" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="space-y-4">
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Apporteur *</label>
+          <select id="c-apporteur" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px]"></select></div>
+        <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Type *</label>
+          <select id="c-type" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px]">
+            <option value="placement">Placement</option><option value="gestion">Gestion</option><option value="conseil_immo">Conseil immo.</option>
+          </select></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Date début *</label>
+          <input id="c-debut" type="date" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px]"></div>
+        <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Date fin</label>
+          <input id="c-fin" type="date" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px]"></div>
+      </div>
+      <div>
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-[12px] font-semibold text-on-surface-variant">Niveaux de commission *</label>
+          <button type="button" onclick="addNiveau()" class="flex items-center gap-1 text-[12px] text-primary font-semibold hover:opacity-70"><span class="material-symbols-outlined text-[16px]">add</span>Niveau</button>
+        </div>
+        <div id="niveaux-container" class="space-y-2"></div>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-6 justify-end">
+      <button onclick="document.getElementById('modal-contrat').classList.add('hidden')" class="px-4 py-2 rounded-lg text-[13px] text-on-surface-variant hover:bg-surface-container">Annuler</button>
+      <button onclick="saveContrat()" class="px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container">Créer</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/context_bar.js"></script>
+<script>
+let isIC=false, currentTab='commissions', commFilter='all', niveauCount=0;
+const fmt=n=>new Intl.NumberFormat('fr-FR').format(Math.round(n));
+
+function updateMetierSidebar(code){
+  const map={'AC':'sidebar-immobilier','TC':'sidebar-production','SW':'sidebar-hotellerie','IC':'sidebar-conseil'};
+  Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{const tid=map[code];if(tid){const e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+
+window.addEventListener('alveole:contexte',e=>{updateMetierSidebar(e.detail.entite_code);checkAccess(e.detail.entite_code);});
+
+function checkAccess(code){
+  isIC=code==='IC';
+  if(code!=='IC'&&code!=='MDP'&&code!=='CONSOLIDE'){
+    document.getElementById('access-denied').classList.remove('hidden');
+    document.getElementById('page-content').classList.add('hidden');
+  } else {
+    document.getElementById('access-denied').classList.add('hidden');
+    document.getElementById('page-content').classList.remove('hidden');
+    if(isIC){document.getElementById('btn-calc').classList.remove('hidden');document.getElementById('btn-contrat').classList.remove('hidden');}
+    loadApporteurs();
+    loadCommissions();
+  }
+}
+
+function setTab(t){
+  currentTab=t;
+  ['commissions','contrats'].forEach(id=>{
+    const btn=document.getElementById('tab-'+id);
+    const panel=document.getElementById('panel-'+id);
+    if(id===t){btn.className='px-4 py-2.5 text-[13px] font-semibold text-primary border-b-2 border-primary';panel.classList.remove('hidden');}
+    else{btn.className='px-4 py-2.5 text-[13px] font-semibold text-on-surface-variant hover:text-primary';panel.classList.add('hidden');}
+  });
+  if(t==='contrats')loadContrats();
+}
+
+function setCF(f){
+  commFilter=f;
+  document.querySelectorAll('[id^="cf-"]').forEach(b=>{
+    b.className=b.id==='cf-'+f?'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white':'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high';
+  });
+  loadCommissions();
+}
+
+async function loadCommissions(){
+  let url='/api/conseil/commissions';
+  if(commFilter!=='all')url+=`?statut=${commFilter}`;
+  const r=await fetch(url);
+  if(r.status===403)return;
+  const data=await r.json();
+  const tb=document.getElementById('tbody-comm');
+  if(!data.length){tb.innerHTML='<tr><td colspan="8" class="px-6 py-8 text-center text-on-surface-variant">Aucune commission</td></tr>';return;}
+  tb.innerHTML=data.map(c=>`
+    <tr class="border-t border-outline-variant hover:bg-surface-container-low">
+      <td class="px-4 py-3 text-[13px] font-semibold text-primary">${c.investisseur||'Dossier #'+c.dossier_id}</td>
+      <td class="px-4 py-3 text-[13px] text-on-surface">${c.apporteur_nom||'—'}</td>
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant">Niveau ${c.niveau}</td>
+      <td class="px-4 py-3 text-right text-[12px] text-on-surface-variant">Niveau ${c.niveau||'—'}</td>
+      <td class="px-4 py-3 text-right text-[13px] font-semibold text-primary">${c.taux}%</td>
+      <td class="px-4 py-3 text-right text-[13px] font-bold text-secondary">${fmt(c.montant)} FCFA</td>
+      <td class="px-4 py-3">
+        ${c.statut==='calculee'?'<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-yellow-100 text-yellow-700">Calculée</span>':'<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-100 text-green-700">Versée</span>'}
+      </td>
+      <td class="px-4 py-3">
+        ${isIC&&c.statut==='calculee'?`<button onclick="verser(${c.id})" class="px-2 py-1 text-[11px] bg-secondary text-white rounded-lg hover:bg-secondary/80">Verser</button>`:''}
+      </td>
+    </tr>`).join('');
+}
+
+async function loadContrats(){
+  const r=await fetch('/api/conseil/contrats');
+  if(r.status===403)return;
+  const data=await r.json();
+  const grid=document.getElementById('contrats-grid');
+  if(!data.length){grid.innerHTML='<div class="col-span-2 py-8 text-center text-on-surface-variant">Aucun contrat</div>';return;}
+  grid.innerHTML=data.map(c=>`
+    <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-5">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <p class="text-[14px] font-bold text-on-surface">${c.apporteur_nom||'—'}</p>
+          <p class="text-[12px] text-on-surface-variant">${c.description||''}</p>
+        </div>
+        <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-100 text-green-700">Actif</span>
+      </div>
+      <div class="space-y-1.5 mt-3">
+        ${(c.niveaux||[]).map(n=>`
+          <div class="flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-1.5">
+            <span class="text-[12px] text-on-surface-variant">Niveau ${n.niveau} — ${n.description||''}</span>
+            <span class="text-[13px] font-bold text-primary">${n.taux}%</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+async function loadApporteurs(){
+  const r=await fetch('/api/conseil/apporteurs');
+  if(!r.ok)return;
+  const data=await r.json();
+  const sel=document.getElementById('c-apporteur');
+  sel.innerHTML='';
+  data.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.nom;sel.appendChild(o);});
+}
+
+async function verser(id){
+  const r=await fetch(`/api/conseil/commissions/${id}/verser`,{method:'PUT'});
+  const d=await r.json();
+  if(r.ok)loadCommissions();
+  else alert(d.error||'Erreur');
+}
+
+async function calcAll(){
+  const r=await fetch('/api/conseil/dossiers');
+  if(!r.ok)return;
+  const dossiers=await r.json();
+  const valides=dossiers.filter(d=>d.statut==='valide');
+  for(const d of valides){
+    await fetch(`/api/conseil/commissions/calculer/${d.id}`,{method:'POST'});
+  }
+  loadCommissions();
+}
+
+function addNiveau(){
+  const n=++niveauCount;
+  const div=document.createElement('div');
+  div.className='grid grid-cols-3 gap-2 items-center';
+  div.innerHTML=`
+    <input placeholder="Description (ex: apporteur N1)" class="border border-outline-variant rounded-lg px-2 py-1.5 text-[13px]" id="niv-desc-${n}">
+    <input type="number" placeholder="Taux %" step="0.1" min="0" max="100" class="border border-outline-variant rounded-lg px-2 py-1.5 text-[13px]" id="niv-taux-${n}">
+    <input type="number" placeholder="Niveau" step="1" min="1" value="${n}" class="border border-outline-variant rounded-lg px-2 py-1.5 text-[13px]" id="niv-ordre-${n}">`;
+  document.getElementById('niveaux-container').appendChild(div);
+}
+
+function openContratModal(){
+  niveauCount=0;
+  document.getElementById('niveaux-container').innerHTML='';
+  addNiveau();
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('c-debut').value=today;
+  document.getElementById('modal-contrat').classList.remove('hidden');
+}
+
+async function saveContrat(){
+  const apporteur_id=parseInt(document.getElementById('c-apporteur').value);
+  const description=document.getElementById('c-type').value;
+  const niveaux=[];
+  for(let i=1;i<=niveauCount;i++){
+    const desc=document.getElementById(`niv-desc-${i}`)?.value||'';
+    const taux=parseFloat(document.getElementById(`niv-taux-${i}`)?.value)||0;
+    const ordre=parseInt(document.getElementById(`niv-ordre-${i}`)?.value)||i;
+    if(taux>0)niveaux.push({description:desc,taux,niveau:ordre});
+  }
+  if(!niveaux.length){alert('Au moins un niveau de commission requis');return;}
+  const r=await fetch('/api/conseil/contrats',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({apporteur_id,description,niveaux})});
+  if(r.ok){document.getElementById('modal-contrat').classList.add('hidden');loadContrats();}
+  else{const e=await r.json();alert(e.error||'Erreur');}
+}
+
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('dark',document.documentElement.classList.contains('dark'));}
+if(localStorage.getItem('dark')==='true')document.documentElement.classList.add('dark');
+fetch('/api/contexte').then(r=>r.json()).then(ctx=>{updateMetierSidebar(ctx.entite_code);checkAccess(ctx.entite_code);}).catch(()=>{});
+</script>
+</body>
+</html>

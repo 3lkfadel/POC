@@ -1,0 +1,1114 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gestion des Contrats – Alvéole</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{
+colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#ffffff","surface-container-lowest":"#ffffff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#ffffff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#ffffff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#ffffff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},
+borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},
+fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"],"mono-data":["Geist"]},
+fontSize:{"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}],"mono-data":["14px",{"lineHeight":"20px","fontWeight":"400"}]}
+}}}
+</script>
+<style>
+body{font-family:'Geist',sans-serif}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;display:inline-block;line-height:1}
+.glass-card{background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid rgba(194,199,209,0.7)}
+.modal-enter{animation:fadeUp .18s ease-out}
+.panel-enter{animation:fadeDown .15s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#00355f;border-radius:10px}
+</style>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+<div class="p-gutter">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Alvéole</h1>
+<p class="font-label-md text-label-md text-on-primary/70 mt-1">Conforme OHADA</p>
+</div>
+<nav class="flex-1 mt-2 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Tableau-de-bord.html"><span class="material-symbols-outlined">dashboard</span><span>Tableau de bord</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilite-Generale.html"><span class="material-symbols-outlined">account_balance</span><span>Comptabilité</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="gestion-des-immobiliers.html"><span class="material-symbols-outlined">account_balance_wallet</span><span>Immobilisations</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-secondary-fixed font-bold border-l-4 border-secondary-fixed bg-on-primary-fixed-variant/10" href="Gestion-des-contrats.html"><span class="material-symbols-outlined">description</span><span>Contrats</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="cockpit-tresorie.html"><span class="material-symbols-outlined">account_tree</span><span>Trésorerie</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilité-analytics.html"><span class="material-symbols-outlined">analytics</span><span>Analytique</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Budget.html"><span class="material-symbols-outlined">query_stats</span><span>Budget</span></a>
+
+<div id="sidebar-immobilier" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+  <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+  <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets &amp; chantiers</a>
+  <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+  <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+</div>
+<div id="sidebar-production" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+  <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles &amp; familles</a>
+  <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+  <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks &amp; valorisation</a>
+</div>
+<div id="sidebar-hotellerie" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">H&#244;tellerie SW</span></div>
+  <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+  <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pr&#233;-&#233;critures</a>
+  <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+</div>
+<div id="sidebar-conseil" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+  <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+  <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs &amp; KYC</a>
+  <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+  <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+</div>
+</nav>
+<div class="mt-auto border-t border-on-primary/10 p-4 space-y-2">
+<button onclick="openModal('modal-module')" class="w-full py-2 px-4 bg-on-primary-fixed-variant/20 text-on-primary rounded-lg font-label-md text-label-md font-bold transition-all hover:bg-on-primary-fixed-variant/30 active:scale-95">Changer de module</button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#"><span class="material-symbols-outlined">settings</span><span>Paramètres</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#"><span class="material-symbols-outlined">help</span><span>Assistance</span></a>
+</div>
+</aside>
+
+<!-- Header -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-gutter h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<span class="font-title-lg text-title-lg font-black text-primary">Alvéole</span>
+<div class="flex items-center bg-surface-container-low border border-outline-variant rounded-full px-4 py-1.5">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input id="search-input" oninput="searchContracts(this.value)" class="bg-transparent border-none focus:ring-0 text-body-md placeholder:text-outline w-56" placeholder="Rechercher un contrat..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 pr-gutter mr-gutter border-r border-outline-variant">
+<a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md" href="Tableau-de-bord.html">Tableau de bord</a>
+<button onclick="openModal('modal-rapports')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Rapports</button>
+<button onclick="openModal('modal-audit-full')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Logs d'audit</button>
+</div>
+<button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors" title="Mode sombre">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<button onclick="togglePanel('notif-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span id="notif-dot" class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button onclick="togglePanel('apps-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">apps</span>
+</button>
+<img onclick="togglePanel('profile-panel')" alt="User" class="w-9 h-9 rounded-full border border-outline-variant object-cover cursor-pointer hover:ring-2 hover:ring-primary/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANZzBQ1QSLRuBoHAIYBOAl2q02z4-OOtiRYiPso12BslCJhE9RERiyNDEAVvC7iMQgwi1g95bvDNqDmrDyCuyffs-6TpzHWATvseNfku8h6DaP6LY08jMvFA0SfPTKzHqgw4mWZHs_o-AB4xJViSNM5HKrjBlkkjmJSIc1HSechrwJgjNF0s0dnd8WINRL5L6G30mMDXqZr4zFgNoQY6pDOoqHwxX1jM9Xk9zyXWcy81q7iHxTmGvo">
+</div>
+</header>
+
+<!-- Main -->
+<main class="ml-64 mt-16 p-margin-page min-h-screen">
+<div class="max-w-[1600px] mx-auto">
+
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Gestion des Contrats</h2>
+<p class="text-on-surface-variant mt-1">Surveillance et conformité du cycle de vie contractuel.</p>
+</div>
+<div class="flex gap-3">
+<button onclick="openModal('modal-add-contract')" class="flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-lg font-label-md font-bold shadow-md hover:bg-primary-container hover:shadow-lg transition-all">
+<span class="material-symbols-outlined">add</span>Nouveau Contrat
+</button>
+<button onclick="openModal('modal-filtres')" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">filter_list</span>Filtres Avancés
+</button>
+<button onclick="openModal('modal-import')" class="flex items-center gap-2 px-4 py-2 border border-secondary text-secondary rounded-lg font-label-md text-label-md hover:bg-secondary/5 transition-all">
+<span class="material-symbols-outlined">file_upload</span>Importer
+</button>
+<button onclick="openModal('modal-export')" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">file_download</span>Exporter
+</button>
+</div>
+</div>
+
+<!-- KPI cards -->
+<div class="grid grid-cols-12 gap-gutter mb-gutter">
+<div onclick="filterByStatut('')" class="col-span-3 glass-card p-6 rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-fixed text-primary rounded-lg"><span class="material-symbols-outlined">description</span></div>
+<div class="px-2 py-1 bg-on-secondary-container/10 text-on-secondary-container rounded-full text-[10px] font-bold uppercase">+12% vs N-1</div>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total Contrats Actifs</p>
+<h3 id="kpi-total" class="font-display-lg text-display-lg text-primary">1 248</h3>
+<div class="flex items-center gap-2 mt-4 text-[11px] text-on-surface-variant font-mono-data"><span class="material-symbols-outlined text-[14px]">update</span>Actualisé il y a 2 min</div>
+</div>
+<div onclick="filterByStatut('Actif')" class="col-span-3 glass-card p-6 rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container text-secondary rounded-lg"><span class="material-symbols-outlined">payments</span></div>
+<div class="px-2 py-1 bg-error-container text-on-error-container rounded-full text-[10px] font-bold uppercase">-3% vs N-1</div>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Revenu Contractuel (YTD)</p>
+<h3 id="kpi-revenue" class="font-display-lg text-display-lg text-primary">4,2M <span class="text-headline-md">FCFA</span></h3>
+<div class="flex items-center gap-2 mt-4 text-[11px] text-on-surface-variant font-mono-data"><span class="material-symbols-outlined text-[14px]">update</span>Actualisé il y a 2 min</div>
+</div>
+<div onclick="filterByStatut('Expirant')" class="col-span-3 glass-card p-6 rounded-xl border-l-4 border-error shadow-[0px_4px_20px_rgba(15,76,129,0.05)] bg-error-container/20 cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error text-on-error rounded-lg"><span class="material-symbols-outlined">warning</span></div>
+<span class="text-error font-bold text-[10px] uppercase tracking-widest">Attention Urgente</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Expire dans 30 jours</p>
+<h3 id="kpi-expiring" class="font-display-lg text-display-lg text-error">24</h3>
+<p class="mt-2 text-label-md text-on-surface-variant">Risque d'engagement : 412k FCFA</p>
+</div>
+<div onclick="setTab('fournisseurs')" class="col-span-3 glass-card p-6 rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] overflow-hidden relative cursor-pointer hover:shadow-md transition-all">
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Engagements prévus T4</p>
+<h3 class="font-display-lg text-display-lg text-primary">1,8M <span class="text-headline-md">FCFA</span></h3>
+<div class="mt-4 flex gap-1 h-8 items-end">
+<div class="w-1/6 bg-primary-fixed h-1/2 rounded-t"></div>
+<div class="w-1/6 bg-primary-fixed h-2/3 rounded-t"></div>
+<div class="w-1/6 bg-primary-fixed h-full rounded-t"></div>
+<div class="w-1/6 bg-primary h-5/6 rounded-t"></div>
+<div class="w-1/6 bg-primary-container h-1/3 rounded-t"></div>
+<div class="w-1/6 bg-primary-container h-1/2 rounded-t"></div>
+</div>
+</div>
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image:radial-gradient(#00355f 1px,transparent 1px);background-size:10px 10px"></div>
+</div>
+</div>
+
+<!-- Main area -->
+<div class="grid grid-cols-12 gap-gutter">
+
+<!-- Contract list (left 8 cols) -->
+<div class="col-span-8 space-y-gutter">
+
+<!-- Tabs + chips -->
+<div class="glass-card rounded-xl p-4 flex items-center justify-between">
+<div class="flex bg-surface-container rounded-lg p-1 gap-1">
+<button id="tab-clients" onclick="setTab('clients')" class="px-5 py-2 bg-white shadow-sm rounded-md font-label-md text-label-md text-primary font-bold transition-all">Contrats Clients</button>
+<button id="tab-fournisseurs" onclick="setTab('fournisseurs')" class="px-5 py-2 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-primary transition-all">Contrats Fournisseurs</button>
+</div>
+<div class="flex gap-2">
+<button id="chip-expire" onclick="toggleChip('expire')" class="px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant rounded-full text-[11px] font-bold uppercase transition-all hover:opacity-80">Expire Bientôt</button>
+<button id="chip-valeur" onclick="toggleChip('valeur')" class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-[11px] font-bold uppercase transition-all hover:opacity-80">Valeur Élevée</button>
+</div>
+</div>
+
+<!-- Table -->
+<div class="glass-card rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(15,76,129,0.05)]">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container text-on-surface-variant font-label-md text-label-md">
+<tr>
+<th class="px-6 py-4 font-bold uppercase tracking-wider">Référence / Entité</th>
+<th class="px-6 py-4 font-bold uppercase tracking-wider text-right">Valeur</th>
+<th class="px-6 py-4 font-bold uppercase tracking-wider">Statut</th>
+<th class="px-6 py-4 font-bold uppercase tracking-wider">Renouvellement</th>
+<th class="px-6 py-4 font-bold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="contracts-body" class="divide-y divide-outline-variant"></tbody>
+</table>
+<div class="p-4 bg-surface-container-low flex justify-between items-center text-label-md">
+<span id="contracts-count" class="text-on-surface-variant">—</span>
+<div class="flex gap-2">
+<button onclick="ctrPage(-1)" class="px-3 py-1 border border-outline-variant rounded hover:bg-white transition-all">Préc.</button>
+<span id="ctr-page-info" class="px-2 py-1 text-on-surface-variant"></span>
+<button onclick="ctrPage(1)" class="px-3 py-1 border border-outline-variant rounded hover:bg-white transition-all">Suiv.</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Right: Calendar + Alerts -->
+<div class="col-span-4 space-y-gutter">
+
+<!-- Calendar -->
+<div class="glass-card rounded-xl p-6 shadow-[0px_4px_20px_rgba(15,76,129,0.05)]">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-lg text-title-lg text-primary">Calendrier de Renouvellement</h4>
+<div class="flex gap-1">
+<button onclick="calNav(-1)" class="material-symbols-outlined text-on-surface-variant hover:text-primary p-1 rounded transition-colors">chevron_left</button>
+<button onclick="calNav(1)" class="material-symbols-outlined text-on-surface-variant hover:text-primary p-1 rounded transition-colors">chevron_right</button>
+</div>
+</div>
+<p id="cal-title" class="text-center font-bold text-primary mb-4"></p>
+<div class="grid grid-cols-7 gap-1 text-center text-[10px] text-on-surface-variant font-bold mb-2">
+<span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+</div>
+<div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
+</div>
+
+<!-- Alerts -->
+<div class="glass-card rounded-xl p-6 shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border-t-4 border-secondary">
+<h4 class="font-title-lg text-title-lg text-primary mb-4">Alertes Automatisées</h4>
+<div class="space-y-4">
+<div onclick="openAlertAction('renouvellement','Abonnement Microsoft Azure (ID: MS-992)','CTR-2024-082')" class="flex items-start gap-4 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-secondary transition-all cursor-pointer">
+<div class="p-2 bg-secondary/10 text-secondary rounded-full flex-shrink-0"><span class="material-symbols-outlined text-[18px]">autorenew</span></div>
+<div><p class="text-xs font-bold text-primary">Renouvellement Automatique</p><p class="text-[11px] text-on-surface-variant">Abonnement Microsoft Azure (ID: MS-992)</p><p class="text-[10px] mt-1 text-secondary font-bold">Déclenché dans 48h</p></div>
+</div>
+<div onclick="openAlertAction('resiliation','Loyer Bureaux – Paris HQ','CTR-2024-001')" class="flex items-start gap-4 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-error transition-all cursor-pointer">
+<div class="p-2 bg-error/10 text-error rounded-full flex-shrink-0"><span class="material-symbols-outlined text-[18px]">notifications_active</span></div>
+<div><p class="text-xs font-bold text-primary">Notification de Résiliation</p><p class="text-[11px] text-on-surface-variant">Loyer Bureaux – Paris HQ</p><p class="text-[10px] mt-1 text-error font-bold">Échéance : 28 Août (Action Requise)</p></div>
+</div>
+</div>
+</div>
+
+<!-- AI card -->
+<div class="glass-card rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(15,76,129,0.05)] h-48 relative group cursor-pointer" onclick="showToast('Analyses IA disponibles prochainement','auto_awesome')">
+<img alt="Financial analytics" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqw3y3fiPbiSVc9WWr76LcSSrX6uFoh0JF7chO7u2nXHhsci2M_nkV8uVB7Jz1ZBbFgPWlgI_ypptGaDhS9VbNxK2OlCe8XnGM7Kf3oK08Uv6AeLYdn1uIsg-te8KJotdWe6PsCuDX0aOZAjxO3YfJb-YVEIJcMvrdw94DZ4o5mhhkeITM0sT7cp3PS4p2jlmOoEuOkg71WjBsuPBZudx-AECeAxvVd2VMzbDBEEsgDBGWEuw3NjES">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-6">
+<h5 class="text-white font-bold text-body-lg">Analyses de Contrat IA</h5>
+<p class="text-on-primary-container text-xs">Plus de 150 clauses analysées pour le risque financier en FCFA cette semaine.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer class="mt-margin-page pt-gutter border-t border-outline-variant flex justify-between items-center opacity-70">
+<p class="text-label-md">Système certifié OHADA Révisé 2024</p>
+<div class="flex gap-4 font-label-md"><a class="hover:text-primary underline" href="#">Politique</a><a class="hover:text-primary underline" href="#">Conditions</a><span class="font-mono-data">v4.2.0-STABLE</span></div>
+</footer>
+</div>
+</main>
+
+<!-- Context menu -->
+<div id="ctx-menu" class="hidden fixed z-[70] bg-white rounded-xl shadow-2xl border border-outline-variant w-44 py-1 panel-enter">
+<button id="ctx-view" onclick="ctxAction('view')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-surface-container-low flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">open_in_new</span>Consulter</button>
+<button id="ctx-edit" onclick="ctxAction('edit')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-surface-container-low flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>Modifier</button>
+<button id="ctx-renew" onclick="ctxAction('renew')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-secondary-container/30 text-secondary flex items-center gap-3"><span class="material-symbols-outlined text-[18px]">autorenew</span>Renouveler</button>
+<button id="ctx-terminate" onclick="ctxAction('terminate')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-error-container/20 text-error flex items-center gap-3"><span class="material-symbols-outlined text-[18px]">cancel</span>Résilier</button>
+</div>
+
+<!-- FAB -->
+<button onclick="openModal('modal-add-contract')" class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-2xl">edit_document</span>
+<span class="absolute right-full mr-4 px-3 py-1 bg-primary text-on-primary text-[10px] rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity">Nouveau Contrat</span>
+</button>
+
+<!-- ═══════════ MODALS ═══════════ -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+
+<!-- Import Modal -->
+<div id="modal-import" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-title-lg font-bold text-primary">Importer des contrats</h2>
+      <p class="text-body-sm text-on-surface-variant mt-1">PDF, Excel (.xlsx .xls) ou CSV</p>
+    </div>
+    <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+  </div>
+  <div id="import-dropzone" ondragover="event.preventDefault();this.classList.add('border-primary','bg-primary/5')" ondragleave="this.classList.remove('border-primary','bg-primary/5')" ondrop="event.preventDefault();this.classList.remove('border-primary','bg-primary/5');handleImportFile(event.dataTransfer.files[0])" onclick="document.getElementById('import-file-input').click()" class="border-2 border-dashed border-outline-variant rounded-xl p-10 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+    <span class="material-symbols-outlined text-[48px] text-primary/40">cloud_upload</span>
+    <p class="text-title-sm font-bold text-on-surface mt-2">Glisser-déposer un fichier ici</p>
+    <p class="text-body-sm text-on-surface-variant mt-1">ou cliquer pour parcourir</p>
+    <p class="text-[11px] text-outline mt-3">PDF · Excel (.xlsx .xls) · CSV</p>
+    <input id="import-file-input" type="file" accept=".pdf,.xlsx,.xls,.csv" class="hidden" onchange="handleImportFile(this.files[0])">
+  </div>
+  <div id="import-preview" class="hidden mt-5"></div>
+  <div id="import-actions" class="hidden mt-4 flex gap-3">
+    <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-label-md hover:bg-surface-container transition-all">Annuler</button>
+    <button id="import-confirm-btn" onclick="confirmImport()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-label-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">check</span>
+      <span id="import-confirm-label">Importer</span>
+    </button>
+  </div>
+</div>
+
+<!-- Add Contract -->
+<div id="modal-add-contract" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h2 id="contract-modal-title" class="text-title-lg font-title-lg text-primary font-bold">Nouveau Contrat</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<input type="hidden" id="cf-edit-ref" value="">
+<form onsubmit="submitContract(event)" class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Type de contrat <span class="text-error">*</span></label>
+<select id="cf-type" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option value="">Sélectionner...</option><option value="client">Contrat Client</option><option value="fournisseur">Contrat Fournisseur</option><option value="client">Contrat de Travail</option><option value="client">Bail Commercial</option><option value="client">Contrat de Prestation</option>
+</select></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Entité contractante <span class="text-error">*</span></label><input id="cf-entity" type="text" required placeholder="Nom de la société..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+</div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Objet du contrat <span class="text-error">*</span></label><input id="cf-objet" type="text" required placeholder="Ex: Fourniture de services IT..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date de début <span class="text-error">*</span></label><input id="cf-start" type="date" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date de fin <span class="text-error">*</span></label><input id="cf-end" type="date" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Valeur du contrat (FCFA) <span class="text-error">*</span></label><input id="cf-value" type="number" min="0" required placeholder="0" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Renouvellement</label>
+<select id="cf-renewal" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Manuel</option><option>Automatique</option><option>Tacite reconduction</option>
+</select></div>
+</div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Responsable</label><input id="cf-responsable" type="text" placeholder="Nom du responsable..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div class="flex gap-3 pt-2">
+<button type="button" onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button id="contract-submit-btn" type="submit" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Créer le contrat</button>
+</div>
+</form>
+</div>
+
+<!-- Filtres -->
+<div id="modal-filtres" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Filtres Avancés</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="space-y-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Statut</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer"><input id="f-actif" type="checkbox" checked class="text-primary"><span class="text-body-md">Actif</span></label>
+<label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer"><input id="f-expirant" type="checkbox" checked class="text-primary"><span class="text-body-md">Expirant (30 jours)</span></label>
+<label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer"><input id="f-brouillon" type="checkbox" class="text-primary"><span class="text-body-md">Brouillon</span></label>
+<label class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded cursor-pointer"><input id="f-resilie" type="checkbox" class="text-primary"><span class="text-body-md">Résilié</span></label>
+</div></div>
+<div class="grid grid-cols-2 gap-3">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Valeur min (FCFA)</label><input id="f-val-min" type="number" placeholder="0" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Valeur max (FCFA)</label><input id="f-val-max" type="number" placeholder="∞" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md"></div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date renouvellement début</label><input id="f-date-start" type="date" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date renouvellement fin</label><input id="f-date-end" type="date" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md"></div>
+</div>
+<div class="flex gap-3">
+<button onclick="resetFilters()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Réinitialiser</button>
+<button onclick="applyFiltersModal()" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Appliquer</button>
+</div>
+</div>
+</div>
+
+<!-- Export -->
+<div id="modal-export" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Exporter les Contrats</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="space-y-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-2">Format</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="efmt" checked class="text-primary"><span class="text-body-md">PDF – Rapport complet</span></label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="efmt" class="text-primary"><span class="text-body-md">Excel (.xlsx)</span></label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="efmt" class="text-primary"><span class="text-body-md">CSV</span></label>
+</div></div>
+<div class="flex gap-3">
+<button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button onclick="doExport()" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2"><span class="material-symbols-outlined text-[18px]">download</span>Télécharger</button>
+</div>
+</div>
+</div>
+
+<!-- Alert Action -->
+<div id="modal-alert-action" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 id="alert-action-title" class="text-title-lg font-title-lg text-primary font-bold"></h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div id="alert-action-body"></div>
+</div>
+
+<!-- Rapports -->
+<div id="modal-rapports" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Rapports Contrats</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="divide-y divide-outline-variant">
+<button onclick="closeModal();showToast('Téléchargement...','download')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">description</span></div><div><p class="text-body-md font-bold">Registre des Contrats</p><p class="text-[11px] text-outline">Contrats actifs · 1 248 entrées</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</button>
+<button onclick="closeModal();showToast('Téléchargement...','download')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center"><span class="material-symbols-outlined text-error">warning</span></div><div><p class="text-body-md font-bold">Contrats à risque (30j)</p><p class="text-[11px] text-outline">24 contrats expirant · Risque 412k FCFA</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</button>
+<button onclick="closeModal();showToast('Téléchargement...','download')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">query_stats</span></div><div><p class="text-body-md font-bold">Prévisions T4</p><p class="text-[11px] text-outline">Engagements 1,8M FCFA</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</button>
+</div>
+</div>
+
+<!-- Audit -->
+<div id="modal-audit-full" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Logs d'Audit – Contrats</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div id="audit-log-container" class="overflow-y-auto max-h-96 divide-y divide-outline-variant">
+</div>
+</div>
+
+<!-- Module -->
+<div id="modal-module" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6"><h2 class="text-title-lg font-title-lg text-primary font-bold">Changer de Module</h2><button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button></div>
+<div class="grid grid-cols-2 gap-3">
+<a href="Tableau-de-bord.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">dashboard</span><span class="text-body-md">Tableau de bord</span></a>
+<a href="Comptabilite-Generale.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-body-md">Comptabilité</span></a>
+<a href="gestion-des-immobiliers.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span><span class="text-body-md">Immobilisations</span></a>
+<a href="Gestion-des-contrats.html" class="flex items-center gap-3 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all"><span class="material-symbols-outlined text-primary">description</span><span class="text-body-md font-bold text-primary">Contrats</span></a>
+<a href="cockpit-tresorie.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-body-md">Trésorerie</span></a>
+<a href="Comptabilité-analytics.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">analytics</span><span class="text-body-md">Analytique</span></a>
+<a href="Budget.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all col-span-2"><span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-body-md">Budget</span></a>
+</div>
+</div>
+
+<!-- Contract detail (dynamic) -->
+<div id="modal-contract-detail" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden"></div>
+
+</div><!-- end overlay -->
+
+<!-- Notif panel -->
+<div id="notif-panel" class="hidden panel-enter fixed top-[68px] right-16 w-80 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="text-body-md font-bold text-primary">Notifications <span class="ml-1 px-1.5 py-0.5 bg-error text-white text-[10px] rounded-full">3</span></h3>
+<button onclick="document.getElementById('notif-dot').classList.add('hidden');closeAllPanels();showToast('Tout marqué comme lu','check_circle')" class="text-label-md text-primary hover:underline">Tout lire</button>
+</div>
+<div class="divide-y divide-outline-variant">
+<div onclick="closeAllPanels();openAlertAction('renouvellement','Abonnement Microsoft Azure','CTR-2024-082')" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary text-[16px]">autorenew</span></div>
+<div class="flex-1"><p class="text-body-md font-bold">Renouvellement dans 48h</p><p class="text-[11px] text-outline">Microsoft Azure (MS-992)</p></div>
+<div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+</div>
+<div onclick="closeAllPanels();filterByStatut('Expirant')" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-error text-[16px]">warning</span></div>
+<div class="flex-1"><p class="text-body-md font-bold">24 contrats expirant bientôt</p><p class="text-[11px] text-outline">Risque : 412 000 FCFA</p></div>
+<div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+</div>
+</div>
+</div>
+
+<!-- Apps panel -->
+<div id="apps-panel" class="hidden panel-enter fixed top-[68px] right-6 w-64 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant p-4">
+<p class="text-label-md text-on-surface-variant font-bold mb-3">MODULES</p>
+<div class="grid grid-cols-3 gap-2">
+<a href="Tableau-de-bord.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">dashboard</span><span class="text-[11px] text-on-surface">Dashboard</span></a>
+<a href="Comptabilite-Generale.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-[11px] text-on-surface">Compta.</span></a>
+<a href="gestion-des-immobiliers.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span><span class="text-[11px] text-on-surface">Immo.</span></a>
+<a href="Gestion-des-contrats.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-primary/5"><span class="material-symbols-outlined text-primary">description</span><span class="text-[11px] text-primary font-bold">Contrats</span></a>
+<a href="cockpit-tresorie.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-[11px] text-on-surface">Trésor.</span></a>
+<a href="Budget.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-[11px] text-on-surface">Budget</span></a>
+</div>
+</div>
+
+<!-- Profile panel -->
+<div id="profile-panel" class="hidden panel-enter fixed top-[68px] right-4 w-56 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex items-center gap-3">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuANZzBQ1QSLRuBoHAIYBOAl2q02z4-OOtiRYiPso12BslCJhE9RERiyNDEAVvC7iMQgwi1g95bvDNqDmrDyCuyffs-6TpzHWATvseNfku8h6DaP6LY08jMvFA0SfPTKzHqgw4mWZHs_o-AB4xJViSNM5HKrjBlkkjmJSIc1HSechrwJgjNF0s0dnd8WINRL5L6G30mMDXqZr4zFgNoQY6pDOoqHwxX1jM9Xk9zyXWcy81q7iHxTmGvo" class="w-10 h-10 rounded-full border border-outline-variant object-cover" alt="">
+<div><p class="text-body-md font-bold">Amadou Sarr</p><p class="text-[11px] text-outline">Juriste Contrats</p></div>
+</div>
+<div class="divide-y divide-outline-variant">
+<button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">manage_accounts</span><span class="text-body-md">Mon Profil</span></button>
+<button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">settings</span><span class="text-body-md">Paramètres</span></button>
+<button onclick="showToast('Déconnexion...','logout');closeAllPanels()" class="w-full flex items-center gap-3 p-3 hover:bg-error-container/20 text-left transition-colors"><span class="material-symbols-outlined text-error text-[20px]">logout</span><span class="text-body-md text-error font-bold">Déconnexion</span></button>
+</div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-5 py-3 bg-on-surface text-inverse-on-surface rounded-full text-body-md font-bold shadow-2xl flex items-center gap-2 whitespace-nowrap">
+<span id="toast-icon" class="material-symbols-outlined text-[18px]">check_circle</span>
+<span id="toast-msg">OK</span>
+</div>
+
+<script>
+// ── Storage ───────────────────────────────────────────
+const SK = 'alveole_contracts_v2';
+function save(){localStorage.setItem(SK,JSON.stringify({clients:CLIENTS,fournisseurs:FOURNISSEURS,auditLog:AUDIT_LOG}));}
+function load(){
+  const d=localStorage.getItem(SK);
+  if(!d) return;
+  const p=JSON.parse(d);
+  CLIENTS.splice(0,CLIENTS.length,...p.clients);
+  FOURNISSEURS.splice(0,FOURNISSEURS.length,...p.fournisseurs);
+  AUDIT_LOG.splice(0,AUDIT_LOG.length,...(p.auditLog||[]));
+}
+
+// ── Data ──────────────────────────────────────────────
+const CLIENTS = [
+  {ref:'CTR-2024-001',entity:'Global Logistics SARL',val:450000,statut:'Actif',renewal:'12/10/2024',type:'client',objet:'Transport & Logistique',responsable:'A. Sarr'},
+  {ref:'CTR-2024-082',entity:'TechFlow Solutions',val:125500,statut:'Expirant',renewal:'28/08/2024',type:'client',objet:'Services IT',responsable:'K. Diallo'},
+  {ref:'CTR-2024-115',entity:'Acme Corp Intl',val:890200,statut:'Brouillon',renewal:'15/01/2025',type:'client',objet:'Consulting stratégique',responsable:'A. Sarr'},
+  {ref:'CTR-2023-992',entity:'Lumière Energy',val:2100000,statut:'Actif',renewal:'02/11/2024',type:'client',objet:'Fourniture Énergie',responsable:'M. Traoré'},
+  {ref:'CTR-2023-450',entity:'Diallo & Associés',val:320000,statut:'Actif',renewal:'31/12/2024',type:'client',objet:'Audit financier',responsable:'K. Diallo'},
+  {ref:'CTR-2024-033',entity:'Société Générale SN',val:675000,statut:'Actif',renewal:'15/03/2025',type:'client',objet:'Services bancaires',responsable:'A. Sarr'},
+];
+const FOURNISSEURS = [
+  {ref:'CTR-F-2024-010',entity:'Microsoft Azure',val:95000,statut:'Actif',renewal:'30/09/2024',type:'fournisseur',objet:'Licences Cloud',responsable:'Système'},
+  {ref:'CTR-F-2024-022',entity:'Bureau Paris HQ',val:1800000,statut:'Expirant',renewal:'28/08/2024',type:'fournisseur',objet:'Bail Commercial',responsable:'K. Diallo'},
+  {ref:'CTR-F-2023-087',entity:'Orange Business',val:240000,statut:'Actif',renewal:'01/01/2025',type:'fournisseur',objet:'Télécommunications',responsable:'M. Traoré'},
+  {ref:'CTR-F-2024-041',entity:'Total Énergie SA',val:560000,statut:'Actif',renewal:'31/12/2024',type:'fournisseur',objet:'Carburant & Énergie',responsable:'A. Sarr'},
+];
+let AUDIT_LOG = [
+  {icon:'add',color:'bg-primary-fixed text-primary',user:'A. Sarr',action:'Création contrat CTR-2024-115 – Acme Corp Intl (890 200 FCFA)',time:'Aujourd\'hui 11:23'},
+  {icon:'autorenew',color:'bg-secondary-container text-secondary',user:'Système',action:'Renouvellement automatique déclenché – Microsoft Azure (MS-992)',time:'Hier 09:00'},
+  {icon:'warning',color:'bg-error-container text-error',user:'Système',action:'Alerte expiration – CTR-2024-082 TechFlow Solutions (28 Août 2024)',time:'23 Oct 08:00'},
+  {icon:'edit',color:'bg-primary-fixed text-primary',user:'K. Diallo',action:'Modification valeur CTR-2023-992 – 1 900 000 → 2 100 000 FCFA',time:'22 Oct 14:45'},
+];
+
+load();
+
+const STATUT_CLS={'Actif':'text-secondary','Expirant':'text-error','Brouillon':'text-tertiary','Résilié':'text-on-surface-variant'};
+const STATUT_DOT={'Actif':'bg-secondary animate-pulse','Expirant':'bg-error','Brouillon':'bg-on-tertiary-container','Résilié':'bg-outline-variant'};
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+let currentTab='clients', activeChips={expire:false,valeur:false}, activeStatutFilter='', searchQuery='';
+let modalFilters={statuts:['Actif','Expirant'],valMin:null,valMax:null,dateStart:null,dateEnd:null};
+let ctrPage_=0, ctxTarget=null;
+const PER_PAGE=5;
+let calYear=new Date().getFullYear(), calMonth=new Date().getMonth();
+
+// ── KPIs ──────────────────────────────────────────────
+function updateKPIs(){
+  const all=[...CLIENTS,...FOURNISSEURS];
+  const actifs=all.filter(r=>r.statut==='Actif').length;
+  const revenue=all.filter(r=>r.statut==='Actif').reduce((s,r)=>s+r.val,0);
+  const now=new Date();
+  const in30=new Date(now.getTime()+30*864e5);
+  const expiring=all.filter(r=>{
+    const [d,m,y]=r.renewal.split('/');
+    const dt=new Date(`${y}-${m}-${d}`);
+    return dt>=now&&dt<=in30;
+  }).length;
+  document.getElementById('kpi-total').textContent=actifs.toLocaleString('fr-FR');
+  const rev=revenue>=1e6?(revenue/1e6).toFixed(1)+'M':revenue>=1e3?(revenue/1e3).toFixed(0)+'k':revenue;
+  document.getElementById('kpi-revenue').innerHTML=`${rev} <span class="text-headline-md">FCFA</span>`;
+  document.getElementById('kpi-expiring').textContent=expiring||all.filter(r=>r.statut==='Expirant').length;
+}
+
+// ── Audit log ──────────────────────────────────────────
+function addAudit(icon,color,user,action){
+  const now=new Date();
+  const time=now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  AUDIT_LOG.unshift({icon,color,user,action,time:'Aujourd\'hui '+time});
+  if(AUDIT_LOG.length>50) AUDIT_LOG.pop();
+  renderAuditLog();
+  save();
+}
+function renderAuditLog(){
+  const el=document.getElementById('audit-log-container');
+  if(!el) return;
+  el.innerHTML=AUDIT_LOG.map(a=>`
+    <div class="flex gap-3 p-4 hover:bg-surface-container-low">
+      <div class="w-8 h-8 rounded-full ${a.color} flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[16px]">${a.icon}</span>
+      </div>
+      <div><p class="text-body-md font-bold">${a.user}</p><p class="text-body-md">${a.action}</p>
+      <span class="font-mono-data text-[11px] text-outline">${a.time}</span></div>
+    </div>`).join('');
+}
+
+// ── Data helpers ──────────────────────────────────────
+function getAllData(){ return currentTab==='clients'?CLIENTS:FOURNISSEURS; }
+function getData(){
+  let data=[...getAllData()];
+  if(searchQuery) data=data.filter(r=>r.ref.toLowerCase().includes(searchQuery)||r.entity.toLowerCase().includes(searchQuery)||r.objet.toLowerCase().includes(searchQuery));
+  if(activeStatutFilter) data=data.filter(r=>r.statut===activeStatutFilter);
+  if(activeChips.expire) data=data.filter(r=>r.statut==='Expirant');
+  if(activeChips.valeur) data=data.filter(r=>r.val>=500000);
+  // Modal filters
+  if(modalFilters.statuts.length<4) data=data.filter(r=>modalFilters.statuts.includes(r.statut));
+  if(modalFilters.valMin) data=data.filter(r=>r.val>=Number(modalFilters.valMin));
+  if(modalFilters.valMax) data=data.filter(r=>r.val<=Number(modalFilters.valMax));
+  return data;
+}
+
+function parseDate(s){const [d,m,y]=s.split('/');return new Date(`${y}-${m}-${d}`);}
+function fmtDate(dt){const d=String(dt.getDate()).padStart(2,'0'),m=String(dt.getMonth()+1).padStart(2,'0');return`${d}/${m}/${dt.getFullYear()}`;}
+
+// ── Table ─────────────────────────────────────────────
+function renderTable(){
+  const data=getData();
+  const start=ctrPage_*PER_PAGE;
+  const page=data.slice(start,start+PER_PAGE);
+  const totalPages=Math.ceil(data.length/PER_PAGE)||1;
+  document.getElementById('contracts-body').innerHTML=page.map(r=>`
+    <tr onclick="openContractDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" class="hover:bg-blue-50/30 transition-colors cursor-pointer group">
+      <td class="px-6 py-4"><div class="flex flex-col"><span class="font-bold text-primary">${r.ref}</span><span class="text-xs text-on-surface-variant">${r.entity}</span></div></td>
+      <td class="px-6 py-4 font-mono-data text-right">${Number(r.val).toLocaleString('fr-FR',{minimumFractionDigits:2})} FCFA</td>
+      <td class="px-6 py-4"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full ${STATUT_DOT[r.statut]||'bg-outline'}"></div><span class="text-xs font-medium ${STATUT_CLS[r.statut]||''}">${r.statut}</span></div></td>
+      <td class="px-6 py-4 font-mono-data text-body-md">${r.renewal}</td>
+      <td class="px-6 py-4 text-right">
+        <button onclick="event.stopPropagation();openCtxMenu(event,${JSON.stringify(r).replace(/"/g,'&quot;')})" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all opacity-0 group-hover:opacity-100">more_vert</button>
+      </td>
+    </tr>`).join('');
+  document.getElementById('contracts-count').textContent=`Affichage de ${page.length} sur ${data.length} contrat${data.length!==1?'s':''}`;
+  document.getElementById('ctr-page-info').textContent=`${ctrPage_+1}/${totalPages}`;
+}
+
+function ctrPage(dir){
+  const max=Math.ceil(getData().length/PER_PAGE)-1;
+  ctrPage_=Math.max(0,Math.min(ctrPage_+dir,max));
+  renderTable();
+}
+function setTab(tab){
+  currentTab=tab; ctrPage_=0; activeStatutFilter='';
+  const active='px-5 py-2 bg-white shadow-sm rounded-md font-label-md text-label-md text-primary font-bold transition-all';
+  const inactive='px-5 py-2 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-primary transition-all';
+  document.getElementById('tab-clients').className=tab==='clients'?active:inactive;
+  document.getElementById('tab-fournisseurs').className=tab==='fournisseurs'?active:inactive;
+  renderTable();
+}
+function toggleChip(chip){
+  activeChips[chip]=!activeChips[chip];
+  const el=document.getElementById('chip-'+chip);
+  el.classList.toggle('ring-2',activeChips[chip]);
+  el.classList.toggle('ring-offset-1',activeChips[chip]);
+  el.classList.toggle('ring-primary',activeChips[chip]);
+  ctrPage_=0; renderTable();
+}
+function filterByStatut(statut){activeStatutFilter=statut;ctrPage_=0;renderTable();}
+function searchContracts(q){searchQuery=q.toLowerCase();ctrPage_=0;renderTable();}
+
+// ── Filter modal ───────────────────────────────────────
+function applyFiltersModal(){
+  const checked=[];
+  if(document.getElementById('f-actif').checked) checked.push('Actif');
+  if(document.getElementById('f-expirant').checked) checked.push('Expirant');
+  if(document.getElementById('f-brouillon').checked) checked.push('Brouillon');
+  if(document.getElementById('f-resilie').checked) checked.push('Résilié');
+  modalFilters.statuts=checked.length?checked:['Actif','Expirant','Brouillon','Résilié'];
+  modalFilters.valMin=document.getElementById('f-val-min').value||null;
+  modalFilters.valMax=document.getElementById('f-val-max').value||null;
+  ctrPage_=0; renderTable(); closeModal();
+  showToast('Filtres appliqués','filter_alt');
+}
+function resetFilters(){
+  document.getElementById('f-actif').checked=true;
+  document.getElementById('f-expirant').checked=true;
+  document.getElementById('f-brouillon').checked=false;
+  document.getElementById('f-resilie').checked=false;
+  document.getElementById('f-val-min').value='';
+  document.getElementById('f-val-max').value='';
+  document.getElementById('f-date-start').value='';
+  document.getElementById('f-date-end').value='';
+  modalFilters={statuts:['Actif','Expirant'],valMin:null,valMax:null,dateStart:null,dateEnd:null};
+  ctrPage_=0; renderTable(); closeModal();
+  showToast('Filtres réinitialisés','filter_alt');
+}
+
+// ── Contract CRUD ──────────────────────────────────────
+function openAddContract(){
+  document.getElementById('cf-edit-ref').value='';
+  document.getElementById('contract-modal-title').textContent='Nouveau Contrat';
+  document.getElementById('contract-submit-btn').textContent='Créer le contrat';
+  ['cf-type','cf-entity','cf-objet','cf-start','cf-end','cf-responsable'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value='';
+  });
+  document.getElementById('cf-value').value='';
+  openModal('modal-add-contract');
+}
+
+function openEditContract(r){
+  document.getElementById('cf-edit-ref').value=r.ref;
+  document.getElementById('contract-modal-title').textContent='Modifier le contrat';
+  document.getElementById('contract-submit-btn').textContent='Enregistrer';
+  document.getElementById('cf-type').value=r.type;
+  document.getElementById('cf-entity').value=r.entity;
+  document.getElementById('cf-objet').value=r.objet;
+  document.getElementById('cf-value').value=r.val;
+  document.getElementById('cf-responsable').value=r.responsable||'';
+  // Convert dd/mm/yyyy to yyyy-mm-dd
+  const [d,m,y]=r.renewal.split('/');
+  document.getElementById('cf-end').value=`${y}-${m}-${d}`;
+  openModal('modal-add-contract');
+}
+
+function submitContract(e){
+  e.preventDefault();
+  const ref=document.getElementById('cf-edit-ref').value;
+  const type=document.getElementById('cf-type').value;
+  const arr=type==='fournisseur'?FOURNISSEURS:CLIENTS;
+
+  const endVal=document.getElementById('cf-end').value;
+  const [ey,em,ed]=endVal.split('-');
+  const renewal=`${ed}/${em}/${ey}`;
+
+  if(ref){
+    // Edit existing
+    const src=CLIENTS.find(r=>r.ref===ref)||FOURNISSEURS.find(r=>r.ref===ref);
+    if(src){
+      src.entity=document.getElementById('cf-entity').value;
+      src.objet=document.getElementById('cf-objet').value;
+      src.val=Number(document.getElementById('cf-value').value);
+      src.renewal=renewal;
+      src.responsable=document.getElementById('cf-responsable').value;
+    }
+    addAudit('edit','bg-primary-fixed text-primary','Amadou Sarr',`Modification contrat ${ref} – ${document.getElementById('cf-entity').value}`);
+    showToast('Contrat modifié','edit');
+  } else {
+    // New contract
+    const existing=[...CLIENTS,...FOURNISSEURS];
+    const year=new Date().getFullYear();
+    const num=String(existing.filter(r=>r.ref.includes(year)).length+1).padStart(3,'0');
+    const prefix=type==='fournisseur'?'CTR-F-':'CTR-';
+    const newRef=`${prefix}${year}-${num}`;
+    const contract={
+      ref:newRef,
+      entity:document.getElementById('cf-entity').value,
+      objet:document.getElementById('cf-objet').value,
+      val:Number(document.getElementById('cf-value').value),
+      statut:'Brouillon',
+      renewal,
+      type,
+      responsable:document.getElementById('cf-responsable').value,
+    };
+    arr.push(contract);
+    addAudit('add','bg-primary-fixed text-primary','Amadou Sarr',`Création contrat ${newRef} – ${contract.entity} (${Number(contract.val).toLocaleString('fr-FR')} FCFA)`);
+    showToast('Contrat créé','description');
+  }
+  save(); updateKPIs(); renderTable(); renderCal(); closeModal();
+}
+
+function terminateContract(ref){
+  const r=CLIENTS.find(x=>x.ref===ref)||FOURNISSEURS.find(x=>x.ref===ref);
+  if(!r) return;
+  r.statut='Résilié';
+  addAudit('cancel','bg-error-container text-error','Amadou Sarr',`Résiliation contrat ${ref} – ${r.entity}`);
+  save(); updateKPIs(); renderTable(); closeModal();
+  showToast('Contrat résilié','cancel');
+}
+
+function renewContract(ref){
+  const r=CLIENTS.find(x=>x.ref===ref)||FOURNISSEURS.find(x=>x.ref===ref);
+  if(!r) return;
+  r.statut='Actif';
+  const dt=parseDate(r.renewal);
+  dt.setFullYear(dt.getFullYear()+1);
+  r.renewal=fmtDate(dt);
+  addAudit('autorenew','bg-secondary-container text-secondary','Amadou Sarr',`Renouvellement contrat ${ref} – ${r.entity} jusqu'au ${r.renewal}`);
+  save(); updateKPIs(); renderTable(); renderCal(); closeModal();
+  showToast('Contrat renouvelé','autorenew');
+}
+
+// ── Contract detail ────────────────────────────────────
+function openContractDetail(r){
+  const el=document.getElementById('modal-contract-detail');
+  el.innerHTML=`
+    <div class="p-6 bg-primary text-on-primary relative overflow-hidden">
+      <div class="relative z-10 flex justify-between items-start">
+        <div>
+          <p class="text-label-md opacity-70 uppercase tracking-wider mb-1">${r.objet}</p>
+          <h2 class="text-title-lg font-title-lg font-bold">${r.ref}</h2>
+          <p class="text-on-primary/80 mt-1">${r.entity}</p>
+        </div>
+        <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-full"><span class="material-symbols-outlined text-on-primary">close</span></button>
+      </div>
+      <div class="absolute -right-8 -bottom-8 opacity-10"><span class="material-symbols-outlined text-[120px]">description</span></div>
+    </div>
+    <div class="p-6 space-y-4">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Valeur</p><p class="font-mono-data font-bold text-[18px]">${Number(r.val).toLocaleString('fr-FR',{minimumFractionDigits:2})} FCFA</p></div>
+        <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Statut</p><span class="${STATUT_CLS[r.statut]||''} font-bold">${r.statut}</span></div>
+        <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Renouvellement</p><p class="font-mono-data">${r.renewal}</p></div>
+        <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Responsable</p><p class="font-bold">${r.responsable||'—'}</p></div>
+      </div>
+      <div class="flex gap-3 flex-wrap">
+        ${r.statut!=='Résilié'?`<button onclick="renewContract('${r.ref}')" class="flex-1 py-2.5 bg-secondary text-on-secondary rounded-lg font-label-md font-bold hover:shadow-md transition-all">Renouveler</button>`:''}
+        <button onclick="openEditContract(${JSON.stringify(r).replace(/"/g,'&quot;')})" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Modifier</button>
+        ${r.statut!=='Résilié'?`<button onclick="terminateContract('${r.ref}')" class="flex-1 py-2.5 border border-error text-error rounded-lg font-label-md font-bold hover:bg-error-container/20 transition-all">Résilier</button>`:''}
+      </div>
+    </div>`;
+  openModal('modal-contract-detail');
+}
+
+// ── Context menu ──────────────────────────────────────
+function openCtxMenu(e,r){
+  e.stopPropagation();
+  ctxTarget=r;
+  const menu=document.getElementById('ctx-menu');
+  menu.style.top=(e.clientY+4)+'px';
+  menu.style.left=Math.min(e.clientX,window.innerWidth-180)+'px';
+  menu.classList.remove('hidden');
+}
+function ctxAction(action){
+  document.getElementById('ctx-menu').classList.add('hidden');
+  if(!ctxTarget) return;
+  if(action==='view') openContractDetail(ctxTarget);
+  else if(action==='edit') openEditContract(ctxTarget);
+  else if(action==='renew') renewContract(ctxTarget.ref);
+  else if(action==='terminate') terminateContract(ctxTarget.ref);
+}
+document.addEventListener('click',e=>{if(!e.target.closest('#ctx-menu')&&!e.target.closest('[onclick*="openCtxMenu"]'))document.getElementById('ctx-menu').classList.add('hidden');});
+
+// ── Alert action ───────────────────────────────────────
+function openAlertAction(type,label,ref){
+  document.getElementById('alert-action-title').textContent=type==='renouvellement'?'Confirmer le Renouvellement':'Action Requise : Résiliation';
+  document.getElementById('alert-action-body').innerHTML=`
+    <div class="p-3 bg-surface-container-low rounded-lg mb-4">
+      <p class="text-label-md text-on-surface-variant">Contrat</p>
+      <p class="font-bold text-primary">${label}</p>
+      <p class="text-[11px] text-outline">${ref}</p>
+    </div>
+    <p class="text-body-md text-on-surface-variant mb-4">${type==='renouvellement'
+      ?'Le renouvellement automatique sera déclenché dans 48h. Voulez-vous confirmer ou annuler ?'
+      :'La date d\'échéance approche. Vous devez notifier ou résilier ce contrat avant l\'échéance.'}</p>
+    <div class="flex gap-3">
+      <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container">Annuler</button>
+      <button onclick="${type==='renouvellement'?`renewContract('${ref}')`:`terminateContract('${ref}')`}" class="flex-1 py-2.5 ${type==='renouvellement'?'bg-secondary text-on-secondary':'bg-error text-white'} rounded-lg font-label-md font-bold">${type==='renouvellement'?'Confirmer':'Résilier'}</button>
+    </div>`;
+  openModal('modal-alert-action');
+}
+
+// ── Calendar (from real data) ──────────────────────────
+function buildCalEvents(){
+  const evts={};
+  const all=[...CLIENTS,...FOURNISSEURS];
+  all.forEach(r=>{
+    const [d,m,y]=r.renewal.split('/');
+    if(Number(y)===calYear&&Number(m)-1===calMonth){
+      const day=Number(d);
+      if(!evts[day]) evts[day]=[];
+      const isExpiring=r.statut==='Expirant';
+      evts[day].push({label:`${r.entity} – ${r.ref}`,cls:isExpiring?'bg-error text-white':'bg-secondary-container text-secondary'});
+    }
+  });
+  return evts;
+}
+function renderCal(){
+  document.getElementById('cal-title').textContent=MONTHS[calMonth]+' '+calYear;
+  const CAL_EVENTS=buildCalEvents();
+  const firstDay=(new Date(calYear,calMonth,1).getDay()+6)%7;
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const prevDays=new Date(calYear,calMonth,0).getDate();
+  const today=new Date();
+  let html='';
+  for(let i=0;i<firstDay;i++) html+=`<div class="aspect-square flex items-center justify-center text-xs text-on-surface-variant/30">${prevDays-firstDay+1+i}</div>`;
+  for(let d=1;d<=days;d++){
+    const ev=CAL_EVENTS[d];
+    const isToday=calYear===today.getFullYear()&&calMonth===today.getMonth()&&d===today.getDate();
+    const cls=ev?ev[0].cls:isToday?'bg-primary text-on-primary':'hover:bg-surface-container rounded-lg';
+    const title=ev?`title="${ev.map(e=>e.label).join(', ')}"` :'';
+    const label=ev&&ev.length>1?`${d}<span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-error rounded-full text-[0px]"></span>`:d;
+    html+=`<div ${title} onclick="${ev?`showToast('${ev[0].label.substring(0,35)}','event')`:''}" class="aspect-square flex items-center justify-center text-xs rounded-lg relative ${cls} ${ev?'cursor-pointer font-bold transition-all':''}">${label}</div>`;
+  }
+  const remaining=(7-((firstDay+days)%7))%7;
+  for(let i=1;i<=remaining;i++) html+=`<div class="aspect-square flex items-center justify-center text-xs text-on-surface-variant/30">${i}</div>`;
+  document.getElementById('cal-grid').innerHTML=html;
+}
+function calNav(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCal();
+}
+
+// ── Export ────────────────────────────────────────────
+function doExport(){
+  const fmt=document.querySelector('input[name="efmt"]:checked')?.nextElementSibling?.textContent||'PDF';
+  const data=[...CLIENTS,...FOURNISSEURS];
+  if(fmt.includes('Excel')||fmt.includes('CSV')){
+    const header='Référence,Entité,Objet,Valeur (FCFA),Statut,Renouvellement,Type\n';
+    const rows=data.map(r=>`"${r.ref}","${r.entity}","${r.objet}",${r.val},"${r.statut}","${r.renewal}","${r.type}"`).join('\n');
+    const blob=new Blob(['﻿'+header+rows],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='contrats_alveole.csv';a.click();
+    URL.revokeObjectURL(url);
+    closeModal(); showToast('Export CSV téléchargé','download');
+  } else {
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF();
+    doc.setFontSize(16);doc.setTextColor(0,53,95);
+    doc.text('Registre des Contrats – Alvéole',14,20);
+    doc.setFontSize(10);doc.setTextColor(100);
+    doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`,14,28);
+    doc.autoTable({
+      startY:34,
+      head:[['Référence','Entité','Objet','Valeur (FCFA)','Statut','Renouvellement']],
+      body:data.map(r=>[r.ref,r.entity,r.objet,Number(r.val).toLocaleString('fr-FR'),r.statut,r.renewal]),
+      headStyles:{fillColor:[0,53,95],textColor:255,fontSize:8},
+      bodyStyles:{fontSize:8},
+      alternateRowStyles:{fillColor:[240,247,252]},
+    });
+    doc.save('contrats_alveole.pdf');
+    closeModal(); showToast('Export PDF téléchargé','picture_as_pdf');
+  }
+}
+
+// ── Modal ─────────────────────────────────────────────
+let activeModal=null;
+function openModal(id){
+  closeAllPanels();
+  const overlay=document.getElementById('modal-overlay');
+  if(activeModal&&document.getElementById(activeModal)) document.getElementById(activeModal).classList.add('hidden');
+  activeModal=id;
+  overlay.classList.remove('hidden');
+  const el=document.getElementById(id);
+  if(el){el.classList.remove('hidden');el.classList.add('modal-enter');}
+  if(id==='modal-audit-full') renderAuditLog();
+}
+function closeModal(){
+  if(activeModal&&document.getElementById(activeModal)) document.getElementById(activeModal).classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');
+  activeModal=null;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeAllPanels();document.getElementById('ctx-menu').classList.add('hidden');}});
+
+// ── Panels ────────────────────────────────────────────
+const PANELS=['notif-panel','apps-panel','profile-panel'];
+function togglePanel(id){const open=!document.getElementById(id).classList.contains('hidden');closeAllPanels();if(!open)document.getElementById(id).classList.remove('hidden');}
+function closeAllPanels(){PANELS.forEach(p=>document.getElementById(p).classList.add('hidden'));}
+if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.replace('light','dark');
+function toggleDark(){const d=document.documentElement;const isDark=d.classList.toggle('dark');d.classList.toggle('light',!isDark);localStorage.setItem('alveole_theme',isDark?'dark':'light');}
+function toggleIA(){const p=document.getElementById('ia-panel');p.classList.toggle('hidden');if(!p.classList.contains('hidden')&&document.getElementById('ia-messages').children.length===0)iaMsg('bot','Bonjour ! Je suis Alvéole IA. Essayez : **résumé**, **contrats**, **budget**, **trésorerie**, **alertes**.');}
+function iaSend(){const inp=document.getElementById('ia-input');const q=inp.value.trim();if(!q)return;iaMsg('user',q);inp.value='';setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaAsk(q){iaMsg('user',q);setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaMsg(role,text){const msgs=document.getElementById('ia-messages');const isBot=role==='bot';msgs.innerHTML+=`<div class="flex ${isBot?'justify-start':'justify-end'}"><div class="max-w-[85%] px-3 py-2 rounded-xl text-[12px] leading-relaxed ${isBot?'bg-white border border-outline-variant text-on-surface':'bg-primary text-white'}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div></div>`;msgs.scrollTop=msgs.scrollHeight;}
+function iaResponse(q){const ql=q.toLowerCase();const cr=JSON.parse(localStorage.getItem('alveole_contracts_v2')||'{}');const ct=[...(cr.clients||[]),...(cr.fournisseurs||[])];const bu=JSON.parse(localStorage.getItem('alveole_budget_v1')||'[]');const im=JSON.parse(localStorage.getItem('alveole_immo_v1')||'[]');const tr=(JSON.parse(localStorage.getItem('alveole_tresorerie_v1')||'{}')).transactions||[];const enc=tr.filter(t=>t.type==='encaissement').reduce((s,t)=>s+t.montant,0);const dec=tr.filter(t=>t.type==='decaissement').reduce((s,t)=>s+t.montant,0);if(ql.includes('résumé')||ql.includes('synthèse')||ql.includes('global')){return `**Synthèse Alvéole :**\n• Contrats actifs : **${ct.filter(c=>c.statut==='Actif').length}** / ${ct.length}\n• Budget : **${bu.filter(r=>r.reel>r.alloue).length} dépassement(s)**\n• Trésorerie nette : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**\n• Actifs immo : **${im.length}**`;}if(ql.includes('contrat')){const exp=ct.filter(c=>{try{const p=c.renewal?.split('/');if(!p||p.length<3)return false;const d=new Date(+p[2],+p[1]-1,+p[0]);return(d-new Date())/(864e5)<=30&&(d-new Date())>0;}catch{return false;}});return `**Contrats :**\n• Total : **${ct.length}** | Actifs : **${ct.filter(c=>c.statut==='Actif').length}**\n• Expirant 30j : **${exp.length}** | Résiliés : **${ct.filter(c=>c.statut==='Résilié').length}**`;}if(ql.includes('budget')||ql.includes('dépassement')){const ov=bu.filter(r=>r.reel>r.alloue);const tot=bu.reduce((s,r)=>s+r.alloue,0);const rel=bu.reduce((s,r)=>s+r.reel,0);if(!bu.length)return 'Aucune donnée budgétaire.';return `**Budget :**\n• Consommé : **${Math.round(rel/tot*100)}%** | Dépassements : **${ov.length}**${ov.length?' — '+ov.map(r=>r.dept).join(', '):''}`.slice(0,300);}if(ql.includes('trésor')||ql.includes('caisse')){if(!tr.length)return 'Aucune transaction.';return `**Trésorerie :**\n• Enc. : **${enc.toLocaleString('fr-FR')} FCFA** | Déc. : **${dec.toLocaleString('fr-FR')} FCFA**\n• Solde : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**`;}if(ql.includes('immobil')||ql.includes('actif')){if(!im.length)return 'Aucun actif.';const act=im.filter(a=>['actif','Actif','en_service'].includes(a.statut));return `**Immobilisations :** Total **${im.length}** | En service : **${act.length}**`;}if(ql.includes('alerte')||ql.includes('risque')){const a=[];bu.filter(r=>r.reel>r.alloue).length&&a.push(`⚠️ ${bu.filter(r=>r.reel>r.alloue).length} dépassement(s) budget`);const exp=ct.filter(c=>{try{const p=c.renewal?.split('/');if(!p||p.length<3)return false;const d=new Date(+p[2],+p[1]-1,+p[0]);return(d-new Date())/(864e5)<=30&&(d-new Date())>0;}catch{return false;}});exp.length&&a.push(`⚠️ ${exp.length} contrat(s) expirant`);dec>enc&&a.push('⚠️ Décaissements > Encaissements');return a.length?`**Alertes :**\n${a.join('\n')}`:'✅ Aucune alerte critique.';}return 'Essayez : **résumé**, **contrats**, **budget**, **trésorerie**, **alertes**.';}
+
+document.addEventListener('click',e=>{if(!e.target.closest('[id$="-panel"]')&&!e.target.closest('[onclick*="togglePanel"]')&&!e.target.closest('[onclick*="Panel"]'))closeAllPanels();});
+
+// ── Toast ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg,icon='check_circle'){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  document.getElementById('toast-icon').textContent=icon;
+  t.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.add('hidden'),3000);
+}
+
+// Fix "Nouveau Contrat" button to use openAddContract
+document.querySelectorAll('[onclick*="modal-add-contract"]').forEach(el=>{
+  el.setAttribute('onclick',`openAddContract()`);
+});
+
+// ── Import PDF / Excel ────────────────────────────────
+let importedData=null;
+async function handleImportFile(file){
+  if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  const prev=document.getElementById('import-preview');
+  const acts=document.getElementById('import-actions');
+  prev.innerHTML='<div class="flex items-center justify-center gap-3 py-6 text-on-surface-variant"><span class="material-symbols-outlined">progress_activity</span><span class="text-body-md">Analyse en cours…</span></div>';
+  prev.classList.remove('hidden');acts.classList.add('hidden');
+  try{
+    if(['csv','xlsx','xls'].includes(ext))await importFromExcel(file);
+    else if(ext==='pdf')await importFromPDF(file);
+    else prev.innerHTML='<p class="text-error text-body-md text-center py-4">Format non supporté.</p>';
+  }catch(e){prev.innerHTML=`<p class="text-error text-body-md text-center py-4">Erreur : ${e.message}</p>`;}
+}
+async function importFromExcel(file){
+  const data=await file.arrayBuffer();
+  const wb=XLSX.read(data);
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+  if(rows.length<2){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">Fichier vide.</p>';return;}
+  const headers=rows[0].map(h=>String(h));
+  const dataRows=rows.slice(1).filter(r=>r.some(c=>c!==''));
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3"><strong>${dataRows.length}</strong> ligne(s) dans <em>${file.name}</em></p>
+    <div class="overflow-x-auto max-h-44 border border-outline-variant rounded-lg">
+      <table class="w-full text-[11px]"><thead class="bg-surface-container-low sticky top-0"><tr>${headers.map(h=>`<th class="px-3 py-2 text-left text-on-surface-variant font-semibold whitespace-nowrap">${h||'—'}</th>`).join('')}</tr></thead>
+      <tbody class="divide-y divide-outline-variant">${dataRows.slice(0,6).map(r=>`<tr class="hover:bg-surface-container-lowest">${headers.map((_,i)=>`<td class="px-3 py-1.5 whitespace-nowrap">${r[i]??''}</td>`).join('')}</tr>`).join('')}${dataRows.length>6?`<tr><td colspan="${headers.length}" class="px-3 py-2 text-center text-outline">… et ${dataRows.length-6} lignes de plus</td></tr>`:''}</tbody></table>
+    </div>`;
+  importedData={type:'excel',headers,rows:dataRows};
+  document.getElementById('import-confirm-label').textContent=`Importer ${dataRows.length} contrat(s)`;
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+async function importFromPDF(file){
+  if(!window.pdfjsLib){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">PDF.js non disponible.</p>';return;}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const data=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data}).promise;
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n';}
+  const mM=text.match(/(?:valeur|montant|prix)[^\d]*(\d[\d\s]{0,12}[,\.]\d{2})/i)||text.match(/(\d[\d\s]{0,12}[,\.]\d{2})\s*(?:fcfa|eur|€|xof)/i);
+  const dM=text.match(/(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})/);
+  const rM=text.match(/(?:contrat\s*n°|n°|ref[.:]?)[^\w]*([A-Z0-9][A-Z0-9\-\/]{2,20})/i);
+  const sM=text.match(/(?:entre|partie|contractant|société|raison\s*sociale)[^\w]*([A-Z][^\n,]{3,40})/i);
+  const montant=mM?mM[1].replace(/\s/g,'').replace(',','.'):'';
+  const today=new Date();
+  const todayStr=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+  const endStr=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()+1}`;
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3">Champs extraits de <em>${file.name}</em></p>
+    <div class="space-y-3">
+      <div><label class="text-label-sm text-on-surface-variant block mb-1">Entité / Nom</label><input id="pdf-libelle" type="text" value="${((sM?sM[1]:file.name.replace('.pdf','')).trim()).replace(/"/g,'&quot;')}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Valeur (FCFA)</label><input id="pdf-montant" type="number" value="${montant?Math.round(parseFloat(montant)):''}" placeholder="0" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Référence</label><input id="pdf-ref" type="text" value="${rM?rM[1].trim():`CTR-${Date.now().toString().slice(-5)}`}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Date début</label><input id="pdf-date" type="text" value="${dM?dM[1]:todayStr}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Date fin</label><input id="pdf-date-fin" type="text" value="${endStr}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      </div>
+    </div>
+    <details class="mt-3"><summary class="text-[11px] text-outline cursor-pointer">Texte brut extrait</summary><pre class="mt-2 p-3 bg-surface-container-low rounded-lg text-[10px] text-on-surface-variant max-h-20 overflow-y-auto whitespace-pre-wrap">${text.substring(0,500).replace(/</g,'&lt;')}…</pre></details>`;
+  importedData={type:'pdf'};
+  document.getElementById('import-confirm-label').textContent="Créer le contrat";
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+function confirmImport(){
+  if(!importedData)return;
+  const target=currentTab==='clients'?CLIENTS:FOURNISSEURS;
+  const today=new Date();
+  const todayStr=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+  const endStr=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()+1}`;
+  if(importedData.type==='pdf'){
+    const entite=document.getElementById('pdf-libelle').value||'Import PDF';
+    const val=Math.abs(parseFloat(document.getElementById('pdf-montant').value)||0);
+    const ref=document.getElementById('pdf-ref').value||`CTR-${Date.now().toString().slice(-5)}`;
+    const debut=document.getElementById('pdf-date').value||todayStr;
+    const fin=document.getElementById('pdf-date-fin').value||endStr;
+    target.unshift({ref,type:currentTab==='clients'?'Client':'Fournisseur',entite,objet:'Import PDF',debut,fin,val,statut:'Brouillon',renewal:fin});
+    save();updateKPIs();renderTable();
+    closeModal();showToast('Contrat importé depuis PDF','picture_as_pdf');
+  } else if(importedData.type==='excel'){
+    const{headers,rows}=importedData;
+    const iRef=headers.findIndex(h=>/ref|n°/i.test(h));
+    const iEnt=headers.findIndex(h=>/entit|société|client|fourni|nom/i.test(h));
+    const iObj=headers.findIndex(h=>/objet|description/i.test(h));
+    const iVal=headers.findIndex(h=>/val|montant|amount/i.test(h));
+    const iDeb=headers.findIndex(h=>/début|debut|start/i.test(h));
+    const iFin=headers.findIndex(h=>/fin|end|expir/i.test(h));
+    const iStat=headers.findIndex(h=>/statut|status/i.test(h));
+    let count=0;
+    rows.forEach((r,i)=>{
+      const entite=String(r[iEnt>=0?iEnt:0]||'').trim();
+      if(!entite)return;
+      const val=parseFloat(String(r[iVal>=0?iVal:3]||'0').replace(',','.'))||0;
+      const ref=String(r[iRef>=0?iRef:0]||`IMP-${Date.now()+i}`).trim();
+      const debut=String(r[iDeb>=0?iDeb:4]||todayStr);
+      const fin=String(r[iFin>=0?iFin:5]||endStr);
+      const statut=String(r[iStat>=0?iStat:6]||'Brouillon');
+      const objet=String(r[iObj>=0?iObj:2]||'Import Excel');
+      const validStatuts=['Actif','Expirant','Brouillon','Résilié'];
+      target.unshift({ref,type:currentTab==='clients'?'Client':'Fournisseur',entite,objet,debut,fin,val,statut:validStatuts.includes(statut)?statut:'Brouillon',renewal:fin});
+      count++;
+    });
+    save();updateKPIs();renderTable();
+    closeModal();showToast(`${count} contrat(s) importé(s)`,'table_view');
+  }
+  importedData=null;
+}
+
+// ── Init ─────────────────────────────────────────────
+renderTable(); renderCal(); updateKPIs(); renderAuditLog();
+</script>
+<div id="ia-panel" class="hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[55] border-l border-outline-variant flex flex-col">
+<div class="p-4 bg-primary text-white flex justify-between items-center"><div class="flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span><div><p class="font-bold text-body-md">Alvéole IA</p><p class="text-[10px] opacity-70">Assistant financier intelligent</p></div></div><button onclick="document.getElementById('ia-panel').classList.add('hidden')" class="p-1 hover:bg-white/20 rounded-full"><span class="material-symbols-outlined">close</span></button></div>
+<div id="ia-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-container-low"></div>
+<div class="p-3 border-t border-outline-variant bg-white"><div class="flex gap-2 mb-2 flex-wrap"><button onclick="iaAsk('contrats')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Contrats</button><button onclick="iaAsk('alertes')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Alertes</button><button onclick="iaAsk('budget')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Budget</button></div><div class="flex gap-2"><input id="ia-input" type="text" placeholder="Posez une question…" onkeydown="if(event.key==='Enter')iaSend()" class="flex-1 border border-outline-variant rounded-lg px-3 py-2 text-body-md text-[13px] focus:outline-none focus:ring-1 focus:ring-primary"><button onclick="iaSend()" class="p-2 bg-primary text-white rounded-lg hover:bg-primary-container"><span class="material-symbols-outlined text-[18px]">send</span></button></div></div>
+</div>
+<button onclick="toggleIA()" class="fixed bottom-28 right-8 w-12 h-12 bg-secondary text-on-secondary rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform z-50" title="Assistant IA"><span class="material-symbols-outlined">smart_toy</span></button>
+<script src="/static/js/context_bar.js"></script>
+<script>
+function updateMetierSidebar(code){
+  var ids=['sidebar-immobilier','sidebar-production','sidebar-hotellerie','sidebar-conseil'];
+  var map={AC:'sidebar-immobilier',TC:'sidebar-production',SW:'sidebar-hotellerie',IC:'sidebar-conseil'};
+  ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{var tid=map[code];if(tid){var e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+window.addEventListener('alveole:contexte',function(ev){updateMetierSidebar(ev.detail.entite_code);});
+fetch('/api/contexte').then(function(r){return r.json();}).then(function(ctx){updateMetierSidebar(ctx.entite_code);}).catch(function(){});
+</script>
+</body></html>

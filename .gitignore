@@ -1,0 +1,53 @@
+# Base de données SQLite (rejouable via seed.py)
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+.env/
+
+# Variables d'environnement
+.env
+.env.*
+
+# Fichiers temporaires / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+logs/
+
+# Sessions / cookies de test
+cookies.txt
+
+# Uploads
+uploads/
+instance/
+
+# Claude Code
+CLAUDE.md
+Instructions_ClaudeCode_*.md

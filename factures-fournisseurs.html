@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factures fournisseurs — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <a href="/bons-commande.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Bons de commande</a>
+    <a href="/receptions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory</span>Réceptions</a>
+    <a href="/factures-fournisseurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">receipt</span>Factures fourn.</a>
+    <a href="/engagements.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">trending_up</span>Engagements</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Modules</span></div>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">real_estate_agent</span>Immobilisations</a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">contract</span>Contrats</a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie</a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">donut_large</span>Budget</a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div><span class="font-black text-[20px] text-primary">Alvéole</span></div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div class="mb-6 flex items-start justify-between">
+    <div>
+      <h1 class="text-[28px] font-bold text-primary">Factures fournisseurs</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">Rapprochement 3 voies BC/Réception/Facture — comptabilisation SYSCOHADA</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <input type="file" id="ocr-file" accept=".pdf,.png,.jpg,.jpeg" class="hidden">
+      <button onclick="document.getElementById('ocr-file').click()" class="flex items-center gap-2 px-3 py-2 border border-outline-variant text-on-surface-variant rounded-lg text-[12px] font-semibold hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined text-[16px]">document_scanner</span>Scanner PDF/OCR
+      </button>
+      <button onclick="openNewFact()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-colors">
+        <span class="material-symbols-outlined text-[18px]">add</span>Nouvelle facture
+      </button>
+    </div>
+  </div>
+
+  <div class="flex gap-2 mb-4">
+    <button onclick="setFilter('all')" id="f-all" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white">Toutes</button>
+    <button onclick="setFilter('a_payer')" id="f-a_payer" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">À payer</button>
+    <button onclick="setFilter('comptabilisee')" id="f-comptabilisee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Comptabilisées</button>
+    <button onclick="setFilter('payee')" id="f-payee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Payées</button>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Numéro</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fournisseur</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">BC</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Date</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Échéance</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">HT</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">TVA</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">TTC</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="10" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL : Nouvelle facture -->
+<div id="modal-fact" class="hidden fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 my-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-[20px] font-bold text-primary">Nouvelle facture fournisseur</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+
+    <!-- Bandeau OCR -->
+    <div id="ocr-banner" class="hidden mb-4 px-4 py-3 bg-secondary/10 text-secondary rounded-xl flex items-center gap-3 text-[13px] font-semibold">
+      <span class="material-symbols-outlined">auto_awesome</span>
+      <span id="ocr-banner-msg"></span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">N° facture</label>
+        <input id="f-num" type="text" placeholder="ex : FACT-2024-001"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Date facture *</label>
+        <input id="f-date" type="date"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div class="col-span-2">
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Bon de commande (optionnel)</label>
+        <select id="f-bc" onchange="onBCChange()" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+          <option value="">— Sans BC —</option>
+        </select>
+      </div>
+      <div class="col-span-2">
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Fournisseur *</label>
+        <select id="f-fourn" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+          <option value="">— Sélectionnez —</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Montant HT (FCFA) *</label>
+        <input id="f-ht" type="number" min="0" step="1" oninput="calcTTC()"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Taux TVA (%)</label>
+        <input id="f-taux" type="number" value="18" min="0" max="100" step="1" oninput="calcTTC()"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Montant TVA (FCFA)</label>
+        <input id="f-tva" type="number" min="0" step="1" readonly
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] bg-surface-container-low text-on-surface-variant">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Montant TTC (FCFA)</label>
+        <input id="f-ttc" type="number" min="0" step="1" readonly
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] bg-surface-container-low font-bold text-primary">
+      </div>
+    </div>
+
+    <!-- Rapprochement 3 voies -->
+    <div id="rapp-panel" class="hidden mt-4 border border-outline-variant rounded-xl overflow-hidden">
+      <div class="bg-surface-container-low px-4 py-2 flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">compare_arrows</span>
+        <span class="text-[12px] font-bold text-on-surface-variant uppercase tracking-wider">Rapprochement 3 voies</span>
+      </div>
+      <div class="grid grid-cols-3 divide-x divide-outline-variant">
+        <div class="p-4 text-center">
+          <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Commandé (BC)</p>
+          <p id="rapp-cmd" class="text-[16px] font-bold text-primary">—</p>
+        </div>
+        <div class="p-4 text-center">
+          <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Reçu</p>
+          <p id="rapp-recu" class="text-[16px] font-bold text-secondary">—</p>
+        </div>
+        <div class="p-4 text-center">
+          <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Facturé (saisi)</p>
+          <p id="rapp-fact" class="text-[16px] font-bold">—</p>
+        </div>
+      </div>
+      <div id="rapp-alert" class="hidden px-4 py-2 bg-error-container text-on-error-container text-[12px] font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">warning</span>
+        <span>Écart détecté : montant facturé supérieur au montant reçu. L'écriture sera quand même créée mais signalée.</span>
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-6">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px] hover:bg-surface-container">Annuler</button>
+      <button onclick="createFact()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Enregistrer la facture</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Comptabiliser -->
+<div id="modal-compta" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-[18px] font-bold text-primary">Comptabiliser la facture</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div id="compta-info" class="bg-surface-container-low rounded-xl p-4 mb-4 text-[13px] text-on-surface-variant space-y-1"></div>
+    <div class="mb-4">
+      <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Comptabilisé par (rôle Comptable/Direction)</label>
+      <input id="compta-par" type="text" placeholder="Votre nom"
+        class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+    </div>
+    <p class="text-[12px] text-on-surface-variant mb-4">Génère automatiquement : Débit 60x (charges) + Débit 445 (TVA) / Crédit 401 (fournisseur) dans le journal AC.</p>
+    <div class="flex gap-3">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px]">Annuler</button>
+      <button onclick="comptabiliser()" class="flex-1 py-2.5 bg-secondary text-white rounded-lg text-[13px] font-bold hover:opacity-90">Comptabiliser</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(+n||0)) + ' FCFA';
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+window.addEventListener('alveole:contexte', ()=>loadFact());
+
+const BADGE={
+  a_payer:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800',
+  comptabilisee:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800',
+  payee:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary',
+};
+const LABEL={a_payer:'À payer',comptabilisee:'Comptabilisée',payee:'Payée'};
+
+let currentFilter='all', targetFact=null, bcsDispos=[], fournisseurs=[], currentBCData=null;
+
+async function loadFact(){
+  const url=currentFilter==='all'?'/api/factures':`/api/factures?statut=${currentFilter}`;
+  try{ const r=await fetch(url); renderFact(await r.json()); }
+  catch(_){ showToast('Erreur de chargement','error'); }
+}
+
+function renderFact(list){
+  const tb=document.getElementById('tbody');
+  if(!list.length){ tb.innerHTML=`<tr><td colspan="10" class="px-6 py-12 text-center text-on-surface-variant">Aucune facture fournisseur</td></tr>`; return; }
+  tb.innerHTML=list.map(f=>{
+    const badge=`<span class="${BADGE[f.statut]||''}">${LABEL[f.statut]||f.statut}</span>`;
+    const ecart=f.ecart_rapprochement?'<span class="ml-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 inline-flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">warning</span>Écart</span>':'';
+    let actions='';
+    if(f.statut==='a_payer')
+      actions=`<button onclick="openCompta(${f.id},'${(f.fournisseur_nom||'').replace(/'/g,"\\'")}',${f.montant_ttc})" class="px-3 py-1 bg-secondary text-white rounded-lg text-[11px] font-semibold hover:opacity-90">Comptabiliser</button>`;
+    else if(f.ecriture_id)
+      actions=`<a href="/compta-journal.html" class="px-3 py-1 border border-primary text-primary rounded-lg text-[11px] hover:bg-primary/10 inline-block">→ Écriture</a>`;
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low ${f.ecart_rapprochement?'bg-amber-50/30':''}">
+      <td class="px-4 py-3 font-mono text-[12px] text-primary font-semibold">${f.numero}</td>
+      <td class="px-4 py-3 text-[13px]">${f.fournisseur_nom||'—'}</td>
+      <td class="px-4 py-3 text-[12px] font-mono text-on-surface-variant">${f.bc_numero||'—'}</td>
+      <td class="px-4 py-3 text-[13px]">${f.date||'—'}</td>
+      <td class="px-4 py-3 text-[13px] ${f.date_echeance&&f.date_echeance<new Date().toISOString().slice(0,10)&&f.statut==='a_payer'?'text-error font-semibold':''}">${f.date_echeance||'—'}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right">${fmt(f.montant_ht)}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right text-on-surface-variant">${fmt(f.montant_tva)}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right font-bold">${fmt(f.montant_ttc)}</td>
+      <td class="px-4 py-3">${badge}${ecart}</td>
+      <td class="px-4 py-3 whitespace-nowrap">${actions}</td>
+    </tr>`;
+  }).join('');
+}
+
+function setFilter(f){
+  currentFilter=f;
+  ['all','a_payer','comptabilisee','payee'].forEach(k=>{
+    const b=document.getElementById('f-'+k);
+    if(!b) return;
+    b.className=k===f?'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white':'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high';
+  });
+  loadFact();
+}
+
+function calcTTC(){
+  const ht=parseFloat(document.getElementById('f-ht').value||0);
+  const taux=parseFloat(document.getElementById('f-taux').value||0);
+  const tva=Math.round(ht*taux/100);
+  document.getElementById('f-tva').value=tva||'';
+  document.getElementById('f-ttc').value=Math.round(ht+tva)||'';
+  updateRapp();
+}
+
+async function openNewFact(prefillBcId){
+  currentBCData=null;
+  document.getElementById('f-num').value='';
+  document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('f-ht').value='';
+  document.getElementById('f-taux').value='18';
+  document.getElementById('f-tva').value='';
+  document.getElementById('f-ttc').value='';
+  document.getElementById('ocr-banner').classList.add('hidden');
+  document.getElementById('rapp-panel').classList.add('hidden');
+
+  const [bcRes, fRes] = await Promise.all([
+    fetch('/api/bc?statut=recu_partiel').then(r=>r.json()),
+    fetch('/api/bc?statut=recu_total').then(r=>r.json()),
+    fetch('/api/tiers?type=fournisseur').then(r=>r.json()).then(d=>{fournisseurs=d}),
+  ]);
+  bcsDispos=[...bcRes,...fRes];
+
+  const bcSel=document.getElementById('f-bc');
+  bcSel.innerHTML='<option value="">— Sans BC —</option>'+bcsDispos.map(b=>`<option value="${b.id}">${b.numero} — ${b.fournisseur_nom||''}</option>`).join('');
+
+  const fSel=document.getElementById('f-fourn');
+  fSel.innerHTML='<option value="">— Sélectionnez —</option>'+fournisseurs.map(f=>`<option value="${f.id}">${f.nom}</option>`).join('');
+
+  if(prefillBcId){
+    bcSel.value=prefillBcId;
+    await onBCChange();
+  }
+  document.getElementById('modal-fact').classList.remove('hidden');
+}
+
+async function onBCChange(){
+  const bcId=document.getElementById('f-bc').value;
+  if(!bcId){ document.getElementById('rapp-panel').classList.add('hidden'); currentBCData=null; return; }
+  const bc=bcsDispos.find(b=>b.id==bcId);
+  currentBCData=bc;
+  if(bc?.fournisseur_id){ document.getElementById('f-fourn').value=bc.fournisseur_id; }
+  const montantRecu=bc?.lignes?.reduce((s,l)=>s+(l.quantite_recue||0)*(l.prix_unitaire||0),0)||0;
+  document.getElementById('rapp-cmd').textContent=fmt(bc?.montant_total_ht||0);
+  document.getElementById('rapp-recu').textContent=fmt(montantRecu);
+  document.getElementById('rapp-panel').classList.remove('hidden');
+  updateRapp();
+}
+
+function updateRapp(){
+  const ht=parseFloat(document.getElementById('f-ht').value||0);
+  document.getElementById('rapp-fact').textContent=ht?fmt(ht):'—';
+  document.getElementById('rapp-fact').className=ht?'text-[16px] font-bold text-primary':'text-[16px] font-bold';
+  if(currentBCData&&ht>0){
+    const montantRecu=currentBCData.lignes?.reduce((s,l)=>s+(l.quantite_recue||0)*(l.prix_unitaire||0),0)||0;
+    document.getElementById('rapp-alert').classList.toggle('hidden',ht<=montantRecu*1.001);
+  }
+}
+
+document.getElementById('f-ht').addEventListener('input', updateRapp);
+
+async function createFact(){
+  const ht=parseFloat(document.getElementById('f-ht').value||0);
+  const fournId=document.getElementById('f-fourn').value;
+  if(!ht||!fournId){showToast('Montant HT et fournisseur requis','warning');return;}
+  const bcId=document.getElementById('f-bc').value;
+  const payload={
+    montant_ht:ht,
+    taux_tva:parseFloat(document.getElementById('f-taux').value||18),
+    montant_tva:parseFloat(document.getElementById('f-tva').value||0),
+    montant_ttc:parseFloat(document.getElementById('f-ttc').value||0),
+    fournisseur_id:parseInt(fournId),
+    bc_id:bcId?parseInt(bcId):null,
+    numero:document.getElementById('f-num').value.trim()||undefined,
+    date:document.getElementById('f-date').value||undefined,
+  };
+  const r=await fetch('/api/factures',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  const msg=d.ecart_rapprochement?`Facture ${d.numero} créée (⚠ écart rapprochement)`:`Facture ${d.numero} créée`;
+  showToast(msg,'check_circle'); closeModals(); loadFact();
+}
+
+function openCompta(id, fourn, ttc){
+  targetFact=id;
+  document.getElementById('compta-par').value='';
+  document.getElementById('compta-info').innerHTML=`
+    <p><strong>Fournisseur :</strong> ${fourn}</p>
+    <p><strong>Montant TTC :</strong> ${fmt(ttc)}</p>
+    <p class="mt-2 text-[12px]">Écriture générée : Débit 60x (charges) + Débit 445 (TVA) — Crédit 401 (${fourn})</p>`;
+  document.getElementById('modal-compta').classList.remove('hidden');
+}
+
+async function comptabiliser(){
+  const par=document.getElementById('compta-par').value.trim();
+  if(!par){showToast('Saisissez votre nom','warning');return;}
+  const r=await fetch(`/api/factures/${targetFact}/comptabiliser`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cree_par:par})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast('Facture comptabilisée — écriture générée','check_circle'); closeModals(); loadFact();
+}
+
+function closeModals(){ ['modal-fact','modal-compta'].forEach(id=>document.getElementById(id)?.classList.add('hidden')); }
+
+// ── OCR ───────────────────────────────────────────────────────────────────
+document.getElementById('ocr-file').addEventListener('change', async e=>{
+  const file=e.target.files[0];
+  if(!file) return;
+  showToast('Analyse OCR en cours…','hourglass_empty');
+  const fd=new FormData();
+  fd.append('file',file);
+  try{
+    const r=await fetch('/api/ocr/facture',{method:'POST',body:fd});
+    const d=await r.json();
+    if(d.warning){ showToast(d.warning,'warning'); e.target.value=''; return; }
+    if(d.fields&&Object.keys(d.fields).length){
+      // Ouvre le modal si fermé
+      if(document.getElementById('modal-fact').classList.contains('hidden')) await openNewFact();
+      const f=d.fields;
+      if(f.numero) document.getElementById('f-num').value=f.numero;
+      if(f.date)   document.getElementById('f-date').value=f.date;
+      if(f.montant_ht){ document.getElementById('f-ht').value=Math.round(f.montant_ht); calcTTC(); }
+      if(f.taux_tva){ document.getElementById('f-taux').value=f.taux_tva; calcTTC(); }
+      if(f.montant_tva){ document.getElementById('f-tva').value=Math.round(f.montant_tva); }
+      if(f.montant_ttc){ document.getElementById('f-ttc').value=Math.round(f.montant_ttc); }
+      const banner=document.getElementById('ocr-banner');
+      document.getElementById('ocr-banner-msg').textContent=`Champs extraits via ${d.method}${f.fournisseur_hint?' — Émetteur détecté : '+f.fournisseur_hint:''}`;
+      banner.classList.remove('hidden');
+      showToast('Champs pré-remplis depuis le document','check_circle');
+    } else {
+      showToast('Aucun champ extrait du document','warning');
+    }
+  } catch(_){ showToast('Erreur OCR','error'); }
+  e.target.value='';
+});
+
+const params=new URLSearchParams(window.location.search);
+const prefillBC=params.get('bc');
+if(prefillBC){ window.addEventListener('load',()=>openNewFact(parseInt(prefillBC))); }
+loadFact();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

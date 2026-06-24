@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bons de commande — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <a href="/bons-commande.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Bons de commande</a>
+    <a href="/receptions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory</span>Réceptions</a>
+    <a href="/factures-fournisseurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt</span>Factures fourn.</a>
+    <a href="/engagements.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">trending_up</span>Engagements</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Modules</span></div>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">real_estate_agent</span>Immobilisations</a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">contract</span>Contrats</a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie</a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">donut_large</span>Budget</a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div><span class="font-black text-[20px] text-primary">Alvéole</span></div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div class="mb-6 flex items-start justify-between">
+    <div>
+      <h1 class="text-[28px] font-bold text-primary">Bons de commande</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">Créés depuis une DA validée — contrôle fournisseur intégré</p>
+    </div>
+    <button onclick="openNewBC()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-colors">
+      <span class="material-symbols-outlined text-[18px]">add</span>Créer depuis une DA
+    </button>
+  </div>
+
+  <div class="flex gap-2 mb-4 flex-wrap">
+    <button onclick="setFilter('all')" id="f-all" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white">Tous</button>
+    <button onclick="setFilter('brouillon')" id="f-brouillon" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Brouillon</button>
+    <button onclick="setFilter('envoye')" id="f-envoye" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Envoyé</button>
+    <button onclick="setFilter('recu_partiel')" id="f-recu_partiel" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Reçu partiel</button>
+    <button onclick="setFilter('recu_total')" id="f-recu_total" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Reçu total</button>
+    <button onclick="setFilter('facture')" id="f-facture" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Facturé</button>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Numéro</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">DA</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fournisseur</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Date</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Montant HT</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL : Créer BC depuis DA -->
+<div id="modal-bc" class="hidden fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 my-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-[20px] font-bold text-primary">Nouveau bon de commande</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">DA validée *</label>
+        <select id="bc-da" onchange="onDAChange()" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+          <option value="">— Sélectionnez une DA validée —</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Fournisseur *</label>
+        <select id="bc-fourn" onchange="onFournChange()" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+          <option value="">— Sélectionnez un fournisseur —</option>
+        </select>
+        <div id="fourn-warning" class="hidden mt-2 px-3 py-2 bg-error-container text-on-error-container rounded-lg text-[12px] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px]">block</span>
+          <span id="fourn-warning-msg"></span>
+        </div>
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Créé par *</label>
+        <input id="bc-cree-par" type="text" placeholder="Votre nom"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div id="bc-lignes-preview" class="hidden">
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-2">Lignes (pré-remplies depuis la DA)</label>
+        <div id="bc-lignes-list" class="space-y-1 max-h-48 overflow-y-auto border border-outline-variant rounded-lg p-2 bg-surface-container-low"></div>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px] hover:bg-surface-container">Annuler</button>
+      <button onclick="createBC()" id="btn-create-bc" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Créer le BC</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Envoyer BC -->
+<div id="modal-envoyer" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-[18px] font-bold text-primary">Envoyer le BC</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <p class="text-[13px] text-on-surface-variant mb-4">Confirmer l'envoi du bon de commande au fournisseur. Le statut passera à « Envoyé ».</p>
+    <div class="mb-4">
+      <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Validé par</label>
+      <input id="env-valideur" type="text" placeholder="Votre nom"
+        class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+    </div>
+    <div class="flex gap-3">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px]">Annuler</button>
+      <button onclick="envoyerBC()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(+n||0)) + ' FCFA';
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+window.addEventListener('alveole:contexte', ()=>loadBC());
+
+const BADGE={
+  brouillon:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-surface-container-highest text-on-surface-variant',
+  envoye:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800',
+  recu_partiel:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800',
+  recu_total:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800',
+  facture:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary',
+  clos:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-surface-container text-on-surface-variant',
+};
+const LABEL={brouillon:'Brouillon',envoye:'Envoyé',recu_partiel:'Reçu partiel',recu_total:'Reçu total',facture:'Facturé',clos:'Clôturé'};
+
+let currentFilter='all', targetBC=null, dasValidees=[], fournisseurs=[], fournBloque=false;
+
+async function loadBC(){
+  const url=currentFilter==='all'?'/api/bc':`/api/bc?statut=${currentFilter}`;
+  try{ const r=await fetch(url); renderBC(await r.json()); }
+  catch(_){ showToast('Erreur de chargement','error'); }
+}
+
+function renderBC(list){
+  const tb=document.getElementById('tbody');
+  if(!list.length){ tb.innerHTML=`<tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">Aucun bon de commande</td></tr>`; return; }
+  tb.innerHTML=list.map(bc=>{
+    const badge=`<span class="${BADGE[bc.statut]||''}">${LABEL[bc.statut]||bc.statut}</span>`;
+    let actions='';
+    if(bc.statut==='brouillon')
+      actions=`<button onclick="openEnvoyer(${bc.id})" class="px-3 py-1 bg-primary text-white rounded-lg text-[11px] font-semibold hover:bg-primary-container">Envoyer</button>`;
+    else if(['envoye','recu_partiel'].includes(bc.statut))
+      actions=`<a href="/receptions.html?bc=${bc.id}" class="px-3 py-1 bg-secondary text-white rounded-lg text-[11px] font-semibold hover:opacity-90 inline-block">→ Réception</a>`;
+    if(['recu_partiel','recu_total'].includes(bc.statut))
+      actions+=(actions?' ':'')+ `<a href="/factures-fournisseurs.html?bc=${bc.id}" class="px-3 py-1 border border-primary text-primary rounded-lg text-[11px] font-semibold hover:bg-primary/10 inline-block">→ Facture</a>`;
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low">
+      <td class="px-4 py-3 font-mono text-[12px] text-primary font-semibold">${bc.numero}</td>
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant font-mono">${bc.da_numero||'—'}</td>
+      <td class="px-4 py-3 text-[13px]">${bc.fournisseur_nom||'—'}</td>
+      <td class="px-4 py-3 text-[13px]">${bc.date||'—'}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right">${fmt(bc.montant_total_ht)}</td>
+      <td class="px-4 py-3">${badge}</td>
+      <td class="px-4 py-3 whitespace-nowrap">${actions}</td>
+    </tr>`;
+  }).join('');
+}
+
+function setFilter(f){
+  currentFilter=f;
+  ['all','brouillon','envoye','recu_partiel','recu_total','facture'].forEach(k=>{
+    const b=document.getElementById('f-'+k);
+    if(!b) return;
+    b.className=k===f?'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white':'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high';
+  });
+  loadBC();
+}
+
+async function openNewBC(prefillDaId){
+  fournBloque=false;
+  document.getElementById('bc-cree-par').value='';
+  document.getElementById('bc-lignes-preview').classList.add('hidden');
+  document.getElementById('fourn-warning').classList.add('hidden');
+  document.getElementById('btn-create-bc').disabled=false;
+
+  const [daRes, fournRes] = await Promise.all([
+    fetch('/api/da?statut=validee'),
+    fetch('/api/tiers?type=fournisseur'),
+  ]);
+  dasValidees = await daRes.json();
+  fournisseurs = await fournRes.json();
+
+  const daSelect = document.getElementById('bc-da');
+  daSelect.innerHTML='<option value="">— Sélectionnez une DA validée —</option>'+
+    dasValidees.map(d=>`<option value="${d.id}">${d.numero} — ${d.objet} (${fmt(d.montant_estime)})</option>`).join('');
+
+  const fSelect = document.getElementById('bc-fourn');
+  fSelect.innerHTML='<option value="">— Sélectionnez un fournisseur —</option>'+
+    fournisseurs.map(f=>{
+      const blk=f.statut==='bloque'||f.statut==='suspendu';
+      return `<option value="${f.id}" data-statut="${f.statut||''}" ${blk?'class="text-error"':''}>${f.nom}${blk?' ['+f.statut+']':''}</option>`;
+    }).join('');
+
+  if(prefillDaId){
+    daSelect.value=prefillDaId;
+    await onDAChange();
+  }
+  document.getElementById('modal-bc').classList.remove('hidden');
+}
+
+async function onDAChange(){
+  const daId=document.getElementById('bc-da').value;
+  if(!daId){ document.getElementById('bc-lignes-preview').classList.add('hidden'); return; }
+  const da=dasValidees.find(d=>d.id==daId);
+  if(!da||!da.lignes) return;
+  const preview=document.getElementById('bc-lignes-list');
+  preview.innerHTML=da.lignes.map(l=>`
+    <div class="flex justify-between items-center py-1.5 px-2 border-b border-outline-variant/30 last:border-0">
+      <span class="text-[12px] text-on-surface">${l.designation}</span>
+      <span class="text-[12px] text-on-surface-variant font-mono">${l.quantite} × ${fmt(l.prix_unitaire_estime)}</span>
+    </div>`).join('');
+  document.getElementById('bc-lignes-preview').classList.remove('hidden');
+}
+
+function onFournChange(){
+  const sel=document.getElementById('bc-fourn');
+  const opt=sel.options[sel.selectedIndex];
+  const statut=opt?.dataset?.statut||'';
+  const blk=statut==='bloque'||statut==='suspendu';
+  fournBloque=blk;
+  document.getElementById('fourn-warning').classList.toggle('hidden',!blk);
+  document.getElementById('fourn-warning-msg').textContent=blk?`Fournisseur ${statut} — BC refusé automatiquement`:'';
+  document.getElementById('btn-create-bc').disabled=blk;
+}
+
+async function createBC(){
+  const daId=document.getElementById('bc-da').value;
+  const fournId=document.getElementById('bc-fourn').value;
+  const creePar=document.getElementById('bc-cree-par').value.trim();
+  if(!daId||!fournId||!creePar){showToast('Tous les champs sont requis','warning');return;}
+  if(fournBloque){showToast('Fournisseur bloqué/suspendu — BC impossible','error');return;}
+  const r=await fetch('/api/bc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({da_id:parseInt(daId),fournisseur_id:parseInt(fournId),cree_par:creePar})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast(`BC ${d.numero} créé`,'check_circle'); closeModals(); loadBC();
+}
+
+function openEnvoyer(id){
+  targetBC=id;
+  document.getElementById('env-valideur').value='';
+  document.getElementById('modal-envoyer').classList.remove('hidden');
+}
+
+async function envoyerBC(){
+  const v=document.getElementById('env-valideur').value.trim();
+  if(!v){showToast('Saisissez votre nom','warning');return;}
+  const r=await fetch(`/api/bc/${targetBC}/envoyer`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({valide_par:v})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast('BC envoyé','check_circle'); closeModals(); loadBC();
+}
+
+function closeModals(){ ['modal-bc','modal-envoyer'].forEach(id=>document.getElementById(id)?.classList.add('hidden')); }
+
+// Pre-fill DA from URL param
+const params=new URLSearchParams(window.location.search);
+const prefillDA=params.get('da');
+if(prefillDA){ window.addEventListener('load',()=>openNewBC(parseInt(prefillDA))); }
+loadBC();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

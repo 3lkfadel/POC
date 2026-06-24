@@ -1,0 +1,941 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Contrôle Budgétaire - Alvéole</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#2d6197",
+                    "on-primary-fixed": "#001c37",
+                    "surface-variant": "#e0e3e6",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#2e4b57",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8eb",
+                    "on-secondary-container": "#007147",
+                    "surface-container": "#eceef1",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#78fbb6",
+                    "on-secondary-fixed-variant": "#005232",
+                    "on-secondary-fixed": "#002111",
+                    "error-container": "#ffdad6",
+                    "on-background": "#191c1e",
+                    "outline": "#727780",
+                    "inverse-surface": "#2d3133",
+                    "surface": "#f7f9fc",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f2f4f7",
+                    "secondary-fixed-dim": "#59de9b",
+                    "primary": "#00355f",
+                    "on-tertiary-fixed": "#001f2a",
+                    "on-surface": "#191c1e",
+                    "primary-fixed": "#d2e4ff",
+                    "inverse-primary": "#a0c9ff",
+                    "secondary": "#006d43",
+                    "on-surface-variant": "#42474f",
+                    "on-primary-fixed-variant": "#07497d",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d8dadd",
+                    "primary-container": "#0f4c81",
+                    "outline-variant": "#c2c7d1",
+                    "tertiary-container": "#314e5b",
+                    "tertiary-fixed": "#c9e7f7",
+                    "tertiary": "#193743",
+                    "on-primary-container": "#8ebdf9",
+                    "secondary-container": "#75f8b3",
+                    "tertiary-fixed-dim": "#adcbda",
+                    "surface-bright": "#f7f9fc",
+                    "background": "#f7f9fc",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f4",
+                    "surface-container-highest": "#e0e3e6",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "on-tertiary-container": "#a0bece"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-md": "16px",
+                    "margin-page": "40px",
+                    "container-padding": "24px",
+                    "base": "4px",
+                    "stack-sm": "8px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "title-lg": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "mono-data": ["Geist"]
+            },
+            "fontSize": {
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+<div class="p-gutter">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Alvéole</h1>
+<p class="font-label-md text-label-md text-on-primary/70 mt-1">Conforme OHADA</p>
+</div>
+<nav class="flex-1 mt-2 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Tableau-de-bord.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilite-Generale.html">
+<span class="material-symbols-outlined">account_balance</span>
+<span>Comptabilité</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="gestion-des-immobiliers.html">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span>Immobilisations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Gestion-des-contrats.html">
+<span class="material-symbols-outlined">description</span>
+<span>Contrats</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="cockpit-tresorie.html">
+<span class="material-symbols-outlined">account_tree</span>
+<span>Trésorerie</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilité-analytics.html">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytique</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-secondary-fixed font-bold border-l-4 border-secondary-fixed bg-on-primary-fixed-variant/10" href="Budget.html">
+<span class="material-symbols-outlined">query_stats</span>
+<span>Budget</span>
+</a>
+
+<div id="sidebar-immobilier" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+  <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+  <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets &amp; chantiers</a>
+  <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+  <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+</div>
+<div id="sidebar-production" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+  <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles &amp; familles</a>
+  <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+  <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks &amp; valorisation</a>
+</div>
+<div id="sidebar-hotellerie" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">H&#244;tellerie SW</span></div>
+  <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+  <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pr&#233;-&#233;critures</a>
+  <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+</div>
+<div id="sidebar-conseil" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+  <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+  <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs &amp; KYC</a>
+  <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+  <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+</div>
+</nav>
+<div class="mt-auto border-t border-on-primary/10 p-4 space-y-2">
+<button class="w-full py-2 px-4 bg-on-primary-fixed-variant/20 text-on-primary rounded-lg font-label-md text-label-md font-bold transition-all hover:bg-on-primary-fixed-variant/30 active:scale-95">Changer de module</button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Paramètres</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Assistance</span>
+</a>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-gutter h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<span class="font-title-lg text-title-lg font-black text-primary">Alvéole</span>
+<div class="flex items-center bg-surface-container-low border border-outline-variant rounded-full px-4 py-1.5">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md placeholder:text-outline w-56" placeholder="Rechercher un budget..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 pr-gutter mr-gutter border-r border-outline-variant">
+<a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md" href="Tableau-de-bord.html">Tableau de bord</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Rapports</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md" href="#">Logs d'audit</a>
+</div>
+<button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors" title="Mode sombre">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<button onclick="togglePanel('notif-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button onclick="togglePanel('apps-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">apps</span>
+</button>
+<img onclick="togglePanel('profile-panel')" alt="User Avatar" class="w-9 h-9 rounded-full border border-outline-variant object-cover cursor-pointer hover:ring-2 hover:ring-primary/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBS6N4WZW_5R04JbvzxsgOPyhXedDbARocB7-VVoB_vGdBZN81LutvNDL9qugHE1g7E77ilnIUbZ_oZMYEAGPTmW7f5oC01FMcfMsXBAiEH-oj6BECvw7eCFfv2aWua9crbLhiMVQD_L0KcLsVYfP2wNb_dtZuJYX9xsxCRqbo18YV-fDgTh6qxq9lIwApCYaR2yWwW6uCruT1PlegtXDpIvSJ_PaNSW8t4lCxYK0KAfchVPEllTWNe">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-margin-page min-h-screen">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-display-lg text-display-lg text-primary">Contrôle Budgétaire</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Analyse et gestion des écarts budgétaires par département.</p>
+</div>
+<div class="flex space-x-3">
+<button onclick="openModal('modal-simulation')" class="flex items-center space-x-2 px-5 py-2.5 rounded-lg border border-primary text-primary font-bold hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined" data-icon="sim_card">sim_card</span>
+<span class="text-body-md">Simulations</span>
+</button>
+<button onclick="openModal('modal-add-budget')" class="flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-primary text-on-primary font-bold shadow-md hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span class="text-body-md">Budget révisé</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="bento-grid">
+<!-- Summary KPI Card 1 -->
+<div class="col-span-12 lg:col-span-3 glass-card rounded-xl p-6 shadow-resting hover:shadow-hover transition-all" style="transform: translateY(0px);">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-container rounded-lg">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="payments">payments</span>
+</div>
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full">EN COURS</span>
+</div>
+<h4 class="text-label-md text-on-surface-variant uppercase font-bold tracking-widest mb-1">Budget Total Consommé</h4>
+<div class="flex items-baseline space-x-2 whitespace-nowrap">
+<span id="kpi-budget-total" class="font-headline-md text-headline-md text-on-surface">65.4M FCFA</span>
+<span id="kpi-budget-pct" class="text-secondary font-bold text-label-md">72%</span>
+</div>
+<div class="mt-4 w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 72%;"></div>
+</div>
+<p class="mt-2 text-[10px] text-on-surface-variant font-mono-data">Mise à jour: Il y a 5 min</p>
+</div>
+<!-- Summary KPI Card 2 -->
+<div class="col-span-12 lg:col-span-3 glass-card rounded-xl p-6 shadow-resting hover:shadow-hover transition-all border-l-4 border-error" style="transform: translateY(0px);">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container rounded-lg">
+<span class="material-symbols-outlined text-on-error-container" data-icon="warning">warning</span>
+</div>
+<span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded-full">ALERTE</span>
+</div>
+<h4 class="text-label-md text-on-surface-variant uppercase font-bold tracking-widest mb-1">Écart de Budget (Variance)</h4>
+<div class="flex items-baseline space-x-2 whitespace-nowrap">
+<span id="kpi-variance" class="font-headline-md text-headline-md text-error">-1.2M FCFA</span>
+<span class="text-error font-bold text-label-md">Dépassement</span>
+</div>
+<p id="kpi-overrun-depts" class="mt-4 text-body-md text-on-surface-variant">3 départements en dépassement critique ce mois-ci.</p>
+<p class="mt-2 text-[10px] text-on-surface-variant font-mono-data">Mise à jour: Il y a 10 min</p>
+</div>
+<!-- Variance Main Chart -->
+<div class="col-span-12 lg:col-span-6 glass-card rounded-xl p-6 shadow-resting" style="transform: translateY(0px);">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-lg text-title-lg text-primary">Budget vs Réalisé (Mensuel)</h4>
+<select class="bg-surface-container-low border-none rounded-lg text-label-md font-bold focus:ring-0">
+<option>Budget Annuel 2024</option>
+<option>Budget Révisé Q2</option>
+<option>Prévisionnel 2025</option>
+</select>
+</div>
+<div class="h-48 flex items-end justify-between space-x-4 px-2">
+<canvas id="budget-chart" style="max-height:192px"></canvas>
+</div>
+</div>
+<!-- Departmental Table -->
+<div class="col-span-12 lg:col-span-8 glass-card rounded-xl overflow-hidden shadow-resting" style="transform: translateY(0px);">
+<div class="p-6 flex justify-between items-center border-b border-outline-variant">
+<h4 class="font-title-lg text-title-lg text-primary">Vue par Département / Projet</h4>
+<div class="flex space-x-2">
+<button onclick="showToast('Filtrage par statut bientôt disponible','filter_list')" class="p-2 hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button onclick="openModal('modal-import')" class="p-2 hover:bg-surface-container rounded-lg transition-colors text-secondary" title="Importer PDF/Excel">
+<span class="material-symbols-outlined text-[20px]">file_upload</span>
+</button>
+<button onclick="exportBudget('csv')" class="p-2 hover:bg-surface-container rounded-lg transition-colors" title="Exporter CSV">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button onclick="exportBudget('pdf')" class="p-2 hover:bg-surface-container rounded-lg transition-colors" title="Exporter PDF">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th onclick="sortBudget('dept')" class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase cursor-pointer hover:text-primary select-none">Département <span id="sort-dept" class="text-[10px]"></span></th>
+<th onclick="sortBudget('alloue')" class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase text-right cursor-pointer hover:text-primary select-none">Budget Alloué <span id="sort-alloue" class="text-[10px]"></span></th>
+<th onclick="sortBudget('reel')" class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase text-right cursor-pointer hover:text-primary select-none">Dépenses Réelles <span id="sort-reel" class="text-[10px]"></span></th>
+<th onclick="sortBudget('variance')" class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase text-right cursor-pointer hover:text-primary select-none">Variance <span id="sort-variance" class="text-[10px]"></span></th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Statut</th>
+</tr>
+</thead>
+<tbody id="budget-table-body" class="divide-y divide-outline-variant"></tbody>
+</table>
+</div>
+</div>
+<!-- Overrun Alerts & Dynamic Feed -->
+<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-6 shadow-resting flex flex-col" style="transform: translateY(0px);">
+<h4 class="font-title-lg text-title-lg text-primary mb-6">Alertes &amp; Anomalies</h4>
+<div class="flex-1 space-y-4 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+<!-- Audit Trail Item -->
+<div class="flex space-x-4 p-4 rounded-lg bg-error-container/20 border border-error/10">
+<div class="mt-1">
+<span class="material-symbols-outlined text-error" data-icon="priority_high">priority_high</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-bold">Dépassement Critique: Marketing</p>
+<p class="text-[12px] text-on-surface-variant mt-1">La ligne budgétaire "Évènements Q2" a dépassé son plafond de 15%. Approbation requise.</p>
+<p class="text-[10px] font-mono-data mt-2 text-error">Hier, 16:45 • Admin_Système</p>
+</div>
+</div>
+<!-- Audit Trail Item -->
+<div class="flex space-x-4 p-4 rounded-lg bg-surface-container-low border border-outline-variant">
+<div class="mt-1">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-bold">Révision Budgétaire Soumise</p>
+<p class="text-[12px] text-on-surface-variant mt-1">Nouveau budget prévisionnel pour la branche R&amp;D soumis par le contrôleur de zone.</p>
+<p class="text-[10px] font-mono-data mt-2 text-on-surface-variant">Aujourd'hui, 09:20 • L. Martinet</p>
+</div>
+</div>
+<!-- Audit Trail Item -->
+<div class="flex space-x-4 p-4 rounded-lg bg-surface-container-low border border-outline-variant">
+<div class="mt-1">
+<span class="material-symbols-outlined text-secondary" data-icon="update">update</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-bold">Données Actualisées</p>
+<p class="text-[12px] text-on-surface-variant mt-1">Synchronisation terminée avec le module Trésorerie. Écarts recalculés.</p>
+<p class="text-[10px] font-mono-data mt-2 text-on-surface-variant">Aujourd'hui, 08:00 • Auto_Sync</p>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-3 border-2 border-primary/10 rounded-lg text-primary text-label-md font-bold hover:bg-primary/5 transition-all">
+                    Voir tout l'historique
+                </button>
+</div>
+<!-- Dynamic Financial Analysis Visualizer -->
+<div class="col-span-12 relative h-80 rounded-xl overflow-hidden shadow-resting">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent flex flex-col justify-center px-12">
+<div class="max-w-md">
+<h4 class="font-headline-md text-headline-md text-on-primary mb-4">Analyse de Risque I.A.</h4>
+<p class="text-body-lg text-on-primary/80 mb-6">
+                            Notre algorithme prédictif détecte un risque de déficit de <span class="font-bold text-secondary-fixed">8%</span> sur la clôture annuelle si les tendances de dépenses actuelles se poursuivent. (Valeurs calculées en <span class="font-bold">FCFA</span>)
+                        </p>
+<button class="px-8 py-3 bg-secondary-fixed text-on-secondary-fixed font-bold rounded-lg shadow-lg hover:brightness-110 transition-all">
+                            Générer Simulation d'Optimisation
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button onclick="openModal('modal-add-budget')" class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
+
+<!-- Modal overlay -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+
+<!-- Import Modal -->
+<div id="modal-import" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-title-lg font-bold text-primary">Importer des données</h2>
+      <p class="text-body-sm text-on-surface-variant mt-1">PDF, Excel (.xlsx .xls) ou CSV budgétaire</p>
+    </div>
+    <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+  </div>
+  <div id="import-dropzone" ondragover="event.preventDefault();this.classList.add('border-primary','bg-primary/5')" ondragleave="this.classList.remove('border-primary','bg-primary/5')" ondrop="event.preventDefault();this.classList.remove('border-primary','bg-primary/5');handleImportFile(event.dataTransfer.files[0])" onclick="document.getElementById('import-file-input').click()" class="border-2 border-dashed border-outline-variant rounded-xl p-10 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+    <span class="material-symbols-outlined text-[48px] text-primary/40">cloud_upload</span>
+    <p class="text-title-sm font-bold text-on-surface mt-2">Glisser-déposer un fichier ici</p>
+    <p class="text-body-sm text-on-surface-variant mt-1">ou cliquer pour parcourir</p>
+    <p class="text-[11px] text-outline mt-3">PDF · Excel (.xlsx .xls) · CSV</p>
+    <input id="import-file-input" type="file" accept=".pdf,.xlsx,.xls,.csv" class="hidden" onchange="handleImportFile(this.files[0])">
+  </div>
+  <div id="import-preview" class="hidden mt-5"></div>
+  <div id="import-actions" class="hidden mt-4 flex gap-3">
+    <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-label-md hover:bg-surface-container transition-all">Annuler</button>
+    <button id="import-confirm-btn" onclick="confirmImport()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-label-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">check</span>
+      <span id="import-confirm-label">Importer</span>
+    </button>
+  </div>
+</div>
+
+<!-- Add/Edit Budget Line -->
+<div id="modal-add-budget" class="hidden bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h2 id="budget-modal-title" class="text-title-lg font-title-lg text-primary font-bold">Nouvelle Ligne Budgétaire</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<form onsubmit="submitBudgetLine(event)" class="space-y-4">
+<input type="hidden" id="budget-edit-dept">
+<div class="grid grid-cols-2 gap-4">
+<div class="col-span-2"><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Département / Projet <span class="text-error">*</span></label>
+<input id="b-dept" type="text" required placeholder="Ex: Marketing & Comms" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Budget alloué (FCFA) <span class="text-error">*</span></label>
+<input id="b-alloue" type="number" min="0" required placeholder="0" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Dépenses réelles (FCFA)</label>
+<input id="b-reel" type="number" min="0" placeholder="0" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+<div class="col-span-2"><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Projet associé</label>
+<input id="b-projet" type="text" placeholder="Ex: Cloud Migration" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+</div>
+<div class="flex gap-3 pt-2">
+<button type="button" onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button type="submit" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Enregistrer</button>
+</div>
+</form>
+</div>
+
+<!-- Simulation -->
+<div id="modal-simulation" class="hidden bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Simulation Budgétaire</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="space-y-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Ajustement global (%)</label>
+<input id="sim-pct" type="number" value="10" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md"></div>
+<div id="sim-preview" class="space-y-2 text-body-md"></div>
+<div class="flex gap-3">
+<button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md">Annuler</button>
+<button onclick="applySimulation()" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold">Appliquer</button>
+</div>
+</div>
+</div>
+
+<!-- Detail ligne -->
+<div id="modal-budget-detail" class="hidden bg-white rounded-2xl shadow-2xl w-full max-w-md p-8"></div>
+
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-5 py-3 bg-on-surface text-inverse-on-surface rounded-full text-body-md font-bold shadow-2xl flex items-center gap-2 whitespace-nowrap">
+<span id="toast-icon" class="material-symbols-outlined text-[18px]">check_circle</span>
+<span id="toast-msg">OK</span>
+</div>
+
+<script>
+// ── Storage ───────────────────────────────────────────
+const SK_BU='alveole_budget_v1';
+function saveBU(){localStorage.setItem(SK_BU,JSON.stringify(BUDGET_DATA));}
+function loadBU(){const d=localStorage.getItem(SK_BU);if(d)BUDGET_DATA.splice(0,BUDGET_DATA.length,...JSON.parse(d));}
+
+// ── Data ──────────────────────────────────────────────
+const BUDGET_DATA=[
+  {dept:'Département IT & Infra',projet:'Cloud Migration',alloue:12450000,reel:11200000},
+  {dept:'Marketing & Comms',projet:'Campagne Q2 Globale',alloue:4200000,reel:4850000},
+  {dept:'Ressources Humaines',projet:'Formation OHADA',alloue:1500000,reel:1480000},
+  {dept:'Logistique & Supply',projet:'Renouvellement Flotte',alloue:8900000,reel:9400000},
+  {dept:'R&D Innovation',projet:'Projet Horizon 2025',alloue:5000000,reel:2200000},
+];
+loadBU();
+
+const MONTHS_SHORT=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+
+// ── KPIs ──────────────────────────────────────────────
+function updateKPIs(){
+  const totalAlloue=BUDGET_DATA.reduce((s,r)=>s+r.alloue,0);
+  const totalReel=BUDGET_DATA.reduce((s,r)=>s+r.reel,0);
+  const variance=totalAlloue-totalReel;
+  const pct=Math.round(totalReel/totalAlloue*100);
+  const overrunDepts=BUDGET_DATA.filter(r=>r.reel>r.alloue).length;
+  document.getElementById('kpi-budget-total').textContent=(totalAlloue/1e6).toFixed(1)+'M FCFA';
+  document.getElementById('kpi-budget-pct').textContent=pct+'%';
+  document.getElementById('kpi-variance').textContent=(variance>=0?'+':'-')+(Math.abs(variance)/1e6).toFixed(1)+'M FCFA';
+  document.getElementById('kpi-variance').className='font-headline-md text-headline-md '+(variance>=0?'text-secondary':'text-error');
+  document.getElementById('kpi-overrun-depts').textContent=`${overrunDepts} département${overrunDepts!==1?'s':''} en dépassement critique ce mois-ci.`;
+  document.getElementById('kpi-budget-pct').className='font-bold text-label-md '+(pct>100?'text-error':'text-secondary');
+}
+
+// ── Table ─────────────────────────────────────────────
+function renderBudgetTable(){
+  const body=document.getElementById('budget-table-body');
+  body.innerHTML=BUDGET_DATA.map(r=>{
+    const variance=r.alloue-r.reel;
+    const overrun=variance<0;
+    const pct=Math.round(r.reel/r.alloue*100);
+    const statut=overrun?{icon:'error',cls:'text-error',label:'Dépassement'}:pct>80?{icon:'schedule',cls:'text-on-surface-variant',label:'Révision'}:{icon:'check_circle',cls:'text-secondary',label:'Optimal'};
+    return `<tr onclick="openBudgetDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" class="hover:bg-primary/5 transition-colors cursor-pointer group">
+      <td class="px-6 py-4"><div class="flex flex-col"><span class="font-body-md font-bold text-on-surface">${r.dept}</span><span class="text-[10px] text-on-surface-variant">${r.projet}</span></div></td>
+      <td class="px-6 py-4 text-right font-mono-data whitespace-nowrap">${r.alloue.toLocaleString('fr-FR')} FCFA</td>
+      <td class="px-6 py-4 text-right font-mono-data whitespace-nowrap">${r.reel.toLocaleString('fr-FR')} FCFA</td>
+      <td class="px-6 py-4 text-right font-bold font-mono-data whitespace-nowrap ${overrun?'text-error':'text-secondary'}">${overrun?'-':'+'} ${Math.abs(variance).toLocaleString('fr-FR')} FCFA</td>
+      <td class="px-6 py-4"><span class="flex items-center ${statut.cls}"><span class="material-symbols-outlined text-sm mr-1">${statut.icon}</span><span class="text-label-md font-bold">${statut.label}</span></span></td>
+      <td class="px-6 py-4 text-right"><button onclick="event.stopPropagation();openEditBudget(${JSON.stringify(r).replace(/"/g,'&quot;')})" class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all">edit</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Budget detail ────────────────────────────────────
+function openBudgetDetail(r){
+  const pct=Math.round(r.reel/r.alloue*100);
+  const variance=r.alloue-r.reel;
+  const el=document.getElementById('modal-budget-detail');
+  el.innerHTML=`
+    <div class="flex justify-between items-start mb-6">
+      <div><h2 class="text-title-lg font-title-lg text-primary font-bold">${r.dept}</h2><p class="text-on-surface-variant">${r.projet}</p></div>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Budget alloué</p><p class="font-mono-data font-bold">${r.alloue.toLocaleString('fr-FR')} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Dépenses réelles</p><p class="font-mono-data font-bold">${r.reel.toLocaleString('fr-FR')} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Variance</p><p class="font-mono-data font-bold ${variance>=0?'text-secondary':'text-error'}">${variance>=0?'+':'-'}${Math.abs(variance).toLocaleString('fr-FR')} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Consommé</p><p class="font-mono-data font-bold ${pct>100?'text-error':''}">${pct}%</p></div>
+    </div>
+    <div class="mb-4"><div class="h-3 bg-surface-container rounded-full overflow-hidden"><div class="h-full ${pct>100?'bg-error':'bg-primary'} transition-all" style="width:${Math.min(pct,100)}%"></div></div></div>
+    <div class="flex gap-3">
+      <button onclick="openEditBudget(${JSON.stringify(r).replace(/"/g,'&quot;')})" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold">Modifier</button>
+      <button onclick="deleteBudgetLine('${r.dept.replace(/'/g,"\\'")}');closeModal()" class="py-2.5 px-4 border border-error text-error rounded-lg font-label-md font-bold">Supprimer</button>
+    </div>`;
+  openModal('modal-budget-detail');
+}
+
+// ── CRUD ──────────────────────────────────────────────
+function submitBudgetLine(e){
+  e.preventDefault();
+  const editDept=document.getElementById('budget-edit-dept').value;
+  const dept=document.getElementById('b-dept').value;
+  const alloue=Number(document.getElementById('b-alloue').value);
+  const reel=Number(document.getElementById('b-reel').value)||0;
+  const projet=document.getElementById('b-projet').value;
+  if(editDept){
+    const r=BUDGET_DATA.find(x=>x.dept===editDept);
+    if(r){r.dept=dept;r.alloue=alloue;r.reel=reel;r.projet=projet;}
+  } else {
+    BUDGET_DATA.push({dept,projet,alloue,reel});
+  }
+  saveBU();updateKPIs();renderBudgetTable();updateChart();
+  closeModal();showToast('Ligne budgétaire enregistrée','check_circle');
+}
+
+function openEditBudget(r){
+  document.getElementById('budget-edit-dept').value=r.dept;
+  document.getElementById('budget-modal-title').textContent='Modifier la ligne';
+  document.getElementById('b-dept').value=r.dept;
+  document.getElementById('b-alloue').value=r.alloue;
+  document.getElementById('b-reel').value=r.reel;
+  document.getElementById('b-projet').value=r.projet;
+  openModal('modal-add-budget');
+}
+
+function deleteBudgetLine(dept){
+  const idx=BUDGET_DATA.findIndex(x=>x.dept===dept);
+  if(idx>-1)BUDGET_DATA.splice(idx,1);
+  saveBU();updateKPIs();renderBudgetTable();updateChart();
+  showToast('Ligne supprimée','delete');
+}
+
+// ── Simulation ────────────────────────────────────────
+document.getElementById('sim-pct')?.addEventListener('input',function(){
+  const pct=Number(this.value)/100;
+  document.getElementById('sim-preview').innerHTML=BUDGET_DATA.map(r=>{
+    const newAlloue=Math.round(r.alloue*(1+pct));
+    return `<div class="flex justify-between text-[12px]"><span>${r.dept}</span><span class="font-mono-data">${r.alloue.toLocaleString('fr-FR')} → <strong>${newAlloue.toLocaleString('fr-FR')}</strong></span></div>`;
+  }).join('');
+});
+function applySimulation(){
+  const pct=Number(document.getElementById('sim-pct').value)/100;
+  BUDGET_DATA.forEach(r=>r.alloue=Math.round(r.alloue*(1+pct)));
+  saveBU();updateKPIs();renderBudgetTable();updateChart();
+  closeModal();showToast('Simulation appliquée','sim_card');
+}
+
+// ── Chart.js ──────────────────────────────────────────
+let budgetChart=null;
+function updateChart(){
+  const ctx=document.getElementById('budget-chart').getContext('2d');
+  const labels=BUDGET_DATA.map(r=>r.dept.substring(0,12)+'…');
+  if(budgetChart) budgetChart.destroy();
+  budgetChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Budget alloué',data:BUDGET_DATA.map(r=>r.alloue),backgroundColor:'rgba(0,53,95,0.2)',borderColor:'#00355f',borderWidth:2,borderRadius:4},
+        {label:'Dépenses réelles',data:BUDGET_DATA.map(r=>r.reel),backgroundColor:BUDGET_DATA.map(r=>r.reel>r.alloue?'rgba(186,26,26,0.7)':'rgba(0,109,67,0.7)'),borderRadius:4},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'top',labels:{font:{family:'Geist',size:11},color:'#42474f',boxWidth:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('fr-FR')} FCFA`}}},
+      scales:{y:{ticks:{callback:v=>(v/1e6).toFixed(1)+'M',font:{family:'Geist',size:10},color:'#42474f'},grid:{color:'rgba(194,199,209,0.3)'}},x:{ticks:{font:{family:'Geist',size:9},color:'#42474f'},grid:{display:false}}}
+    }
+  });
+}
+
+// ── Export ────────────────────────────────────────────
+function exportBudget(format){
+  if(format==='csv'){
+    const header='Département,Projet,Budget Alloué (FCFA),Dépenses Réelles (FCFA),Variance,% Consommé\n';
+    const rows=BUDGET_DATA.map(r=>{const v=r.alloue-r.reel;const p=Math.round(r.reel/r.alloue*100);return`"${r.dept}","${r.projet}",${r.alloue},${r.reel},${v},${p}%`;}).join('\n');
+    const blob=new Blob(['﻿'+header+rows],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='budget_alveole.csv';a.click();URL.revokeObjectURL(url);
+    showToast('Export CSV téléchargé','download');
+  } else {
+    const{jsPDF}=window.jspdf;const doc=new jsPDF();
+    doc.setFontSize(16);doc.setTextColor(0,53,95);doc.text('Contrôle Budgétaire – Alvéole',14,20);
+    doc.setFontSize(10);doc.setTextColor(100);doc.text(new Date().toLocaleDateString('fr-FR'),14,28);
+    doc.autoTable({startY:34,head:[['Département','Projet','Alloué','Réel','Variance','%']],body:BUDGET_DATA.map(r=>{const v=r.alloue-r.reel;return[r.dept,r.projet,r.alloue.toLocaleString('fr-FR'),r.reel.toLocaleString('fr-FR'),(v>=0?'+':'')+v.toLocaleString('fr-FR'),Math.round(r.reel/r.alloue*100)+'%'];
+    }),headStyles:{fillColor:[0,53,95],textColor:255,fontSize:8},bodyStyles:{fontSize:8},alternateRowStyles:{fillColor:[240,247,252]}});
+    doc.save('budget_alveole.pdf');showToast('Export PDF téléchargé','picture_as_pdf');
+  }
+}
+
+// ── Hover cards ───────────────────────────────────────
+document.querySelectorAll('.glass-card').forEach(card=>{
+  card.addEventListener('mouseenter',()=>card.style.transform='translateY(-4px)');
+  card.addEventListener('mouseleave',()=>card.style.transform='translateY(0)');
+});
+
+// ── Modal ─────────────────────────────────────────────
+let activeModal=null;
+function openModal(id){
+  const overlay=document.getElementById('modal-overlay');
+  if(activeModal&&document.getElementById(activeModal))document.getElementById(activeModal).classList.add('hidden');
+  activeModal=id;overlay.classList.remove('hidden');
+  const el=document.getElementById(id);
+  if(el)el.classList.remove('hidden');
+  if(id==='modal-simulation'){const pct=10;document.getElementById('sim-preview').innerHTML=BUDGET_DATA.map(r=>`<div class="flex justify-between text-[12px]"><span>${r.dept}</span><span class="font-mono-data">${r.alloue.toLocaleString('fr-FR')} → <strong>${Math.round(r.alloue*1.1).toLocaleString('fr-FR')}</strong></span></div>`).join('');}
+  if(id==='modal-add-budget'){document.getElementById('budget-edit-dept').value='';document.getElementById('budget-modal-title').textContent='Nouvelle Ligne Budgétaire';}
+}
+function closeModal(){
+  if(activeModal&&document.getElementById(activeModal))document.getElementById(activeModal).classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');activeModal=null;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ── Toast ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg,icon='check_circle'){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;document.getElementById('toast-icon').textContent=icon;
+  t.classList.remove('hidden');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.add('hidden'),3000);
+}
+
+// ── Panels ────────────────────────────────────────────
+const PANELS=['notif-panel','apps-panel','profile-panel'];
+function togglePanel(id){const open=!document.getElementById(id).classList.contains('hidden');closeAllPanels();if(!open){document.getElementById(id).classList.remove('hidden');if(id==='notif-panel')renderNotifs();}}
+function closeAllPanels(){PANELS.forEach(p=>document.getElementById(p)?.classList.add('hidden'));}
+document.addEventListener('click',e=>{if(!e.target.closest('[id$="-panel"]')&&!e.target.closest('[onclick*="togglePanel"]')&&!e.target.closest('[onclick*="Panel"]')&&!e.target.closest('[onclick*="toggleIA"]'))closeAllPanels();});
+
+// ── Dark mode ─────────────────────────────────────────
+if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.replace('light','dark');
+function toggleDark(){const d=document.documentElement;const isDark=d.classList.toggle('dark');d.classList.toggle('light',!isDark);localStorage.setItem('alveole_theme',isDark?'dark':'light');}
+
+// ── Sort budget table ─────────────────────────────────
+let sortCol=null,sortDir=1;
+function sortBudget(col){
+  if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=1;}
+  ['dept','alloue','reel','variance'].forEach(c=>{const el=document.getElementById('sort-'+c);if(el)el.textContent='';});
+  const el=document.getElementById('sort-'+col);if(el)el.textContent=sortDir===1?' ↑':' ↓';
+  BUDGET_DATA.sort((a,b)=>{
+    if(col==='dept')return sortDir*a.dept.localeCompare(b.dept);
+    if(col==='alloue')return sortDir*(a.alloue-b.alloue);
+    if(col==='reel')return sortDir*(a.reel-b.reel);
+    if(col==='variance')return sortDir*((a.alloue-a.reel)-(b.alloue-b.reel));
+    return 0;
+  });
+  renderBudgetTable();
+}
+
+// ── Notifications ─────────────────────────────────────
+function renderNotifs(){
+  const notifs=buildNotifs();
+  document.getElementById('notif-badge').textContent=notifs.filter(n=>n.unread).length;
+  document.getElementById('notif-list').innerHTML=notifs.map(n=>`
+    <div class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+      <div class="w-8 h-8 rounded-full ${n.bg} flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined ${n.iconCls} text-[16px]">${n.icon}</span></div>
+      <div class="flex-1"><p class="text-body-md font-bold">${n.title}</p><p class="text-[11px] text-outline">${n.body}</p></div>
+      ${n.unread?'<div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>':''}
+    </div>`).join('');
+}
+function buildNotifs(){
+  const notifs=[];
+  const overrun=BUDGET_DATA.filter(r=>r.reel>r.alloue);
+  if(overrun.length>0)notifs.push({title:`${overrun.length} dépassement(s) budgétaire(s)`,body:overrun.map(r=>r.dept).join(', '),icon:'warning',bg:'bg-error-container',iconCls:'text-on-error-container',unread:true});
+  const total=BUDGET_DATA.reduce((s,r)=>s+r.alloue,0);
+  const reel=BUDGET_DATA.reduce((s,r)=>s+r.reel,0);
+  const pct=Math.round(reel/total*100);
+  notifs.push({title:`Consommation globale : ${pct}%`,body:`Budget alloué : ${(total/1e6).toFixed(1)}M FCFA`,icon:'query_stats',bg:'bg-primary-container',iconCls:'text-on-primary-container',unread:pct>90});
+  return notifs;
+}
+
+// ── IA Assistant ─────────────────────────────────────
+function toggleIA(){const p=document.getElementById('ia-panel');p.classList.toggle('hidden');if(!p.classList.contains('hidden')&&document.getElementById('ia-messages').children.length===0)iaGreet();}
+function iaGreet(){iaMsg('bot','Bonjour ! Je suis votre assistant budgétaire Alvéole. Posez-moi des questions sur vos budgets, dépassements ou demandez une simulation.');}
+function iaSend(){const inp=document.getElementById('ia-input');const q=inp.value.trim();if(!q)return;iaMsg('user',q);inp.value='';setTimeout(()=>iaMsg('bot',iaResponse(q)),600);}
+function iaAsk(q){iaMsg('user',q);setTimeout(()=>iaMsg('bot',iaResponse(q)),600);}
+function iaMsg(role,text){
+  const msgs=document.getElementById('ia-messages');
+  const isBot=role==='bot';
+  msgs.innerHTML+=`<div class="flex ${isBot?'justify-start':'justify-end'}">
+    <div class="max-w-[85%] px-3 py-2 rounded-xl text-[12px] leading-relaxed ${isBot?'bg-white border border-outline-variant text-on-surface':'bg-primary text-white'}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>
+  </div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function iaResponse(q){
+  const ql=q.toLowerCase();
+  const total=BUDGET_DATA.reduce((s,r)=>s+r.alloue,0);
+  const reel=BUDGET_DATA.reduce((s,r)=>s+r.reel,0);
+  const overrun=BUDGET_DATA.filter(r=>r.reel>r.alloue);
+  const savings=BUDGET_DATA.filter(r=>r.reel<r.alloue*0.8);
+  if(ql.includes('résumé')||ql.includes('synthèse')||ql.includes('rapport')){
+    return `**Résumé budgétaire :**\n• Budget total alloué : **${(total/1e6).toFixed(2)}M FCFA**\n• Dépenses réelles : **${(reel/1e6).toFixed(2)}M FCFA**\n• Consommé : **${Math.round(reel/total*100)}%**\n• Dépassements : **${overrun.length} département(s)**\n• Économies potentielles : **${savings.length} département(s)**`;
+  }
+  if(ql.includes('dépassement')||ql.includes('dépasse')){
+    if(overrun.length===0)return '✅ Aucun département ne dépasse son budget actuellement.';
+    return `**${overrun.length} dépassement(s) détecté(s) :**\n${overrun.map(r=>`• ${r.dept} : **+${(r.reel-r.alloue).toLocaleString('fr-FR')} FCFA** (${Math.round((r.reel-r.alloue)/r.alloue*100)}% dépassement)`).join('\n')}`;
+  }
+  if(ql.includes('économi')||ql.includes('sous-consomm')){
+    if(savings.length===0)return 'Aucune sous-consommation notable détectée.';
+    return `**Sous-consommations (< 80% alloué) :**\n${savings.map(r=>`• ${r.dept} : ${Math.round(r.reel/r.alloue*100)}% consommé`).join('\n')}`;
+  }
+  if(ql.includes('simulation')||ql.includes('augment')||ql.includes('baiss')){
+    return 'Utilisez le bouton **"Simulations"** en haut pour appliquer un ajustement global (ex: +10%) sur tous les budgets. Je recalculerai automatiquement les KPIs.';
+  }
+  if(ql.includes('département')||ql.includes('liste')){
+    return `**Départements suivis (${BUDGET_DATA.length}) :**\n${BUDGET_DATA.map(r=>`• ${r.dept} — ${Math.round(r.reel/r.alloue*100)}%`).join('\n')}`;
+  }
+  if(ql.includes('ajouter')||ql.includes('nouveau')){
+    return 'Pour ajouter une ligne, cliquez sur le bouton **"Budget révisé"** en haut ou sur le **+** en bas à droite.';
+  }
+  if(ql.includes('export')||ql.includes('télécharger')){
+    return 'Cliquez sur **↓ CSV** ou **PDF** dans l\'en-tête du tableau pour exporter toutes les lignes.';
+  }
+  return `Je n'ai pas compris "${q}". Essayez : **résumé**, **dépassements**, **économies**, **simulation**, **exporter**.`;
+}
+
+// ── Import PDF / Excel ────────────────────────────────
+let importedData=null;
+async function handleImportFile(file){
+  if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  const prev=document.getElementById('import-preview');
+  const acts=document.getElementById('import-actions');
+  prev.innerHTML='<div class="flex items-center justify-center gap-3 py-6 text-on-surface-variant"><span class="material-symbols-outlined">progress_activity</span><span class="text-body-md">Analyse en cours…</span></div>';
+  prev.classList.remove('hidden');acts.classList.add('hidden');
+  try{
+    if(['csv','xlsx','xls'].includes(ext))await importFromExcel(file);
+    else if(ext==='pdf')await importFromPDF(file);
+    else prev.innerHTML='<p class="text-error text-body-md text-center py-4">Format non supporté.</p>';
+  }catch(e){prev.innerHTML=`<p class="text-error text-body-md text-center py-4">Erreur : ${e.message}</p>`;}
+}
+async function importFromExcel(file){
+  const data=await file.arrayBuffer();
+  const wb=XLSX.read(data);
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+  if(rows.length<2){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">Fichier vide.</p>';return;}
+  const headers=rows[0].map(h=>String(h));
+  const dataRows=rows.slice(1).filter(r=>r.some(c=>c!==''));
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3"><strong>${dataRows.length}</strong> ligne(s) dans <em>${file.name}</em></p>
+    <div class="overflow-x-auto max-h-44 border border-outline-variant rounded-lg">
+      <table class="w-full text-[11px]"><thead class="bg-surface-container-low sticky top-0"><tr>${headers.map(h=>`<th class="px-3 py-2 text-left text-on-surface-variant font-semibold whitespace-nowrap">${h||'—'}</th>`).join('')}</tr></thead>
+      <tbody class="divide-y divide-outline-variant">${dataRows.slice(0,6).map(r=>`<tr class="hover:bg-surface-container-lowest">${headers.map((_,i)=>`<td class="px-3 py-1.5 whitespace-nowrap">${r[i]??''}</td>`).join('')}</tr>`).join('')}${dataRows.length>6?`<tr><td colspan="${headers.length}" class="px-3 py-2 text-center text-outline">… et ${dataRows.length-6} lignes de plus</td></tr>`:''}</tbody></table>
+    </div>`;
+  importedData={type:'excel',headers,rows:dataRows};
+  document.getElementById('import-confirm-label').textContent=`Importer ${dataRows.length} ligne(s)`;
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+async function importFromPDF(file){
+  if(!window.pdfjsLib){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">PDF.js non disponible.</p>';return;}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const data=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data}).promise;
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n';}
+  const mM=text.match(/(?:total\s*ttc|net\s*à\s*payer|montant\s*ttc)[^\d]*(\d[\d\s]{0,12}[,\.]\d{2})/i)||text.match(/(\d[\d\s]{0,12}[,\.]\d{2})\s*(?:fcfa|eur|€|xof)/i);
+  const sM=text.match(/(?:service|département|direction|division)[^\w]*([A-Z][^\n,]{3,40})/i);
+  const montant=mM?mM[1].replace(/\s/g,'').replace(',','.'):'';
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3">Champs extraits de <em>${file.name}</em></p>
+    <div class="space-y-3">
+      <div><label class="text-label-sm text-on-surface-variant block mb-1">Département / Projet</label><input id="pdf-libelle" type="text" value="${((sM?sM[1]:file.name.replace('.pdf','')).trim()).replace(/"/g,'&quot;')}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Budget alloué (FCFA)</label><input id="pdf-montant" type="number" value="${montant?Math.round(parseFloat(montant)):''}" placeholder="0" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Dépenses réelles (FCFA)</label><input id="pdf-reel" type="number" value="0" placeholder="0" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      </div>
+      <div><label class="text-label-sm text-on-surface-variant block mb-1">Projet associé</label><input id="pdf-projet" type="text" value="Import PDF" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+    </div>
+    <details class="mt-3"><summary class="text-[11px] text-outline cursor-pointer">Texte brut extrait</summary><pre class="mt-2 p-3 bg-surface-container-low rounded-lg text-[10px] text-on-surface-variant max-h-20 overflow-y-auto whitespace-pre-wrap">${text.substring(0,500).replace(/</g,'&lt;')}…</pre></details>`;
+  importedData={type:'pdf'};
+  document.getElementById('import-confirm-label').textContent="Créer la ligne";
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+function confirmImport(){
+  if(!importedData)return;
+  if(importedData.type==='pdf'){
+    const dept=document.getElementById('pdf-libelle').value||'Import PDF';
+    const alloue=Math.abs(parseFloat(document.getElementById('pdf-montant').value)||0);
+    const reel=Math.abs(parseFloat(document.getElementById('pdf-reel').value)||0);
+    const projet=document.getElementById('pdf-projet').value||'Import PDF';
+    BUDGET_DATA.push({dept,projet,alloue,reel,categorie:'Charges',note:''});
+    saveBudget();renderBudgetTable();updateKPIs();updateChart();
+    closeModal();showToast('Ligne budgétaire créée depuis PDF','picture_as_pdf');
+  } else if(importedData.type==='excel'){
+    const{headers,rows}=importedData;
+    const iDept=headers.findIndex(h=>/dept|service|direction/i.test(h));
+    const iProjet=headers.findIndex(h=>/projet|progr/i.test(h));
+    const iAlloue=headers.findIndex(h=>/alloue|budget|prévu|prevu/i.test(h));
+    const iReel=headers.findIndex(h=>/reel|réel|réali|depens/i.test(h));
+    let count=0;
+    rows.forEach(r=>{
+      const dept=String(r[iDept>=0?iDept:0]||'Import').trim();
+      const projet=String(r[iProjet>=0?iProjet:1]||'Import').trim();
+      const alloue=parseFloat(String(r[iAlloue>=0?iAlloue:2]||'0').replace(',','.'))||0;
+      const reel=parseFloat(String(r[iReel>=0?iReel:3]||'0').replace(',','.'))||0;
+      if(!alloue&&!reel)return;
+      BUDGET_DATA.push({dept,projet,alloue,reel,categorie:'Charges',note:''});
+      count++;
+    });
+    saveBudget();renderBudgetTable();updateKPIs();updateChart();
+    closeModal();showToast(`${count} ligne(s) budgétaire(s) importée(s)`,'table_view');
+  }
+  importedData=null;
+}
+
+// ── Init ─────────────────────────────────────────────
+updateKPIs();renderBudgetTable();updateChart();
+</script>
+<!-- Notif panel -->
+<div id="notif-panel" class="hidden panel-enter fixed top-[68px] right-16 w-80 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="text-body-md font-bold text-primary">Notifications <span id="notif-badge" class="ml-1 px-1.5 py-0.5 bg-error text-white text-[10px] rounded-full">3</span></h3>
+<button onclick="closeAllPanels()" class="text-label-md text-primary hover:underline">Fermer</button>
+</div>
+<div id="notif-list" class="divide-y divide-outline-variant max-h-72 overflow-y-auto"></div>
+</div>
+<!-- Apps panel -->
+<div id="apps-panel" class="hidden panel-enter fixed top-[68px] right-6 w-64 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant p-4">
+<p class="text-label-md text-on-surface-variant font-bold mb-3">MODULES</p>
+<div class="grid grid-cols-3 gap-2">
+<a href="Tableau-de-bord.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">dashboard</span><span class="text-[11px] text-on-surface">Dashboard</span></a>
+<a href="Comptabilite-Generale.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-[11px] text-on-surface">Compta.</span></a>
+<a href="gestion-des-immobiliers.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span><span class="text-[11px] text-on-surface">Immo.</span></a>
+<a href="Gestion-des-contrats.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">description</span><span class="text-[11px] text-on-surface">Contrats</span></a>
+<a href="cockpit-tresorie.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-[11px] text-on-surface">Trésor.</span></a>
+<a href="Budget.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-primary/5"><span class="material-symbols-outlined text-primary">query_stats</span><span class="text-[11px] text-primary font-bold">Budget</span></a>
+<a href="Comptabilité-analytics.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 col-span-3 flex-row justify-center"><span class="material-symbols-outlined text-on-surface-variant">analytics</span><span class="text-[11px] text-on-surface ml-2">Analytique</span></a>
+</div>
+</div>
+<!-- Profile panel -->
+<div id="profile-panel" class="hidden panel-enter fixed top-[68px] right-4 w-56 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">CF</div>
+<div><p class="text-body-md font-bold">Chef Financier</p><p class="text-[11px] text-outline">Directeur Budget</p></div>
+</div>
+<div class="divide-y divide-outline-variant">
+<button onclick="toggleDark();closeAllPanels()" class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">dark_mode</span><span class="text-body-md">Mode sombre</span></button>
+<button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">settings</span><span class="text-body-md">Paramètres</span></button>
+<button onclick="showToast('Déconnexion...','logout');closeAllPanels()" class="w-full flex items-center gap-3 p-3 hover:bg-error-container/20 text-left transition-colors"><span class="material-symbols-outlined text-error text-[20px]">logout</span><span class="text-body-md text-error font-bold">Déconnexion</span></button>
+</div>
+</div>
+<!-- IA Assistant Panel -->
+<div id="ia-panel" class="hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[55] border-l border-outline-variant flex flex-col" style="transition:transform 0.3s ease">
+<div class="p-4 bg-primary text-white flex justify-between items-center">
+<div class="flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span><div><p class="font-bold text-body-md">Alvéole IA</p><p class="text-[10px] opacity-70">Assistant financier intelligent</p></div></div>
+<button onclick="document.getElementById('ia-panel').classList.add('hidden')" class="p-1 hover:bg-white/20 rounded-full"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div id="ia-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-container-low"></div>
+<div class="p-3 border-t border-outline-variant bg-white">
+<div class="flex gap-2 mb-2 flex-wrap">
+<button onclick="iaAsk('résumé budget')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Résumé budget</button>
+<button onclick="iaAsk('dépassements')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Dépassements</button>
+<button onclick="iaAsk('simulation')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Simulation</button>
+</div>
+<div class="flex gap-2">
+<input id="ia-input" type="text" placeholder="Posez une question…" onkeydown="if(event.key==='Enter')iaSend()" class="flex-1 border border-outline-variant rounded-lg px-3 py-2 text-body-md text-[13px] focus:outline-none focus:ring-1 focus:ring-primary">
+<button onclick="iaSend()" class="p-2 bg-primary text-white rounded-lg hover:bg-primary-container"><span class="material-symbols-outlined text-[18px]">send</span></button>
+</div>
+</div>
+</div>
+<!-- IA FAB -->
+<button onclick="toggleIA()" class="fixed bottom-28 right-8 w-12 h-12 bg-secondary text-on-secondary rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform z-50" title="Assistant IA">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<script src="/static/js/context_bar.js"></script>
+<script>
+function updateMetierSidebar(code){
+  var ids=['sidebar-immobilier','sidebar-production','sidebar-hotellerie','sidebar-conseil'];
+  var map={AC:'sidebar-immobilier',TC:'sidebar-production',SW:'sidebar-hotellerie',IC:'sidebar-conseil'};
+  ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{var tid=map[code];if(tid){var e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+window.addEventListener('alveole:contexte',function(ev){updateMetierSidebar(ev.detail.entite_code);});
+fetch('/api/contexte').then(function(r){return r.json();}).then(function(ctx){updateMetierSidebar(ctx.entite_code);}).catch(function(){});
+</script>
+</body></html>

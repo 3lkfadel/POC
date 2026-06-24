@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demandes d'achat — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <a href="/bons-commande.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Bons de commande</a>
+    <a href="/receptions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory</span>Réceptions</a>
+    <a href="/factures-fournisseurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt</span>Factures fourn.</a>
+    <a href="/engagements.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">trending_up</span>Engagements</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Modules</span></div>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">real_estate_agent</span>Immobilisations</a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">contract</span>Contrats</a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie</a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">donut_large</span>Budget</a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div><span class="font-black text-[20px] text-primary">Alvéole</span></div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div class="mb-6 flex items-start justify-between">
+    <div>
+      <h1 class="text-[28px] font-bold text-primary">Demandes d'achat</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">DA → Validation → BC → Réception → Facture</p>
+    </div>
+    <button onclick="openNewDA()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-colors">
+      <span class="material-symbols-outlined text-[18px]">add</span>Nouvelle DA
+    </button>
+  </div>
+
+  <div class="flex gap-2 mb-4 flex-wrap">
+    <button onclick="setFilter('all')" id="f-all" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white">Toutes</button>
+    <button onclick="setFilter('brouillon')" id="f-brouillon" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Brouillon</button>
+    <button onclick="setFilter('soumise')" id="f-soumise" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Soumises</button>
+    <button onclick="setFilter('validee')" id="f-validee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Validées</button>
+    <button onclick="setFilter('refusee')" id="f-refusee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Refusées</button>
+    <button onclick="setFilter('transformee')" id="f-transformee" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Transformées</button>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Numéro</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Date</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Objet</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Montant estimé</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Créé par</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Validé par</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="8" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL : Nouvelle DA -->
+<div id="modal-da" class="hidden fixed inset-0 bg-black/40 z-50 flex items-start justify-center p-4 overflow-y-auto">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 my-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-[20px] font-bold text-primary">Nouvelle demande d'achat</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Objet *</label>
+        <input id="da-objet" type="text" placeholder="ex : Achat fournitures de bureau"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Demandeur *</label>
+        <input id="da-cree-par" type="text" placeholder="Nom du demandeur"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-[12px] font-semibold text-on-surface-variant">Lignes de demande *</label>
+          <button type="button" onclick="addLigneDA()" class="flex items-center gap-1 text-[12px] text-primary font-semibold hover:opacity-70">
+            <span class="material-symbols-outlined text-[16px]">add</span>Ajouter une ligne
+          </button>
+        </div>
+        <div id="lignes-da" class="space-y-2"></div>
+        <p id="da-total" class="text-right text-[13px] font-bold text-primary mt-2"></p>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px] hover:bg-surface-container">Annuler</button>
+      <button onclick="createDA()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Créer la DA</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Valider DA -->
+<div id="modal-valider" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-[18px] font-bold text-secondary">Valider la DA</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <p id="valider-info" class="text-[13px] text-on-surface-variant mb-4 bg-surface-container-low rounded-lg p-3"></p>
+    <div class="mb-4">
+      <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Validé par * (doit être différent du créateur)</label>
+      <input id="valider-nom" type="text" placeholder="Votre nom"
+        class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+    </div>
+    <div class="flex gap-3">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px]">Annuler</button>
+      <button onclick="validerDA()" class="flex-1 py-2.5 bg-secondary text-white rounded-lg text-[13px] font-bold hover:opacity-90">Valider</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Refuser DA -->
+<div id="modal-refuser" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-[18px] font-bold text-error">Refuser la DA</h2>
+      <button onclick="closeModals()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-3">
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Refusé par *</label>
+        <input id="refuser-nom" type="text" placeholder="Votre nom"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary">
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Motif de refus *</label>
+        <textarea id="refuser-motif" rows="3" placeholder="Expliquez le motif du refus…"
+          class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary resize-none"></textarea>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-4">
+      <button onclick="closeModals()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px]">Annuler</button>
+      <button onclick="refuserDA()" class="flex-1 py-2.5 bg-error text-white rounded-lg text-[13px] font-bold hover:opacity-90">Refuser</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(+n||0)) + ' FCFA';
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+window.addEventListener('alveole:contexte', ()=>loadDA());
+
+const BADGE = {
+  brouillon:  'px-2 py-0.5 rounded-full text-[11px] font-bold bg-surface-container-highest text-on-surface-variant',
+  soumise:    'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800',
+  validee:    'px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800',
+  refusee:    'px-2 py-0.5 rounded-full text-[11px] font-bold bg-error-container text-on-error-container',
+  transformee:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary',
+};
+const LABEL = {brouillon:'Brouillon',soumise:'Soumise',validee:'Validée',refusee:'Refusée',transformee:'Transformée'};
+
+let currentFilter='all', comptes6=[], ligneIdx=0, targetDA=null;
+
+async function loadDA(){
+  const url=currentFilter==='all'?'/api/da':`/api/da?statut=${currentFilter}`;
+  try{ const r=await fetch(url); renderDA(await r.json()); }
+  catch(_){ showToast('Erreur de chargement','error'); }
+}
+
+function renderDA(list){
+  const tb=document.getElementById('tbody');
+  if(!list.length){ tb.innerHTML=`<tr><td colspan="8" class="px-6 py-12 text-center text-on-surface-variant">Aucune demande d'achat</td></tr>`; return; }
+  tb.innerHTML=list.map(da=>{
+    const badge=`<span class="${BADGE[da.statut]||''}">${LABEL[da.statut]||da.statut}</span>`;
+    let actions='';
+    if(da.statut==='brouillon')
+      actions=`<button onclick="soumettre(${da.id})" class="px-3 py-1 bg-primary text-white rounded-lg text-[11px] font-semibold hover:bg-primary-container">Soumettre</button>`;
+    else if(da.statut==='soumise')
+      actions=`<button onclick="openValider(${da.id},'${(da.cree_par||'').replace(/'/g,"\\'")}',${da.montant_estime})" class="px-3 py-1 bg-secondary text-white rounded-lg text-[11px] font-semibold mr-1 hover:opacity-90">Valider</button><button onclick="openRefuser(${da.id})" class="px-3 py-1 border border-error text-error rounded-lg text-[11px] font-semibold hover:bg-error-container">Refuser</button>`;
+    else if(da.statut==='validee')
+      actions=`<a href="/bons-commande.html?da=${da.id}" class="px-3 py-1 bg-primary text-white rounded-lg text-[11px] font-semibold hover:bg-primary-container inline-block">→ Créer BC</a>`;
+    else if(da.statut==='refusee'&&da.motif_refus)
+      actions=`<span class="text-[11px] text-error italic" title="${da.motif_refus}">${da.motif_refus.slice(0,35)}…</span>`;
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low">
+      <td class="px-4 py-3 font-mono text-[12px] text-primary font-semibold">${da.numero}</td>
+      <td class="px-4 py-3 text-[13px]">${da.date||'—'}</td>
+      <td class="px-4 py-3 text-[13px] max-w-[180px]"><span title="${da.objet}" class="truncate block">${da.objet}</span></td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right">${fmt(da.montant_estime)}</td>
+      <td class="px-4 py-3">${badge}</td>
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant">${da.cree_par||'—'}</td>
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant">${da.valide_par||'—'}</td>
+      <td class="px-4 py-3 whitespace-nowrap">${actions}</td>
+    </tr>`;
+  }).join('');
+}
+
+function setFilter(f){
+  currentFilter=f;
+  ['all','brouillon','soumise','validee','refusee','transformee'].forEach(k=>{
+    const b=document.getElementById('f-'+k);
+    if(!b) return;
+    b.className=k===f?'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white':'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high';
+  });
+  loadDA();
+}
+
+async function soumettre(id){
+  const r=await fetch(`/api/da/${id}/soumettre`,{method:'POST'});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast('DA soumise','check_circle'); loadDA();
+}
+
+function openValider(id,creePar,montant){
+  targetDA=id;
+  document.getElementById('valider-info').textContent=`Créée par : ${creePar} — Montant estimé : ${fmt(montant)}`;
+  document.getElementById('valider-nom').value='';
+  document.getElementById('modal-valider').classList.remove('hidden');
+}
+
+async function validerDA(){
+  const nom=document.getElementById('valider-nom').value.trim();
+  if(!nom){showToast('Saisissez votre nom','warning');return;}
+  const r=await fetch(`/api/da/${targetDA}/valider`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({validateur:nom})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast('DA validée','check_circle'); closeModals(); loadDA();
+}
+
+function openRefuser(id){
+  targetDA=id;
+  document.getElementById('refuser-nom').value='';
+  document.getElementById('refuser-motif').value='';
+  document.getElementById('modal-refuser').classList.remove('hidden');
+}
+
+async function refuserDA(){
+  const nom=document.getElementById('refuser-nom').value.trim();
+  const motif=document.getElementById('refuser-motif').value.trim();
+  if(!nom||!motif){showToast('Nom et motif requis','warning');return;}
+  const r=await fetch(`/api/da/${targetDA}/refuser`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({validateur:nom,motif})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast('DA refusée','check_circle'); closeModals(); loadDA();
+}
+
+async function openNewDA(){
+  ligneIdx=0;
+  document.getElementById('da-objet').value='';
+  document.getElementById('da-cree-par').value='';
+  document.getElementById('da-total').textContent='';
+  document.getElementById('lignes-da').innerHTML='';
+  if(!comptes6.length){
+    const r=await fetch('/api/comptes?q=6');
+    const all=await r.json();
+    comptes6=all.filter(c=>c.numero.startsWith('6'));
+  }
+  addLigneDA();
+  document.getElementById('modal-da').classList.remove('hidden');
+}
+
+function addLigneDA(){
+  const i=ligneIdx++;
+  const opts=comptes6.map(c=>`<option value="${c.id}">${c.numero} — ${c.libelle}</option>`).join('');
+  document.getElementById('lignes-da').insertAdjacentHTML('beforeend',`
+    <div id="lda-${i}" class="flex gap-2 items-center bg-surface-container-low p-2 rounded-lg">
+      <input id="des-${i}" type="text" placeholder="Désignation" class="flex-1 border border-outline-variant rounded px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-primary min-w-0">
+      <input id="qte-${i}" type="number" placeholder="Qté" min="0.01" step="0.01" oninput="updTotal()" class="w-14 border border-outline-variant rounded px-2 py-1.5 text-[12px] text-center focus:outline-none focus:ring-1 focus:ring-primary">
+      <input id="pu-${i}" type="number" placeholder="PU FCFA" min="0" step="1" oninput="updTotal()" class="w-28 border border-outline-variant rounded px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-primary">
+      <select id="cpt-${i}" class="w-40 border border-outline-variant rounded px-2 py-1.5 text-[11px] focus:outline-none focus:ring-1 focus:ring-primary">
+        <option value="">6xx — Charge</option>${opts}
+      </select>
+      <button onclick="document.getElementById('lda-${i}').remove();updTotal()" class="p-1 hover:bg-error-container rounded flex-shrink-0"><span class="material-symbols-outlined text-[16px] text-error">close</span></button>
+    </div>`);
+}
+
+function updTotal(){
+  let t=0;
+  document.querySelectorAll('[id^="qte-"]').forEach(el=>{
+    const n=el.id.slice(4);
+    t+=parseFloat(el.value||0)*parseFloat(document.getElementById('pu-'+n)?.value||0);
+  });
+  document.getElementById('da-total').textContent=t>0?`Total estimé : ${fmt(t)}`:'';
+}
+
+async function createDA(){
+  const objet=document.getElementById('da-objet').value.trim();
+  const creePar=document.getElementById('da-cree-par').value.trim();
+  if(!objet||!creePar){showToast('Objet et demandeur requis','warning');return;}
+  const lignes=[];
+  document.querySelectorAll('[id^="des-"]').forEach(el=>{
+    const n=el.id.slice(4);
+    const des=el.value.trim(), qte=parseFloat(document.getElementById('qte-'+n)?.value||0), pu=parseFloat(document.getElementById('pu-'+n)?.value||0), cpt=document.getElementById('cpt-'+n)?.value;
+    if(des&&qte>0&&pu>0) lignes.push({designation:des,quantite:qte,prix_unitaire_estime:pu,compte_charge_id:cpt?parseInt(cpt):null});
+  });
+  if(!lignes.length){showToast('Au moins une ligne requise','warning');return;}
+  const r=await fetch('/api/da',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({objet,cree_par:creePar,lignes})});
+  const d=await r.json();
+  if(!r.ok){showToast(d.error||'Erreur','error');return;}
+  showToast(`DA ${d.numero} créée`,'check_circle'); closeModals(); loadDA();
+}
+
+function closeModals(){ ['modal-da','modal-valider','modal-refuser'].forEach(id=>document.getElementById(id)?.classList.add('hidden')); }
+loadDA();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

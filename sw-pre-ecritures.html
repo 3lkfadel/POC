@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pré-écritures — Hôtellerie SW — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-tertiary":"#fff","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary":"#193743","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-surface":"#191c1e","error-container":"#ffdad6","on-secondary-container":"#007147","on-secondary-fixed":"#002111","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","on-primary":"#fff"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}body{font-family:'Geist',sans-serif;background:#f7f9fc}</style>
+</head>
+<body>
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <div id="sidebar-immobilier" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div><a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a><a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a></div>
+    <div id="sidebar-production" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div><a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles & familles</a><a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a><a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks</a></div>
+    <div id="sidebar-hotellerie" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Hôtellerie SW</span></div>
+      <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+      <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pré-écritures</a>
+      <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+    </div>
+    <div id="sidebar-conseil" class="hidden"><div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div><a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a><a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs & KYC</a><a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF</a></div>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div class="flex items-center gap-2">
+    <span class="text-[12px] text-on-surface-variant">Hôtellerie SW</span>
+    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">chevron_right</span>
+    <span class="text-[13px] font-semibold text-primary">Pré-écritures</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div id="access-denied" class="hidden bg-error-container border border-error/20 rounded-2xl p-8 text-center">
+    <span class="material-symbols-outlined text-[48px] text-error">lock</span>
+    <h2 class="text-[20px] font-bold text-error mt-2">Module réservé à Synergy Wellness (SW)</h2>
+    <p class="text-[14px] text-on-surface-variant mt-1">Sélectionnez l'entité <strong>Synergy Wellness</strong> pour accéder à ce module.</p>
+  </div>
+
+  <div id="page-content">
+    <div class="mb-6">
+      <h1 class="text-[28px] font-bold text-primary">Pré-écritures comptables</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">Contrôler et valider les pré-écritures avant comptabilisation dans le journal VE.</p>
+    </div>
+
+    <div class="flex gap-2 mb-4">
+      <button onclick="setFilter('all')" id="f-all" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white">Toutes</button>
+      <button onclick="setFilter('a_valider')" id="f-a_valider" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">À valider</button>
+      <button onclick="setFilter('valide')" id="f-valide" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high">Validées</button>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+      <table class="w-full">
+        <thead><tr class="bg-surface-container-low">
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Import</th>
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Libellé</th>
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Cpte Débit</th>
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Cpte Crédit</th>
+          <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Montant</th>
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+          <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Action</th>
+        </tr></thead>
+        <tbody id="tbody"><tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr></tbody>
+      </table>
+    </div>
+
+    <!-- Info validation -->
+    <div class="mt-4 bg-surface-container-low border border-outline-variant rounded-xl p-4 flex items-start gap-3">
+      <span class="material-symbols-outlined text-on-surface-variant text-[20px] mt-0.5">shield</span>
+      <div>
+        <p class="text-[13px] font-semibold text-on-surface">Règle de séparation des tâches</p>
+        <p class="text-[12px] text-on-surface-variant mt-0.5">Seuls les rôles <strong>Comptable</strong> et <strong>Direction</strong> peuvent valider des pré-écritures. Le saisissant ne peut pas valider sa propre saisie.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/static/js/context_bar.js"></script>
+<script>
+let currentRole='', currentFilter='all';
+const fmt=n=>new Intl.NumberFormat('fr-FR').format(Math.round(n))+' FCFA';
+
+function updateMetierSidebar(code){
+  const map={'AC':'sidebar-immobilier','TC':'sidebar-production','SW':'sidebar-hotellerie','IC':'sidebar-conseil'};
+  Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{const tid=map[code];if(tid){const e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+
+window.addEventListener('alveole:contexte',e=>{updateMetierSidebar(e.detail.entite_code);currentRole=e.detail.role_code||'';checkAccess(e.detail.entite_code);});
+
+function checkAccess(code){
+  if(code!=='SW'&&code!=='MDP'&&code!=='CONSOLIDE'){
+    document.getElementById('access-denied').classList.remove('hidden');
+    document.getElementById('page-content').classList.add('hidden');
+  } else {
+    document.getElementById('access-denied').classList.add('hidden');
+    document.getElementById('page-content').classList.remove('hidden');
+    load();
+  }
+}
+
+function setFilter(f){
+  currentFilter=f;
+  document.querySelectorAll('[id^="f-"]').forEach(b=>{
+    b.className=b.id==='f-'+f?'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-primary text-white':'px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-surface-container text-on-surface-variant hover:bg-surface-container-high';
+  });
+  load();
+}
+
+async function load(){
+  let url='/api/hotellerie/pre-ecritures';
+  if(currentFilter!=='all')url+=`?statut=${currentFilter}`;
+  const r=await fetch(url);
+  if(r.status===403){document.getElementById('tbody').innerHTML='<tr><td colspan="8" class="px-6 py-8 text-center text-on-surface-variant">Accès refusé</td></tr>';return;}
+  const data=await r.json();
+  const tb=document.getElementById('tbody');
+  if(!data.length){tb.innerHTML='<tr><td colspan="7" class="px-6 py-8 text-center text-on-surface-variant">Aucune pré-écriture</td></tr>';return;}
+  const canValidate=['Comptable','Direction'].includes(currentRole);
+  tb.innerHTML=data.map(pe=>`
+    <tr class="border-t border-outline-variant hover:bg-surface-container-low">
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant">#${pe.import_id}</td>
+      <td class="px-4 py-3 text-[13px] text-on-surface">${pe.libelle||'—'}</td>
+      <td class="px-4 py-3 font-mono text-[12px] text-primary">${pe.compte_debit||'—'}</td>
+      <td class="px-4 py-3 font-mono text-[12px] text-secondary">${pe.compte_credit||'—'}</td>
+      <td class="px-4 py-3 text-right text-[13px] font-semibold text-on-surface">${fmt(pe.montant)}</td>
+      <td class="px-4 py-3">
+        ${pe.statut==='a_valider'?'<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-yellow-100 text-yellow-700">À valider</span>':'<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-100 text-green-700">Validée</span>'}
+      </td>
+      <td class="px-4 py-3">
+        ${pe.statut==='a_valider'&&canValidate?`<button onclick="valider(${pe.id})" class="px-2 py-1 text-[11px] bg-secondary text-white rounded-lg hover:bg-secondary/80">Valider</button>`:''}
+        ${pe.statut==='a_valider'&&!canValidate?'<span class="text-[11px] text-on-surface-variant">Nécessite Comptable</span>':''}
+      </td>
+    </tr>`).join('');
+}
+
+async function valider(id){
+  const r=await fetch(`/api/hotellerie/pre-ecritures/${id}/valider`,{method:'POST'});
+  const d=await r.json();
+  if(r.ok)load();
+  else alert(d.error||'Erreur validation');
+}
+
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('dark',document.documentElement.classList.contains('dark'));}
+if(localStorage.getItem('dark')==='true')document.documentElement.classList.add('dark');
+fetch('/api/contexte').then(r=>r.json()).then(ctx=>{currentRole=ctx.role_code||'';updateMetierSidebar(ctx.entite_code);checkAccess(ctx.entite_code);}).catch(()=>{});
+</script>
+</body>
+</html>

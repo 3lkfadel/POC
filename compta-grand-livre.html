@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Livre — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body class="dark:bg-on-background">
+
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary z-40 flex flex-col overflow-hidden">
+  <div class="flex items-center gap-2 px-5 h-16 border-b border-on-primary/10 shrink-0">
+    <span class="font-black text-[22px] text-white tracking-tight">Alvéole</span>
+  </div>
+  <nav class="flex-1 overflow-y-auto py-3 flex flex-col gap-0.5 px-2">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord
+    </a>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable
+    </a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture
+    </a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal
+    </a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed text-on-primary transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre
+    </a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">balance</span>Balance
+    </a>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">people</span>Tiers
+    </a>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Immobilisations
+    </a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">contract</span>Contrats
+    </a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie
+    </a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">donut_large</span>Budget
+    </a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-6 h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div class="flex items-center gap-4">
+    <span class="font-black text-[20px] text-primary">Alvéole</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+    </button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+
+  <div class="mb-6">
+    <h1 class="text-headline-md text-on-surface font-semibold">Grand Livre</h1>
+    <div id="ctx-banner" class="mt-2 inline-flex items-center gap-2 px-3 py-1.5 bg-primary/8 rounded-lg text-[12px] text-primary font-medium">
+      <span class="material-symbols-outlined text-[16px]">business</span>
+      <span id="ctx-entite-label">Entité courante</span>
+    </div>
+  </div>
+
+  <div class="flex gap-6 items-start flex-col lg:flex-row">
+
+    <div class="w-full lg:w-[280px] shrink-0 bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm overflow-hidden flex flex-col" style="max-height: calc(100vh - 180px);">
+      <div class="px-4 pt-4 pb-3 border-b border-outline-variant shrink-0">
+        <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wide mb-2">Sélectionner un compte</p>
+        <div class="relative">
+          <span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2">search</span>
+          <input id="compte-search" type="text" placeholder="Rechercher…" oninput="filterComptes(this.value)"
+            class="w-full pl-9 pr-3 py-2 rounded-xl border border-outline-variant bg-surface text-on-surface text-[13px] focus:outline-none focus:ring-2 focus:ring-primary/30">
+        </div>
+      </div>
+      <div id="comptes-list" class="overflow-y-auto flex-1">
+        <div class="px-4 py-8 text-center text-on-surface-variant text-[13px]">
+          <span class="material-symbols-outlined text-[36px] block mb-2 opacity-30">menu_book</span>
+          Chargement…
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 min-w-0 flex flex-col gap-5">
+
+      <div id="result-panel" class="hidden flex flex-col gap-5">
+
+        <div class="flex items-center justify-between">
+          <h2 id="compte-titre" class="text-title-lg text-on-surface font-semibold"></h2>
+          <span id="ligne-count" class="text-[12px] text-on-surface-variant font-medium"></span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm p-4">
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wide mb-1">Total Débit</p>
+            <p id="kpi-debit" class="text-[20px] font-bold text-primary">—</p>
+          </div>
+          <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm p-4">
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wide mb-1">Total Crédit</p>
+            <p id="kpi-credit" class="text-[20px] font-bold text-secondary">—</p>
+          </div>
+          <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm p-4">
+            <p class="text-label-md text-on-surface-variant uppercase tracking-wide mb-1">Solde</p>
+            <p id="kpi-solde" class="text-[20px] font-bold text-on-surface-variant">—</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+          <div id="result-loading" class="hidden px-6 py-4 border-b border-outline-variant">
+            <div class="flex items-center gap-2 text-[13px] text-on-surface-variant">
+              <span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+              Chargement des mouvements…
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                  <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Date</th>
+                  <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Journal</th>
+                  <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Écriture</th>
+                  <th class="px-4 py-3 text-right text-label-md text-on-surface-variant uppercase tracking-wide">Débit</th>
+                  <th class="px-4 py-3 text-right text-label-md text-on-surface-variant uppercase tracking-wide">Crédit</th>
+                  <th class="px-4 py-3 text-right text-label-md text-on-surface-variant uppercase tracking-wide">Solde cumulé</th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
+                <tr>
+                  <td colspan="6" class="px-4 py-8 text-center text-on-surface-variant">Sélectionnez un compte</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="empty-state" class="flex flex-col items-center justify-center py-24 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[64px] mb-4 opacity-20">menu_book</span>
+        <p class="text-[15px] font-medium opacity-50">Sélectionnez un compte dans la liste</p>
+        <p class="text-[13px] opacity-30 mt-1">pour afficher ses mouvements</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+let comptes = [], currentCompte = null;
+
+async function load(){
+  comptes = await fetch('/api/comptes').then(r=>r.json());
+  renderComptesList(comptes);
+}
+
+function filterComptes(q){
+  const f = q.toLowerCase();
+  renderComptesList(comptes.filter(c=>c.numero.includes(f)||c.libelle.toLowerCase().includes(f)));
+}
+
+function renderComptesList(list){
+  const el = document.getElementById('comptes-list');
+  if(!list.length){
+    el.innerHTML = '<div class="px-4 py-6 text-center text-[13px] text-on-surface-variant">Aucun résultat</div>';
+    return;
+  }
+  el.innerHTML = list.map(c=>`
+    <div onclick="selectCompte(${c.id},'${c.numero}','${c.libelle.replace(/'/g,"\\'")}')"
+      class="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-primary/5 border-b border-outline-variant/30 transition-colors ${currentCompte?.id===c.id?'bg-primary/10 border-l-4 border-primary':''}">
+      <span class="font-mono text-[13px] font-bold text-primary w-14 shrink-0">${c.numero}</span>
+      <span class="text-[13px] text-on-surface truncate">${c.libelle}</span>
+    </div>`).join('');
+}
+
+async function selectCompte(id, numero, libelle){
+  currentCompte = {id, numero, libelle};
+  document.getElementById('compte-titre').textContent = `${numero} — ${libelle}`;
+  document.getElementById('result-panel').classList.remove('hidden');
+  document.getElementById('empty-state').classList.add('hidden');
+  document.getElementById('result-loading').classList.remove('hidden');
+  renderComptesList(comptes);
+
+  const res = await fetch(`/api/grand-livre?compte_id=${id}`);
+  const data = await res.json();
+  document.getElementById('result-loading').classList.add('hidden');
+
+  document.getElementById('kpi-debit').textContent  = data.total_debit.toLocaleString('fr-FR') + ' FCFA';
+  document.getElementById('kpi-credit').textContent = data.total_credit.toLocaleString('fr-FR') + ' FCFA';
+  const solde = data.solde;
+  document.getElementById('kpi-solde').textContent  = Math.abs(solde).toLocaleString('fr-FR') + ' FCFA ' + (solde>0?'D':solde<0?'C':'');
+  document.getElementById('kpi-solde').className = 'text-[20px] font-bold ' + (solde>0?'text-primary':solde<0?'text-secondary':'text-on-surface-variant');
+
+  let cumul = 0;
+  document.getElementById('tbody').innerHTML = data.lignes.map(l=>{
+    cumul += l.debit - l.credit;
+    const cumulClass = cumul>0?'text-primary':cumul<0?'text-secondary':'text-on-surface-variant';
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low">
+      <td class="px-4 py-2.5 text-[13px] text-on-surface-variant whitespace-nowrap">${l.date}</td>
+      <td class="px-4 py-2.5"><span class="px-2 py-0.5 bg-primary/10 text-primary rounded font-mono text-[11px] font-bold">${l.journal_code||'—'}</span></td>
+      <td class="px-4 py-2.5 text-[13px] text-on-surface max-w-xs truncate">${l.ecriture_libelle}</td>
+      <td class="px-4 py-2.5 text-right font-mono text-[13px] text-primary">${l.debit?l.debit.toLocaleString('fr-FR'):'—'}</td>
+      <td class="px-4 py-2.5 text-right font-mono text-[13px] text-secondary">${l.credit?l.credit.toLocaleString('fr-FR'):'—'}</td>
+      <td class="px-4 py-2.5 text-right font-mono text-[13px] font-semibold ${cumulClass}">${Math.abs(cumul).toLocaleString('fr-FR')} ${cumul>0?'D':cumul<0?'C':''}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="6" class="px-4 py-8 text-center text-on-surface-variant">Aucun mouvement</td></tr>';
+
+  document.getElementById('ligne-count').textContent = data.lignes.length + ' mouvement(s)';
+}
+
+window.addEventListener('alveole:contexte', () => { currentCompte=null; document.getElementById('result-panel').classList.add('hidden'); document.getElementById('empty-state').classList.remove('hidden'); load(); });
+load();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

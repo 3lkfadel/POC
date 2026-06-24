@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal Comptable — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body class="dark:bg-on-background">
+
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary z-40 flex flex-col overflow-hidden">
+  <div class="flex items-center gap-2 px-5 h-16 border-b border-on-primary/10 shrink-0">
+    <span class="font-black text-[22px] text-white tracking-tight">Alvéole</span>
+  </div>
+  <nav class="flex-1 overflow-y-auto py-3 flex flex-col gap-0.5 px-2">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord
+    </a>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable
+    </a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture
+    </a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed text-on-primary transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal
+    </a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre
+    </a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">balance</span>Balance
+    </a>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">people</span>Tiers
+    </a>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Immobilisations
+    </a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">contract</span>Contrats
+    </a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie
+    </a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors text-[13px] font-medium">
+      <span class="material-symbols-outlined text-[20px]">donut_large</span>Budget
+    </a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-6 h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div class="flex items-center gap-4">
+    <span class="font-black text-[20px] text-primary">Alvéole</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+    </button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+
+  <div class="mb-6">
+    <h1 class="text-headline-md text-on-surface font-semibold">Journal des Écritures</h1>
+    <div id="ctx-banner" class="mt-2 inline-flex items-center gap-2 px-3 py-1.5 bg-primary/8 rounded-lg text-[12px] text-primary font-medium">
+      <span class="material-symbols-outlined text-[16px]">business</span>
+      <span id="ctx-entite-label">Entité courante</span>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm mb-6 p-4">
+    <div class="flex flex-wrap gap-3 items-end">
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-on-surface-variant uppercase tracking-wide">Journal</label>
+        <select id="filter-journal" class="rounded-xl border border-outline-variant bg-surface text-on-surface text-[13px] px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-primary/30 min-w-[200px]">
+          <option value="">Tous les journaux</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-on-surface-variant uppercase tracking-wide">Statut</label>
+        <select id="filter-statut" class="rounded-xl border border-outline-variant bg-surface text-on-surface text-[13px] px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-primary/30">
+          <option value="">Tous</option>
+          <option value="brouillon">Brouillon</option>
+          <option value="validee">Validée</option>
+        </select>
+      </div>
+      <button onclick="applyFilters()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-[13px] font-semibold hover:bg-primary-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">refresh</span>
+        Actualiser
+      </button>
+      <div class="ml-auto flex items-center">
+        <span id="count" class="text-[12px] text-on-surface-variant font-medium">— écriture(s)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-surface-container rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Date</th>
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Réf</th>
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Journal</th>
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Libellé</th>
+            <th class="px-4 py-3 text-right text-label-md text-on-surface-variant uppercase tracking-wide">Débit</th>
+            <th class="px-4 py-3 text-right text-label-md text-on-surface-variant uppercase tracking-wide">Crédit</th>
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Statut</th>
+            <th class="px-4 py-3 text-left text-label-md text-on-surface-variant uppercase tracking-wide">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr>
+            <td colspan="8" class="px-6 py-12 text-center text-on-surface-variant">
+              <span class="material-symbols-outlined text-[40px] block mb-2 opacity-30">receipt_long</span>
+              Chargement…
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+let journaux = [], ecritures = [];
+
+async function load(){
+  [journaux, ecritures] = await Promise.all([
+    fetch('/api/journaux').then(r=>r.json()),
+    fetch('/api/ecritures').then(r=>r.json()),
+  ]);
+  const sel = document.getElementById('filter-journal');
+  sel.innerHTML = '<option value="">Tous les journaux</option>' + journaux.map(j=>`<option value="${j.id}">${j.code} — ${j.libelle}</option>`).join('');
+  render();
+}
+
+function getFilters(){
+  return {
+    journal_id: document.getElementById('filter-journal').value,
+    statut: document.getElementById('filter-statut').value,
+  };
+}
+
+async function applyFilters(){
+  const {journal_id, statut} = getFilters();
+  let url = '/api/ecritures?';
+  if(journal_id) url += `journal_id=${journal_id}&`;
+  if(statut) url += `statut=${statut}`;
+  ecritures = await fetch(url).then(r=>r.json());
+  render();
+}
+
+function render(){
+  const tbody = document.getElementById('tbody');
+  if(!ecritures.length){
+    tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-12 text-center text-on-surface-variant">Aucune écriture</td></tr>';
+    document.getElementById('count').textContent = '0 écriture';
+    return;
+  }
+  document.getElementById('count').textContent = ecritures.length + ' écriture(s)';
+  tbody.innerHTML = ecritures.map(e=>{
+    const statutBadge = e.statut==='validee'
+      ? '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container">Validée</span>'
+      : '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-surface-container text-on-surface-variant">Brouillon</span>';
+    const validerBtn = e.statut==='brouillon'
+      ? `<button onclick="validerEcriture(${e.id})" class="px-3 py-1 bg-primary text-white rounded-lg text-[11px] font-bold hover:bg-primary-container transition-all">Valider</button>`
+      : `<span class="text-[11px] text-on-surface-variant">par ${e.valide_par||'—'}</span>`;
+    const totalD = e.total_debit?.toLocaleString('fr-FR')||'0';
+    const totalC = e.total_credit?.toLocaleString('fr-FR')||'0';
+    return `<tr class="hover:bg-surface-container-low border-b border-outline-variant cursor-pointer" onclick="toggleDetail(this,'detail-${e.id}')">
+      <td class="px-4 py-3 text-[13px] text-on-surface-variant whitespace-nowrap">${e.date||''}</td>
+      <td class="px-4 py-3 font-mono text-[12px] text-primary">${e.reference||'—'}</td>
+      <td class="px-4 py-3 text-[12px]"><span class="px-2 py-0.5 bg-primary/10 text-primary rounded font-bold">${e.journal_code||''}</span></td>
+      <td class="px-4 py-3 text-[13px] text-on-surface max-w-xs truncate">${e.libelle}</td>
+      <td class="px-4 py-3 text-right font-mono text-[13px] text-primary">${totalD}</td>
+      <td class="px-4 py-3 text-right font-mono text-[13px] text-secondary">${totalC}</td>
+      <td class="px-4 py-3">${statutBadge}</td>
+      <td class="px-4 py-3" onclick="event.stopPropagation()">${validerBtn}</td>
+    </tr>
+    <tr id="detail-${e.id}" class="hidden bg-surface-container-low">
+      <td colspan="8" class="px-8 py-3">
+        <table class="w-full text-[12px]">
+          <thead><tr class="text-on-surface-variant uppercase text-[10px]">
+            <th class="text-left py-1">Compte</th><th class="text-left py-1">Libellé</th>
+            <th class="text-right py-1">Débit</th><th class="text-right py-1">Crédit</th>
+          </tr></thead>
+          <tbody>${(e.lignes||[]).map(l=>`<tr class="border-t border-outline-variant/30">
+            <td class="py-1 font-mono text-primary">${l.compte_numero} ${l.compte_libelle}</td>
+            <td class="py-1">${l.libelle||''}</td>
+            <td class="py-1 text-right font-mono">${l.debit?l.debit.toLocaleString('fr-FR'):'—'}</td>
+            <td class="py-1 text-right font-mono">${l.credit?l.credit.toLocaleString('fr-FR'):'—'}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+        <p class="text-[11px] text-on-surface-variant mt-2">Créé par: ${e.cree_par||'—'} · Entité: ${e.entite_code||'—'}</p>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleDetail(tr, id){
+  const det = document.getElementById(id);
+  det.classList.toggle('hidden');
+}
+
+async function validerEcriture(id){
+  const role = document.getElementById('ctx-role-select')?.value || 'Comptable';
+  const validateur = prompt(`Valider l'écriture #${id} ?\nVotre identifiant (ne doit pas être le créateur) :`, role);
+  if(!validateur) return;
+  try {
+    const res = await fetch(`/api/ecritures/${id}/valider`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({validateur})
+    });
+    const data = await res.json();
+    if(!res.ok) { showToast(data.error||'Erreur','error'); return; }
+    showToast('Écriture validée','check_circle');
+    await applyFilters();
+  } catch(e){ showToast('Erreur réseau','error'); }
+}
+
+window.addEventListener('alveole:contexte', () => load());
+load();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

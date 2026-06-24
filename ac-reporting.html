@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporting Projet — Immobilier AC — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}body{font-family:'Geist',sans-serif;background:#f7f9fc}</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <div id="sidebar-immobilier" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+      <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+      <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets & chantiers</a>
+      <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+      <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+    </div>
+    <div id="sidebar-production" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+      <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles & familles</a>
+      <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+      <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks & valorisation</a>
+    </div>
+    <div id="sidebar-hotellerie" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Hôtellerie SW</span></div>
+      <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+      <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+    </div>
+    <div id="sidebar-conseil" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+      <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+      <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs & KYC</a>
+      <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+    </div>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div class="flex items-center gap-2">
+    <span class="text-[12px] text-on-surface-variant">Immobilier AC</span>
+    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">chevron_right</span>
+    <span class="text-[13px] font-semibold text-primary">Reporting projet</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div id="access-denied" class="hidden bg-error-container border border-error/20 rounded-2xl p-8 text-center">
+    <span class="material-symbols-outlined text-[48px] text-error">lock</span>
+    <h2 class="text-[20px] font-bold text-error mt-2">Module réservé à AIC (AC)</h2>
+  </div>
+
+  <div id="page-content">
+    <div class="mb-6">
+      <h1 class="text-[28px] font-bold text-primary">Reporting projet</h1>
+      <p class="text-[14px] text-on-surface-variant mt-1">Trésorerie · Coûts réels · Résultat-marge par projet</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Sélectionner un projet</label>
+      <select id="sel-projet" onchange="loadReporting()" class="border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary min-w-[280px]">
+        <option value="">— Sélectionner —</option>
+      </select>
+    </div>
+
+    <div id="reporting-content" class="hidden">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-5">
+          <div class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Budget</div>
+          <div id="kpi-budget" class="text-[22px] font-bold text-primary">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-5">
+          <div class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Charges analytiques</div>
+          <div id="kpi-charges" class="text-[22px] font-bold text-error">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-5">
+          <div class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Marge brute</div>
+          <div id="kpi-marge" class="text-[22px] font-bold text-secondary">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-5">
+          <div class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Encaissements</div>
+          <div id="kpi-tresor" class="text-[22px] font-bold text-on-surface">—</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-6">
+          <h3 class="text-[15px] font-bold text-on-surface mb-3">Souscriptions</h3>
+          <div id="kpi-souscriptions" class="text-[28px] font-bold text-primary">—</div>
+          <div class="text-[12px] text-on-surface-variant mt-1">Total souscriptions actives</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-6">
+          <h3 class="text-[15px] font-bold text-on-surface mb-3">Trésorerie nette</h3>
+          <div id="kpi-tresonet" class="text-[28px] font-bold text-secondary">—</div>
+          <div class="text-[12px] text-on-surface-variant mt-1">Encaissements − Charges</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/static/js/context_bar.js"></script>
+<script>
+const fmt=n=>new Intl.NumberFormat('fr-FR').format(Math.round(n))+' FCFA';
+
+function updateMetierSidebar(code){
+  const map={'AC':'sidebar-immobilier','TC':'sidebar-production','SW':'sidebar-hotellerie','IC':'sidebar-conseil'};
+  Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){Object.values(map).forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{const tid=map[code];if(tid){const e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+
+window.addEventListener('alveole:contexte',e=>{updateMetierSidebar(e.detail.entite_code);checkAccess(e.detail.entite_code);});
+
+function checkAccess(code){
+  if(code!=='AC'&&code!=='MDP'&&code!=='CONSOLIDE'){
+    document.getElementById('access-denied').classList.remove('hidden');
+    document.getElementById('page-content').classList.add('hidden');
+  } else {
+    document.getElementById('access-denied').classList.add('hidden');
+    document.getElementById('page-content').classList.remove('hidden');
+    loadProjets();
+  }
+}
+
+async function loadProjets(){
+  const r=await fetch('/api/immobilier/projets');
+  if(!r.ok)return;
+  const data=await r.json();
+  const sel=document.getElementById('sel-projet');
+  sel.innerHTML='<option value="">— Sélectionner —</option>'+data.map(p=>`<option value="${p.id}">${p.nom} (${p.code})</option>`).join('');
+}
+
+async function loadReporting(){
+  const id=document.getElementById('sel-projet').value;
+  if(!id){document.getElementById('reporting-content').classList.add('hidden');return;}
+  const r=await fetch(`/api/immobilier/reporting/${id}`);
+  if(!r.ok)return;
+  const d=await r.json();
+  document.getElementById('reporting-content').classList.remove('hidden');
+  document.getElementById('kpi-budget').textContent=fmt(d.budget);
+  document.getElementById('kpi-charges').textContent=fmt(d.total_charges);
+  const marge=d.marge_brute;
+  const el=document.getElementById('kpi-marge');
+  el.textContent=fmt(marge);
+  el.className=`text-[22px] font-bold ${marge>=0?'text-secondary':'text-error'}`;
+  document.getElementById('kpi-tresor').textContent=fmt(d.encaissements);
+  document.getElementById('kpi-souscriptions').textContent=fmt(d.souscriptions_total);
+  const tn=d.tresorerie_nette;
+  const el2=document.getElementById('kpi-tresonet');
+  el2.textContent=fmt(tn);
+  el2.className=`text-[28px] font-bold ${tn>=0?'text-secondary':'text-error'}`;
+}
+
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('dark',document.documentElement.classList.contains('dark'));}
+if(localStorage.getItem('dark')==='true')document.documentElement.classList.add('dark');
+fetch('/api/contexte').then(r=>r.json()).then(ctx=>{updateMetierSidebar(ctx.entite_code);checkAccess(ctx.entite_code);}).catch(()=>{});
+</script>
+</body>
+</html>

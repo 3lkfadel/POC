@@ -1,0 +1,1019 @@
+ <!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Finance Suite - Tableau de Bord Stratégique</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<style>
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.filled-icon { font-variation-settings: 'FILL' 1; }
+body { font-family: 'Geist', sans-serif; }
+.bento-card { background:#fff; border:1px solid #E2E8F0; box-shadow:0px 4px 20px rgba(15,76,129,0.05); transition:box-shadow 0.2s ease-in-out; }
+.bento-card:hover { box-shadow:0px 8px 30px rgba(15,76,129,0.08); }
+.modal-enter { animation: fadeUp 0.18s ease-out; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.panel-enter { animation: fadeDown 0.15s ease-out; }
+@keyframes fadeDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+</style>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode:"class",
+  theme:{extend:{
+    colors:{
+      "surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6",
+      "on-tertiary":"#ffffff","surface-container-lowest":"#ffffff","on-tertiary-fixed-variant":"#2e4b57",
+      "on-primary":"#ffffff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147",
+      "surface-container":"#eceef1","on-error":"#ffffff","secondary-fixed":"#78fbb6",
+      "on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6",
+      "on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc",
+      "error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b",
+      "primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff",
+      "inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f",
+      "on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd",
+      "primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b",
+      "tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9",
+      "secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc",
+      "background":"#f7f9fc","on-secondary":"#ffffff","inverse-on-surface":"#eff1f4",
+      "surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"
+    },
+    borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+    spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},
+    fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"],"mono-data":["Geist"]},
+    fontSize:{
+      "display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+      "headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],
+      "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],
+      "title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],
+      "body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+      "body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],
+      "label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}],
+      "mono-data":["14px",{"lineHeight":"20px","fontWeight":"400"}]
+    }
+  }}
+}
+</script>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+<div class="p-gutter">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Alvéole</h1>
+<p class="font-label-md text-label-md text-on-primary/70 mt-1">Conforme OHADA</p>
+</div>
+<nav class="flex-1 mt-2 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-secondary-fixed font-bold border-l-4 border-secondary-fixed bg-on-primary-fixed-variant/10" href="Tableau-de-bord.html">
+<span class="material-symbols-outlined">dashboard</span><span>Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilite-Generale.html">
+<span class="material-symbols-outlined">account_balance</span><span>Comptabilité</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="gestion-des-immobiliers.html">
+<span class="material-symbols-outlined">account_balance_wallet</span><span>Immobilisations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Gestion-des-contrats.html">
+<span class="material-symbols-outlined">description</span><span>Contrats</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="cockpit-tresorie.html">
+<span class="material-symbols-outlined">account_tree</span><span>Trésorerie</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilité-analytics.html">
+<span class="material-symbols-outlined">analytics</span><span>Analytique</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Budget.html">
+<span class="material-symbols-outlined">query_stats</span><span>Budget</span>
+</a>
+<div id="sidebar-immobilier" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+  <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+  <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets & chantiers</a>
+  <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+  <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+</div>
+<div id="sidebar-production" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+  <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles & familles</a>
+  <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+  <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks & valorisation</a>
+</div>
+<div id="sidebar-hotellerie" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Hôtellerie SW</span></div>
+  <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+  <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pré-écritures</a>
+  <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+</div>
+<div id="sidebar-conseil" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+  <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+  <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs & KYC</a>
+  <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+  <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+</div>
+</nav>
+<div class="mt-auto border-t border-on-primary/10 p-4 space-y-2">
+<button onclick="openModal('modal-module')" class="w-full py-2 px-4 bg-on-primary-fixed-variant/20 text-on-primary rounded-lg font-label-md text-label-md font-bold transition-all hover:bg-on-primary-fixed-variant/30 active:scale-95">Changer de module</button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span><span>Paramètres</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span><span>Assistance</span>
+</a>
+</div>
+</aside>
+
+<!-- Header -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-gutter h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<span class="font-title-lg text-title-lg font-black text-primary">Alvéole</span>
+<div class="flex items-center bg-surface-container-low border border-outline-variant rounded-full px-4 py-1.5 cursor-text" onclick="document.getElementById('search-input').focus()">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input id="search-input" class="bg-transparent border-none focus:ring-0 text-body-md placeholder:text-outline w-56" placeholder="Rechercher..." type="text" oninput="handleSearch(this.value)">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 pr-gutter mr-gutter border-r border-outline-variant">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="Tableau-de-bord.html">Tableau de bord</a>
+<button onclick="openModal('modal-rapports')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Rapports</button>
+<button onclick="openModal('modal-audit')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Logs d'audit</button>
+</div>
+<button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors" title="Mode sombre">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<button id="btn-notif" onclick="togglePanel('notif-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span id="notif-dot" class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button onclick="togglePanel('apps-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">apps</span>
+</button>
+<img onclick="togglePanel('profile-panel')" alt="Directeur Financier" class="w-9 h-9 rounded-full border border-outline-variant object-cover cursor-pointer hover:ring-2 hover:ring-primary/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdl3jNln6DLhUX0KcLRDxwSusuHnMiuw9wbfYf-NpFjzf1k83X13ue7nBGLhKUyMXA_lBP3OGjHBfKh7uRnZLzJJ3EcTGYfanY00PbfkE-ZWfKlZpXXudsUnC0vluEmr8gdSjlgP-CZz1Zg13-ZMwQ5Qfnsxqxm3DC8cOkRfpXy6HmGHzCj9QHmcdCAp1_ixSGNqn2G3fOywH50uU72Q5Qn9i_Ci0frDvjb6Dcwoah27gND20s2o8d">
+</div>
+</header>
+
+<!-- Main -->
+<main class="ml-64 mt-16 p-margin-page min-h-screen">
+<header class="mb-gutter flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Tableau de Bord Stratégique</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Vue d'ensemble de la performance financière du groupe</p>
+</div>
+<div class="flex gap-stack-sm">
+<button onclick="openModal('modal-export')" class="px-gutter py-2 border border-primary text-primary rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span> Exporter
+</button>
+<button onclick="openModal('modal-add')" class="px-gutter py-2 bg-primary-container text-white rounded-lg font-label-md text-label-md flex items-center gap-2 hover:shadow-lg transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span> Ajouter une entrée
+</button>
+</div>
+</header>
+
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-stack-md mb-gutter">
+<div onclick="location.href='Comptabilite-Generale.html'" class="bento-card p-stack-md rounded-xl flex flex-col justify-between cursor-pointer">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-md font-label-md text-on-surface-variant">CA GLOBAL</span>
+<span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary font-bold">14.8M FCFA</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">+12.4%</span>
+<span class="text-[10px] text-outline">vs mois dernier</span>
+</div>
+</div>
+<div onclick="location.href='Budget.html'" class="bento-card p-stack-md rounded-xl flex flex-col justify-between cursor-pointer">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-md font-label-md text-on-surface-variant">RÉSULTAT NET</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">monetization_on</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary font-bold">2.45M FCFA</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">+4.1%</span>
+<span class="text-[10px] text-outline">vs mois dernier</span>
+</div>
+</div>
+<div onclick="location.href='cockpit-tresorie.html'" class="bento-card p-stack-md rounded-xl flex flex-col justify-between border-l-4 border-l-primary-container cursor-pointer">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-md font-label-md text-on-surface-variant">TRESORERIE DISPO.</span>
+<span class="material-symbols-outlined text-primary-container text-[20px]">account_balance_wallet</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary-container font-bold">4.12M FCFA</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="px-2 py-0.5 bg-error-container text-on-error-container text-[10px] font-bold rounded-full">-2.3%</span>
+<span class="text-[10px] text-outline">Liquidité immédiate</span>
+</div>
+</div>
+<div onclick="location.href='Gestion-des-contrats.html'" class="bento-card p-stack-md rounded-xl flex flex-col justify-between cursor-pointer">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-md font-label-md text-on-surface-variant">CRÉANCES CLIENTS</span>
+<span class="material-symbols-outlined text-outline text-[20px]">group</span>
+</div>
+<div class="text-headline-md font-headline-md text-on-surface font-bold">840K FCFA</div>
+</div>
+<div class="mt-4">
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-primary w-3/4 h-full"></div>
+</div>
+<span class="text-[10px] text-outline mt-1 block">75% recouvrées</span>
+</div>
+</div>
+<div onclick="location.href='Gestion-des-contrats.html'" class="bento-card p-stack-md rounded-xl flex flex-col justify-between cursor-pointer">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-md font-label-md text-on-surface-variant">DETTES FOURNIS.</span>
+<span class="material-symbols-outlined text-error text-[20px]">payments</span>
+</div>
+<div class="text-headline-md font-headline-md text-on-surface font-bold">1.2M FCFA</div>
+</div>
+<div class="mt-4">
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-error w-1/2 h-full"></div>
+</div>
+<span class="text-[10px] text-outline mt-1 block">50% exigibles à 30j</span>
+</div>
+</div>
+</div>
+
+<!-- Charts Layout -->
+<div class="grid grid-cols-12 gap-stack-md">
+<!-- Performance chart -->
+<div class="col-span-12 lg:col-span-8 bento-card p-container-padding rounded-xl">
+<div class="flex justify-between items-start mb-gutter">
+<div>
+<h3 class="text-title-lg font-title-lg text-primary">Performance Mensuelle</h3>
+<p class="text-label-md text-on-surface-variant">CA vs Marge Brute (K FCFA)</p>
+</div>
+<div class="flex gap-2 bg-surface-container p-1 rounded-lg">
+<button id="btn-chart" onclick="switchView('chart')" class="px-3 py-1 bg-white shadow-sm rounded-md text-label-md font-bold transition-all">Graphique</button>
+<button id="btn-table" onclick="switchView('table')" class="px-3 py-1 text-label-md text-on-surface-variant hover:bg-white/50 rounded-md transition-all">Tableau</button>
+</div>
+</div>
+<!-- Chart view -->
+<div id="view-chart" class="h-64 flex items-end justify-between gap-4 px-4">
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full flex items-end gap-1 h-48">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[60%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[40%]"></div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">JAN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full flex items-end gap-1 h-48">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[75%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[55%]"></div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">FEV</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer relative">
+<div class="w-full flex items-end gap-1 h-48 relative">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[90%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[70%]"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-primary-container text-white text-[10px] px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 whitespace-nowrap">CA: 1,420K · Marge: 840K</div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full flex items-end gap-1 h-48">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[65%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[45%]"></div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">AVR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full flex items-end gap-1 h-48">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[85%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[65%]"></div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">MAI</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-full flex items-end gap-1 h-48">
+<div class="w-1/2 bg-primary/20 group-hover:bg-primary/30 transition-all rounded-t-sm h-[95%]"></div>
+<div class="w-1/2 bg-primary group-hover:bg-primary-container transition-all rounded-t-sm h-[75%]"></div>
+</div>
+<span class="text-[10px] font-mono-data text-outline">JUN</span>
+</div>
+</div>
+<!-- Table view (hidden by default) -->
+<div id="view-table" class="hidden overflow-hidden rounded-lg border border-outline-variant">
+<table class="w-full text-body-md">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="text-left p-3 text-label-md text-on-surface-variant font-bold">Mois</th>
+<th class="text-right p-3 text-label-md text-on-surface-variant font-bold">CA (K FCFA)</th>
+<th class="text-right p-3 text-label-md text-on-surface-variant font-bold">Marge Brute (K FCFA)</th>
+<th class="text-right p-3 text-label-md text-on-surface-variant font-bold">Taux</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Janvier</td><td class="p-3 text-right font-mono-data">1 100</td><td class="p-3 text-right font-mono-data">440</td><td class="p-3 text-right"><span class="text-secondary font-bold">40%</span></td></tr>
+<tr class="hover:bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Février</td><td class="p-3 text-right font-mono-data">1 350</td><td class="p-3 text-right font-mono-data">743</td><td class="p-3 text-right"><span class="text-secondary font-bold">55%</span></td></tr>
+<tr class="hover:bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Mars</td><td class="p-3 text-right font-mono-data">1 420</td><td class="p-3 text-right font-mono-data">840</td><td class="p-3 text-right"><span class="text-secondary font-bold">59%</span></td></tr>
+<tr class="hover:bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Avril</td><td class="p-3 text-right font-mono-data">1 200</td><td class="p-3 text-right font-mono-data">540</td><td class="p-3 text-right"><span class="text-secondary font-bold">45%</span></td></tr>
+<tr class="hover:bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Mai</td><td class="p-3 text-right font-mono-data">1 500</td><td class="p-3 text-right font-mono-data">780</td><td class="p-3 text-right"><span class="text-secondary font-bold">52%</span></td></tr>
+<tr class="hover:bg-surface-container-low bg-primary/3"><td class="p-3 font-bold text-primary">Juin</td><td class="p-3 text-right font-mono-data font-bold text-primary">1 650</td><td class="p-3 text-right font-mono-data font-bold text-primary">900</td><td class="p-3 text-right"><span class="text-secondary font-bold">55%</span></td></tr>
+<tr class="bg-surface-container-low"><td class="p-3 font-bold text-on-surface">Total S1</td><td class="p-3 text-right font-mono-data font-bold">8 220</td><td class="p-3 text-right font-mono-data font-bold">4 243</td><td class="p-3 text-right"><span class="text-secondary font-bold">52%</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Alertes -->
+<div class="col-span-12 lg:col-span-4 bento-card rounded-xl flex flex-col overflow-hidden">
+<div class="p-container-padding border-b border-outline-variant bg-surface-container-low">
+<h3 class="text-title-lg font-title-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-error filled-icon">notifications_active</span>
+Alertes Critiques
+</h3>
+</div>
+<div class="flex-1 p-0 overflow-y-auto max-h-[300px]">
+<div onclick="openAlertDetail('error','DÉPASSEMENT BUDGET','Il y a 2h','Module Marketing : Budget Q3 dépassé de 12,400 FCFA sur la campagne Horizon.','Voir le Budget','Budget.html')" class="p-4 border-b border-outline-variant hover:bg-error-container/10 transition-colors cursor-pointer group">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-error">DÉPASSEMENT BUDGET</span>
+<span class="text-[10px] text-outline font-mono-data">Il y a 2h</span>
+</div>
+<p class="text-body-md text-on-surface">Module Marketing : Budget Q3 dépassé de 12,400 FCFA sur la campagne "Horizon".</p>
+</div>
+<div onclick="openAlertDetail('primary','ÉCHÉANCE PAIEMENT','Demain','Facture #F2023-991 (Global Cloud Services) de 45,000 FCFA à régler avant demain 18h.','Voir la Facture','Gestion-des-contrats.html')" class="p-4 border-b border-outline-variant hover:bg-primary/5 transition-colors cursor-pointer">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-primary">ÉCHÉANCE PAIEMENT</span>
+<span class="text-[10px] text-outline font-mono-data">Demain</span>
+</div>
+<p class="text-body-md text-on-surface">Facture #F2023-991 (Global Cloud Services) de 45,000 FCFA à régler.</p>
+</div>
+<div onclick="openAlertDetail('secondary','AUDIT TERMINÉ','Hier','L\'audit de conformité OHADA sur l\'exercice précédent est validé sans réserve. Rapport disponible.','Voir le Rapport','Comptabilite-Generale.html')" class="p-4 hover:bg-primary/5 transition-colors cursor-pointer">
+<div class="flex justify-between mb-1">
+<span class="text-label-md font-bold text-secondary">AUDIT TERMINÉ</span>
+<span class="text-[10px] text-outline font-mono-data">Hier</span>
+</div>
+<p class="text-body-md text-on-surface">L'audit de conformité OHADA sur l'exercice précédent est validé sans réserve.</p>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low text-center">
+<button onclick="openModal('modal-all-alerts')" class="text-label-md text-primary font-bold hover:underline">Voir toutes les alertes (12)</button>
+</div>
+</div>
+
+<!-- Flux de Trésorerie -->
+<div onclick="location.href='cockpit-tresorie.html'" class="col-span-12 lg:col-span-6 bento-card p-container-padding rounded-xl cursor-pointer">
+<div class="flex justify-between items-center mb-gutter">
+<h3 class="text-title-lg font-title-lg text-primary">Flux de Trésorerie</h3>
+<div class="flex items-center gap-2">
+<div class="text-label-md font-mono-data text-outline">Dernière MAJ: 09:42</div>
+<span class="material-symbols-outlined text-outline text-[18px]">open_in_new</span>
+</div>
+</div>
+<div class="space-y-gutter">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant">south_west</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-label-md mb-1">
+<span class="font-bold text-on-surface">Entrées (Recaissements)</span>
+<span class="font-mono-data text-secondary font-bold">+ 1,240,000 FCFA</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary w-full h-full"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-error-container">north_east</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-label-md mb-1">
+<span class="font-bold text-on-surface">Sorties (Décaissements)</span>
+<span class="font-mono-data text-error font-bold">- 890,000 FCFA</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error w-[72%] h-full"></div>
+</div>
+</div>
+</div>
+<div class="pt-stack-md border-t border-outline-variant flex justify-between items-center">
+<span class="text-body-md font-bold text-primary">Cash Flow Net</span>
+<span class="text-headline-md font-headline-md text-secondary font-bold">+ 350,000 FCFA</span>
+</div>
+</div>
+</div>
+
+<!-- Réel vs Prévisionnel -->
+<div class="col-span-12 lg:col-span-6 bento-card p-container-padding rounded-xl">
+<div class="flex justify-between items-center mb-gutter">
+<h3 class="text-title-lg font-title-lg text-primary">Réel vs Prévisionnel</h3>
+<select id="dept-select" onchange="updateBudgetBars(this.value)" class="text-label-md border-outline-variant rounded-lg bg-surface focus:ring-primary h-8 py-0">
+<option value="dept">Par Département</option>
+<option value="projet">Par Projet</option>
+</select>
+</div>
+<div id="budget-bars" class="space-y-4">
+<div>
+<div class="flex justify-between text-label-md mb-2">
+<span class="font-bold text-on-surface cursor-pointer hover:text-primary" onclick="location.href='Budget.html'">Opérations</span>
+<span class="font-mono-data">92% du budget consommé</span>
+</div>
+<div class="relative h-4 bg-surface-container rounded-full overflow-hidden">
+<div class="absolute inset-0 bg-primary/20 w-full"></div>
+<div class="absolute inset-0 bg-primary w-[92%] h-full transition-all duration-700"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-2">
+<span class="font-bold text-on-surface cursor-pointer hover:text-primary" onclick="location.href='Budget.html'">Marketing &amp; Sales</span>
+<span class="font-mono-data text-error font-bold">115% du budget consommé</span>
+</div>
+<div class="relative h-4 bg-surface-container rounded-full overflow-hidden">
+<div class="absolute inset-0 bg-primary/20 w-[80%]"></div>
+<div class="absolute inset-0 bg-error w-full h-full transition-all duration-700"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-2">
+<span class="font-bold text-on-surface cursor-pointer hover:text-primary" onclick="location.href='Budget.html'">R&amp;D</span>
+<span class="font-mono-data">45% du budget consommé</span>
+</div>
+<div class="relative h-4 bg-surface-container rounded-full overflow-hidden">
+<div class="absolute inset-0 bg-primary/20 w-full"></div>
+<div class="absolute inset-0 bg-secondary w-[45%] h-full transition-all duration-700"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Accès Rapide -->
+<div class="mt-gutter">
+<h3 class="text-title-lg font-title-lg text-primary mb-stack-md">Accès Rapide aux Modules</h3>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-stack-md">
+<a href="Comptabilite-Generale.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">account_balance</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Comptabilité</span>
+</a>
+<a href="gestion-des-immobiliers.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">account_balance_wallet</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Immobilisations</span>
+</a>
+<a href="Gestion-des-contrats.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">description</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Contrats</span>
+</a>
+<a href="cockpit-tresorie.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">account_tree</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Trésorerie</span>
+</a>
+<a href="Comptabilité-analytics.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">analytics</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Analytique</span>
+</a>
+<a href="Budget.html" class="bento-card p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-primary-container group transition-all">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-white/20">
+<span class="material-symbols-outlined text-primary group-hover:text-white">query_stats</span>
+</div>
+<span class="text-label-md font-bold text-on-surface group-hover:text-white">Budget</span>
+</a>
+</div>
+</div>
+
+<footer class="mt-gutter pt-gutter border-t border-outline-variant flex justify-between items-center text-[12px] text-outline">
+<div class="flex gap-4">
+<span>© 2024 Alvéole - Standard OHADA Révisé</span>
+<button onclick="openModal('modal-audit')" class="hover:text-primary underline">Assistance Technique</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full animate-pulse bg-secondary"></span>
+Système Synchronisé - Temps réel
+</div>
+</footer>
+</main>
+
+<!-- ═══════════════════ OVERLAYS ═══════════════════ -->
+
+<!-- Modal backdrop -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+
+  <!-- Modal: Ajouter une entrée -->
+  <div id="modal-add" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Nouvelle Entrée Financière</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <form onsubmit="submitEntry(event)" class="space-y-4">
+      <div>
+        <label class="text-label-md font-label-md text-on-surface-variant block mb-2">Type d'opération</label>
+        <div class="flex gap-3">
+          <label class="flex-1 flex items-center gap-2 p-3 border border-outline-variant rounded-lg cursor-pointer transition-all" id="lbl-recette">
+            <input type="radio" name="type" value="recette" class="text-secondary" checked onchange="updateTypeStyle()">
+            <span class="text-body-md font-bold text-secondary">+ Recette</span>
+          </label>
+          <label class="flex-1 flex items-center gap-2 p-3 border border-outline-variant rounded-lg cursor-pointer transition-all" id="lbl-depense">
+            <input type="radio" name="type" value="depense" class="text-error" onchange="updateTypeStyle()">
+            <span class="text-body-md font-bold text-error">− Dépense</span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <label class="text-label-md font-label-md text-on-surface-variant block mb-1">Montant (FCFA) <span class="text-error">*</span></label>
+        <input type="number" min="0" placeholder="Ex: 450 000" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date <span class="text-error">*</span></label>
+          <input type="date" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+        </div>
+        <div>
+          <label class="text-label-md font-label-md text-on-surface-variant block mb-1">Département</label>
+          <select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+            <option>Opérations</option><option>Marketing &amp; Sales</option><option>R&amp;D</option><option>Ressources Humaines</option><option>Finance</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="text-label-md font-label-md text-on-surface-variant block mb-1">Libellé / Description</label>
+        <input type="text" placeholder="Ex: Paiement fournisseur Global Cloud" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+      </div>
+      <div>
+        <label class="text-label-md font-label-md text-on-surface-variant block mb-1">Référence (optionnel)</label>
+        <input type="text" placeholder="Ex: FAC-2024-112" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="button" onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container transition-all">Annuler</button>
+        <button type="submit" class="flex-1 py-2.5 bg-primary-container text-white rounded-lg font-label-md text-label-md font-bold hover:shadow-lg transition-all">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal: Exporter -->
+  <div id="modal-export" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Exporter le Rapport</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-5">
+      <div>
+        <p class="text-label-md font-label-md text-on-surface-variant mb-2">Période</p>
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="selectPeriod(this)" data-period="T1 2024" class="period-btn px-4 py-1.5 border border-outline-variant rounded-full text-label-md hover:border-primary hover:text-primary transition-all">T1 2024</button>
+          <button onclick="selectPeriod(this)" data-period="T2 2024" class="period-btn px-4 py-1.5 border-2 border-primary text-primary bg-primary/5 rounded-full text-label-md font-bold">T2 2024</button>
+          <button onclick="selectPeriod(this)" data-period="Semestre 1" class="period-btn px-4 py-1.5 border border-outline-variant rounded-full text-label-md hover:border-primary hover:text-primary transition-all">Semestre 1</button>
+          <button onclick="selectPeriod(this)" data-period="Année 2024" class="period-btn px-4 py-1.5 border border-outline-variant rounded-full text-label-md hover:border-primary hover:text-primary transition-all">Année 2024</button>
+        </div>
+      </div>
+      <div>
+        <p class="text-label-md font-label-md text-on-surface-variant mb-2">Format</p>
+        <div class="grid grid-cols-3 gap-3">
+          <button onclick="selectFormat(this)" class="format-btn flex flex-col items-center gap-2 p-4 border-2 border-primary bg-primary/5 rounded-xl transition-all">
+            <span class="material-symbols-outlined text-primary text-[28px]">picture_as_pdf</span>
+            <span class="text-label-md font-bold text-primary">PDF</span>
+          </button>
+          <button onclick="selectFormat(this)" class="format-btn flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:border-primary transition-all">
+            <span class="material-symbols-outlined text-on-surface-variant text-[28px]">table_chart</span>
+            <span class="text-label-md text-on-surface-variant">Excel</span>
+          </button>
+          <button onclick="selectFormat(this)" class="format-btn flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:border-primary transition-all">
+            <span class="material-symbols-outlined text-on-surface-variant text-[28px]">data_table</span>
+            <span class="text-label-md text-on-surface-variant">CSV</span>
+          </button>
+        </div>
+      </div>
+      <div>
+        <p class="text-label-md font-label-md text-on-surface-variant mb-2">Inclure</p>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" checked class="rounded text-primary"> <span class="text-body-md text-on-surface">KPIs et indicateurs clés</span></label>
+          <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" checked class="rounded text-primary"> <span class="text-body-md text-on-surface">Graphiques de performance</span></label>
+          <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="rounded text-primary"> <span class="text-body-md text-on-surface">Détail des transactions</span></label>
+          <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="rounded text-primary"> <span class="text-body-md text-on-surface">Logs d'audit</span></label>
+        </div>
+      </div>
+      <button onclick="triggerExport()" class="w-full py-2.5 bg-primary-container text-white rounded-lg font-label-md text-label-md font-bold flex items-center justify-center gap-2 hover:shadow-lg transition-all">
+        <span class="material-symbols-outlined text-[18px]">download</span> Télécharger le rapport
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal: Détail alerte -->
+  <div id="modal-alert" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <span id="alert-badge" class="inline-block text-label-md font-bold text-error uppercase tracking-wider"></span>
+        <p id="alert-time" class="text-[11px] text-outline mt-0.5"></p>
+      </div>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors flex-shrink-0"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <p id="alert-body" class="text-body-md text-on-surface mb-6 leading-relaxed"></p>
+    <div class="flex gap-3">
+      <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container transition-all">Ignorer</button>
+      <button id="alert-cta" class="flex-1 py-2.5 bg-primary-container text-white rounded-lg font-label-md text-label-md font-bold hover:shadow-lg transition-all"></button>
+    </div>
+  </div>
+
+  <!-- Modal: Toutes les alertes -->
+  <div id="modal-all-alerts" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+    <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Toutes les Alertes <span class="text-label-md text-outline font-normal ml-2">12 alertes</span></h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="overflow-y-auto max-h-[500px] divide-y divide-outline-variant">
+      <div class="p-4 hover:bg-error-container/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-error mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-error">Dépassement budget – Marketing Q3</p><p class="text-[12px] text-outline">Il y a 2h · Module Budgétaire</p></div></div>
+      <div class="p-4 hover:bg-primary/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-primary">Échéance paiement – #F2023-991</p><p class="text-[12px] text-outline">Demain 18h · Trésorerie</p></div></div>
+      <div class="p-4 hover:bg-secondary/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-secondary">Audit OHADA validé</p><p class="text-[12px] text-outline">Hier · Comptabilité Générale</p></div></div>
+      <div class="p-4 hover:bg-error-container/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-error mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-error">Solde compte courant bas</p><p class="text-[12px] text-outline">Il y a 5h · Trésorerie – Seuil: 500K FCFA</p></div></div>
+      <div class="p-4 hover:bg-primary/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-outline mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-on-surface">Contrat arrivant à expiration</p><p class="text-[12px] text-outline">Dans 7 jours · Contrat #C-2024-045 – Prestataire LogiTech</p></div></div>
+      <div class="p-4 hover:bg-primary/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-outline mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-on-surface">Amortissement immobilisation planifié</p><p class="text-[12px] text-outline">30/06/2024 · Véhicule utilitaire #IMM-089</p></div></div>
+      <div class="p-4 hover:bg-primary/5 cursor-pointer flex gap-3"><div class="w-2 h-2 rounded-full bg-outline mt-2 flex-shrink-0"></div><div><p class="text-body-md font-bold text-on-surface">Rapprochement bancaire en attente</p><p class="text-[12px] text-outline">Semaine 24 · Compte BNP #007-4521</p></div></div>
+    </div>
+    <div class="p-4 bg-surface-container-low flex justify-between items-center">
+      <button onclick="showToast('Toutes les alertes marquées comme lues','check_circle');closeModal()" class="text-label-md text-primary font-bold hover:underline">Tout marquer comme lu</button>
+      <button onclick="closeModal()" class="px-4 py-2 bg-primary-container text-white rounded-lg text-label-md font-bold hover:shadow transition-all">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal: Rapports -->
+  <div id="modal-rapports" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+    <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Rapports Disponibles</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="divide-y divide-outline-variant">
+      <a href="Budget.html" class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">query_stats</span></div><div><p class="text-body-md font-bold text-on-surface">Rapport Budgétaire Q2 2024</p><p class="text-[11px] text-outline">Mis à jour il y a 3 heures</p></div></div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+      </a>
+      <a href="Comptabilite-Generale.html" class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">account_balance</span></div><div><p class="text-body-md font-bold text-on-surface">États Financiers Juin 2024</p><p class="text-[11px] text-outline">Validé le 15 juin 2024</p></div></div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+      </a>
+      <a href="cockpit-tresorie.html" class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary-container">account_tree</span></div><div><p class="text-body-md font-bold text-on-surface">Flux de Trésorerie – Juin</p><p class="text-[11px] text-outline">Temps réel · Actualisé à 09:42</p></div></div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+      </a>
+      <a href="Comptabilité-analytics.html" class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">analytics</span></div><div><p class="text-body-md font-bold text-on-surface">Analyse Analytique par Axe</p><p class="text-[11px] text-outline">Données consolidées S1 2024</p></div></div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Modal: Logs d'audit -->
+  <div id="modal-audit" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+    <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Logs d'Audit</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="overflow-y-auto max-h-96">
+      <table class="w-full">
+        <thead class="bg-surface-container-low sticky top-0">
+          <tr><th class="text-left p-4 text-label-md text-on-surface-variant font-bold">Horodatage</th><th class="text-left p-4 text-label-md text-on-surface-variant font-bold">Utilisateur</th><th class="text-left p-4 text-label-md text-on-surface-variant font-bold">Action</th><th class="text-left p-4 text-label-md text-on-surface-variant font-bold">Statut</th></tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant">
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">18/06/2024 09:42</td><td class="p-4 text-body-md font-bold">A. Diallo</td><td class="p-4 text-body-md">Validation rapport Q2</td><td class="p-4"><span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">Succès</span></td></tr>
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">18/06/2024 08:15</td><td class="p-4 text-body-md font-bold">M. Koné</td><td class="p-4 text-body-md">Export PDF Budget</td><td class="p-4"><span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">Succès</span></td></tr>
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">17/06/2024 17:33</td><td class="p-4 text-body-md font-bold">F. Touré</td><td class="p-4 text-body-md">Saisie écriture comptable</td><td class="p-4"><span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">Succès</span></td></tr>
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">17/06/2024 14:50</td><td class="p-4 text-body-md font-bold">A. Diallo</td><td class="p-4 text-body-md">Modification budget Marketing</td><td class="p-4"><span class="px-2 py-0.5 bg-error-container text-on-error-container text-[10px] font-bold rounded-full">Refusé</span></td></tr>
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">17/06/2024 11:20</td><td class="p-4 text-body-md font-bold">B. Sawadogo</td><td class="p-4 text-body-md">Consultation immobilisations</td><td class="p-4"><span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">Succès</span></td></tr>
+          <tr class="hover:bg-surface-container-low"><td class="p-4 font-mono-data text-[12px] text-outline">16/06/2024 16:05</td><td class="p-4 text-body-md font-bold">M. Koné</td><td class="p-4 text-body-md">Connexion système</td><td class="p-4"><span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed-variant text-[10px] font-bold rounded-full">Succès</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal: Changer de module -->
+  <div id="modal-module" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-title-lg font-title-lg text-primary font-bold">Changer de Module</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <a href="Tableau-de-bord.html" class="flex items-center gap-3 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-primary">dashboard</span><span class="text-body-md font-bold text-primary">Tableau de bord</span>
+      </a>
+      <a href="Comptabilite-Generale.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-body-md text-on-surface">Comptabilité</span>
+      </a>
+      <a href="gestion-des-immobiliers.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span><span class="text-body-md text-on-surface">Immobilisations</span>
+      </a>
+      <a href="Gestion-des-contrats.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-on-surface-variant">description</span><span class="text-body-md text-on-surface">Contrats</span>
+      </a>
+      <a href="cockpit-tresorie.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-body-md text-on-surface">Trésorerie</span>
+      </a>
+      <a href="Comptabilité-analytics.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-on-surface-variant">analytics</span><span class="text-body-md text-on-surface">Analytique</span>
+      </a>
+      <a href="Budget.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all col-span-2">
+        <span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-body-md text-on-surface">Budget</span>
+      </a>
+    </div>
+  </div>
+
+</div><!-- end modal-overlay -->
+
+<!-- Notification panel -->
+<div id="notif-panel" class="hidden panel-enter fixed top-[68px] right-16 w-80 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+  <div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+    <h3 class="text-body-md font-bold text-primary">Notifications <span class="ml-1 px-1.5 py-0.5 bg-error text-white text-[10px] rounded-full">3</span></h3>
+    <button onclick="markAllRead()" class="text-label-md text-primary hover:underline">Tout lire</button>
+  </div>
+  <div class="divide-y divide-outline-variant max-h-72 overflow-y-auto">
+    <div onclick="openAlertDetail('error','DÉPASSEMENT BUDGET','Il y a 2h','Module Marketing : Budget Q3 dépassé de 12,400 FCFA sur la campagne Horizon.','Voir le Budget','Budget.html');closePanel('notif-panel')" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3 bg-error-container/5">
+      <div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-error-container text-[16px]">warning</span></div>
+      <div class="flex-1"><p class="text-body-md font-bold text-on-surface">Dépassement budget</p><p class="text-[11px] text-outline">Marketing Q3 · Il y a 2h</p></div>
+      <div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+    </div>
+    <div onclick="openAlertDetail('primary','ÉCHÉANCE PAIEMENT','Demain','Facture #F2023-991 de 45,000 FCFA à régler avant demain 18h.','Voir la Facture','Gestion-des-contrats.html');closePanel('notif-panel')" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+      <div class="w-8 h-8 rounded-full bg-primary-container/15 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary-container text-[16px]">payments</span></div>
+      <div class="flex-1"><p class="text-body-md font-bold text-on-surface">Échéance paiement</p><p class="text-[11px] text-outline">Facture #F2023-991 · Demain</p></div>
+      <div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+    </div>
+    <div class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+      <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-secondary-fixed-variant text-[16px]">verified</span></div>
+      <div class="flex-1"><p class="text-body-md font-bold text-on-surface">Audit validé</p><p class="text-[11px] text-outline">Conformité OHADA · Hier</p></div>
+      <div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+    </div>
+  </div>
+  <div class="p-3 bg-surface-container-low text-center">
+    <button onclick="openModal('modal-all-alerts');closePanel('notif-panel')" class="text-label-md text-primary font-bold hover:underline">Voir toutes (12)</button>
+  </div>
+</div>
+
+<!-- Apps panel -->
+<div id="apps-panel" class="hidden panel-enter fixed top-[68px] right-6 w-72 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant p-4">
+  <p class="text-label-md text-on-surface-variant font-bold mb-3 px-1">MODULES</p>
+  <div class="grid grid-cols-3 gap-2">
+    <a href="Tableau-de-bord.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-primary">dashboard</span><span class="text-[11px] text-center text-on-surface font-bold">Dashboard</span></a>
+    <a href="Comptabilite-Generale.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-[11px] text-center text-on-surface">Compta.</span></a>
+    <a href="gestion-des-immobiliers.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span><span class="text-[11px] text-center text-on-surface">Immo.</span></a>
+    <a href="Gestion-des-contrats.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">description</span><span class="text-[11px] text-center text-on-surface">Contrats</span></a>
+    <a href="cockpit-tresorie.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-[11px] text-center text-on-surface">Trésorerie</span></a>
+    <a href="Comptabilité-analytics.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">analytics</span><span class="text-[11px] text-center text-on-surface">Analytique</span></a>
+    <a href="Budget.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5 transition-all col-span-3 flex-row justify-center"><span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-[11px] text-on-surface ml-2">Budget</span></a>
+  </div>
+</div>
+
+<!-- Profile panel -->
+<div id="profile-panel" class="hidden panel-enter fixed top-[68px] right-4 w-60 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+  <div class="p-4 border-b border-outline-variant bg-surface-container-low flex items-center gap-3">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdl3jNln6DLhUX0KcLRDxwSusuHnMiuw9wbfYf-NpFjzf1k83X13ue7nBGLhKUyMXA_lBP3OGjHBfKh7uRnZLzJJ3EcTGYfanY00PbfkE-ZWfKlZpXXudsUnC0vluEmr8gdSjlgP-CZz1Zg13-ZMwQ5Qfnsxqxm3DC8cOkRfpXy6HmGHzCj9QHmcdCAp1_ixSGNqn2G3fOywH50uU72Q5Qn9i_Ci0frDvjb6Dcwoah27gND20s2o8d" class="w-10 h-10 rounded-full border border-outline-variant object-cover" alt="">
+    <div><p class="text-body-md font-bold text-on-surface">Amadou Diallo</p><p class="text-[11px] text-outline">Directeur Financier</p></div>
+  </div>
+  <div class="divide-y divide-outline-variant">
+    <button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">manage_accounts</span><span class="text-body-md text-on-surface">Mon Profil</span></button>
+    <button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">settings</span><span class="text-body-md text-on-surface">Paramètres</span></button>
+    <button onclick="showToast('Déconnexion en cours...','logout');closePanel('profile-panel')" class="w-full flex items-center gap-3 p-3 hover:bg-error-container/20 text-left transition-colors"><span class="material-symbols-outlined text-error text-[20px]">logout</span><span class="text-body-md text-error font-bold">Déconnexion</span></button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-5 py-3 bg-on-surface text-inverse-on-surface rounded-full text-body-md font-bold shadow-2xl flex items-center gap-2 whitespace-nowrap">
+  <span id="toast-icon" class="material-symbols-outlined text-[18px]">check_circle</span>
+  <span id="toast-msg">Enregistré</span>
+</div>
+
+<script>
+// ── Modal ──────────────────────────────────────────────
+let activeModal = null;
+function openModal(id) {
+  closeAllPanels();
+  const overlay = document.getElementById('modal-overlay');
+  if (activeModal) document.getElementById(activeModal).classList.add('hidden');
+  activeModal = id;
+  overlay.classList.remove('hidden');
+  const el = document.getElementById(id);
+  el.classList.remove('hidden');
+  el.classList.add('modal-enter');
+}
+function closeModal() {
+  if (activeModal) document.getElementById(activeModal).classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');
+  activeModal = null;
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeAllPanels(); } });
+
+// ── Panels (dropdowns) ─────────────────────────────────
+const PANELS = ['notif-panel','apps-panel','profile-panel'];
+function togglePanel(id) {
+  const open = !document.getElementById(id).classList.contains('hidden');
+  closeAllPanels();
+  if (!open) document.getElementById(id).classList.remove('hidden');
+}
+function closePanel(id) { document.getElementById(id).classList.add('hidden'); }
+function closeAllPanels() { PANELS.forEach(p => document.getElementById(p).classList.add('hidden')); }
+if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.replace('light','dark');
+function toggleDark(){const d=document.documentElement;const isDark=d.classList.toggle('dark');d.classList.toggle('light',!isDark);localStorage.setItem('alveole_theme',isDark?'dark':'light');}
+function toggleIA(){const p=document.getElementById('ia-panel');p.classList.toggle('hidden');if(!p.classList.contains('hidden')&&document.getElementById('ia-messages').children.length===0)iaMsg('bot','Bonjour ! Je suis Alvéole IA. Je lis les données de toutes vos pages. Essayez : **synthèse**, **alertes**, **contrats**, **budget**, **trésorerie**.');}
+function iaSend(){const inp=document.getElementById('ia-input');const q=inp.value.trim();if(!q)return;iaMsg('user',q);inp.value='';setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaAsk(q){iaMsg('user',q);setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaMsg(role,text){const msgs=document.getElementById('ia-messages');const isBot=role==='bot';msgs.innerHTML+=`<div class="flex ${isBot?'justify-start':'justify-end'}"><div class="max-w-[85%] px-3 py-2 rounded-xl text-[12px] leading-relaxed ${isBot?'bg-white border border-outline-variant text-on-surface':'bg-primary text-white'}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div></div>`;msgs.scrollTop=msgs.scrollHeight;}
+function iaResponse(q){const ql=q.toLowerCase();const cr=JSON.parse(localStorage.getItem('alveole_contracts_v2')||'{}');const ct=[...(cr.clients||[]),...(cr.fournisseurs||[])];const bu=JSON.parse(localStorage.getItem('alveole_budget_v1')||'[]');const im=JSON.parse(localStorage.getItem('alveole_immo_v1')||'[]');const tr=(JSON.parse(localStorage.getItem('alveole_tresorerie_v1')||'{}')).transactions||[];const enc=tr.filter(t=>t.type==='encaissement').reduce((s,t)=>s+t.montant,0);const dec=tr.filter(t=>t.type==='decaissement').reduce((s,t)=>s+t.montant,0);if(ql.includes('synthèse')||ql.includes('résumé')||ql.includes('global')||ql.includes('tableau de bord')){return `**Synthèse globale Alvéole :**\n• Contrats actifs : **${ct.filter(c=>c.statut==='Actif').length}** / ${ct.length}\n• Budget : **${bu.filter(r=>r.reel>r.alloue).length} dépassement(s)**\n• Trésorerie nette : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**\n• Actifs immobilisés : **${im.length}**`;}if(ql.includes('contrat')){const exp=ct.filter(c=>{try{const p=c.renewal?.split('/');if(!p||p.length<3)return false;const d=new Date(+p[2],+p[1]-1,+p[0]);return(d-new Date())/(864e5)<=30&&(d-new Date())>0;}catch{return false;}});return `**Contrats :**\n• Total : **${ct.length}** | Actifs : **${ct.filter(c=>c.statut==='Actif').length}**\n• Expirant dans 30j : **${exp.length}** | Résiliés : **${ct.filter(c=>c.statut==='Résilié').length}**`;}if(ql.includes('budget')||ql.includes('dépassement')){const ov=bu.filter(r=>r.reel>r.alloue);const tot=bu.reduce((s,r)=>s+r.alloue,0);const rel=bu.reduce((s,r)=>s+r.reel,0);if(!bu.length)return 'Aucune donnée budgétaire.';return `**Budget :**\n• Alloué : **${(tot/1e6).toFixed(2)}M FCFA** | Consommé : **${Math.round(rel/tot*100)}%**\n• Dépassements : **${ov.length}**${ov.length?' — '+ov.map(r=>r.dept).join(', '):''}`.slice(0,350);}if(ql.includes('trésor')||ql.includes('caisse')){if(!tr.length)return 'Aucune transaction.';return `**Trésorerie :**\n• ${tr.length} opération(s)\n• Enc. : **${enc.toLocaleString('fr-FR')} FCFA** | Déc. : **${dec.toLocaleString('fr-FR')} FCFA**\n• Solde net : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**`;}if(ql.includes('immobil')||ql.includes('actif')){if(!im.length)return 'Aucun actif.';const act=im.filter(a=>['actif','Actif','en_service'].includes(a.statut));return `**Immobilisations :** ${im.length} actif(s) | **${act.length}** en service`;}if(ql.includes('alerte')||ql.includes('risque')){const a=[];bu.filter(r=>r.reel>r.alloue).length&&a.push(`⚠️ ${bu.filter(r=>r.reel>r.alloue).length} dépassement(s) budgétaire(s)`);const exp=ct.filter(c=>{try{const p=c.renewal?.split('/');if(!p||p.length<3)return false;const d=new Date(+p[2],+p[1]-1,+p[0]);return(d-new Date())/(864e5)<=30&&(d-new Date())>0;}catch{return false;}});exp.length&&a.push(`⚠️ ${exp.length} contrat(s) expirant dans 30j`);dec>enc&&a.push('⚠️ Décaissements > Encaissements');return a.length?`**Alertes actives :**\n${a.join('\n')}`:'✅ Aucune alerte critique détectée.';}return 'Essayez : **synthèse**, **contrats**, **budget**, **trésorerie**, **immobilisations**, **alertes**.';}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('[id$="-panel"]') && !e.target.closest('[onclick*="togglePanel"]') && !e.target.closest('[onclick*="Panel"]')) closeAllPanels();
+});
+
+// ── Chart toggle ───────────────────────────────────────
+function switchView(view) {
+  const isChart = view === 'chart';
+  document.getElementById('view-chart').classList.toggle('hidden', !isChart);
+  document.getElementById('view-table').classList.toggle('hidden', isChart);
+  document.getElementById('btn-chart').className = isChart
+    ? 'px-3 py-1 bg-white shadow-sm rounded-md text-label-md font-bold transition-all'
+    : 'px-3 py-1 text-label-md text-on-surface-variant hover:bg-white/50 rounded-md transition-all';
+  document.getElementById('btn-table').className = isChart
+    ? 'px-3 py-1 text-label-md text-on-surface-variant hover:bg-white/50 rounded-md transition-all'
+    : 'px-3 py-1 bg-white shadow-sm rounded-md text-label-md font-bold transition-all';
+}
+
+// ── Alert detail ───────────────────────────────────────
+function openAlertDetail(type, badge, time, body, ctaLabel, ctaHref) {
+  const colors = { error:'text-error', primary:'text-primary', secondary:'text-secondary' };
+  document.getElementById('alert-badge').className = 'inline-block text-label-md font-bold uppercase tracking-wider ' + (colors[type] || 'text-on-surface');
+  document.getElementById('alert-badge').textContent = badge;
+  document.getElementById('alert-time').textContent = time;
+  document.getElementById('alert-body').textContent = body;
+  const cta = document.getElementById('alert-cta');
+  cta.textContent = ctaLabel;
+  cta.onclick = () => { location.href = ctaHref; };
+  openModal('modal-alert');
+}
+
+// ── Export ─────────────────────────────────────────────
+function selectPeriod(btn) {
+  document.querySelectorAll('.period-btn').forEach(b => {
+    b.className = 'period-btn px-4 py-1.5 border border-outline-variant rounded-full text-label-md hover:border-primary hover:text-primary transition-all';
+  });
+  btn.className = 'period-btn px-4 py-1.5 border-2 border-primary text-primary bg-primary/5 rounded-full text-label-md font-bold';
+}
+function selectFormat(btn) {
+  document.querySelectorAll('.format-btn').forEach(b => {
+    b.className = 'format-btn flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:border-primary transition-all';
+    b.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-on-surface-variant text-[28px]';
+    b.querySelector('span:last-child').className = 'text-label-md text-on-surface-variant';
+  });
+  btn.className = 'format-btn flex flex-col items-center gap-2 p-4 border-2 border-primary bg-primary/5 rounded-xl transition-all';
+  btn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-primary text-[28px]';
+  btn.querySelector('span:last-child').className = 'text-label-md font-bold text-primary';
+}
+function triggerExport() {
+  closeModal();
+  showToast('Export en cours de préparation...', 'download');
+}
+
+// ── Form submit ────────────────────────────────────────
+const TB_ENTRIES_KEY = 'alveole_tb_entries';
+function submitEntry(e) {
+  e.preventDefault();
+  const form = e.target;
+  const inputs = form.querySelectorAll('input, select, textarea');
+  const entry = {};
+  inputs.forEach(inp => { if (inp.name) entry[inp.name] = inp.value; });
+  entry.date = new Date().toLocaleDateString('fr-FR');
+  const entries = JSON.parse(localStorage.getItem(TB_ENTRIES_KEY) || '[]');
+  entries.unshift(entry);
+  localStorage.setItem(TB_ENTRIES_KEY, JSON.stringify(entries));
+  form.reset();
+  closeModal();
+  showToast('Entrée enregistrée avec succès', 'check_circle');
+}
+
+// ── Export dashboard ───────────────────────────────────
+function triggerExport() {
+  const fmt = document.querySelector('.format-btn.border-2')?.querySelector('span:last-child')?.textContent || '';
+  if (fmt.includes('CSV') || fmt.includes('Excel')) {
+    const header = 'KPI,Valeur\n';
+    const rows = [
+      ['Chiffre d\'Affaires YTD', '127.4M FCFA'],
+      ['Résultat Net', '18.2M FCFA'],
+      ['Taux de Marge', '14.3%'],
+      ['Liquidité', '2.4x'],
+    ].map(r => r.join(',')).join('\n');
+    const blob = new Blob(['﻿' + header + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'dashboard_alveole.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
+  closeModal();
+  showToast('Export en cours de préparation...', 'download');
+}
+
+// ── Type radio style ───────────────────────────────────
+function updateTypeStyle() {
+  const val = document.querySelector('input[name="type"]:checked')?.value;
+  document.getElementById('lbl-recette').className = 'flex-1 flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ' +
+    (val === 'recette' ? 'border-secondary bg-secondary-container/20' : 'border-outline-variant');
+  document.getElementById('lbl-depense').className = 'flex-1 flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ' +
+    (val === 'depense' ? 'border-error bg-error-container/20' : 'border-outline-variant');
+}
+
+// ── Notifications ──────────────────────────────────────
+function markAllRead() {
+  document.getElementById('notif-dot').classList.add('hidden');
+  closePanel('notif-panel');
+  showToast('Toutes les notifications lues', 'check_circle');
+}
+
+// ── Budget bars by view ────────────────────────────────
+function updateBudgetBars(val) {
+  const data = {
+    dept: [
+      { label:'Opérations', pct:92, color:'bg-primary', over:false },
+      { label:'Marketing & Sales', pct:115, color:'bg-error', over:true },
+      { label:'R&D', pct:45, color:'bg-secondary', over:false }
+    ],
+    projet: [
+      { label:'Projet Alpha', pct:78, color:'bg-primary', over:false },
+      { label:'Projet Horizon', pct:105, color:'bg-error', over:true },
+      { label:'Projet Delta', pct:33, color:'bg-secondary', over:false }
+    ]
+  };
+  const bars = data[val] || data.dept;
+  document.getElementById('budget-bars').innerHTML = bars.map(b => `
+    <div>
+      <div class="flex justify-between text-label-md mb-2">
+        <span class="font-bold text-on-surface cursor-pointer hover:text-primary" onclick="location.href='Budget.html'">${b.label}</span>
+        <span class="font-mono-data ${b.over ? 'text-error font-bold' : ''}">${b.pct}% du budget consommé</span>
+      </div>
+      <div class="relative h-4 bg-surface-container rounded-full overflow-hidden">
+        <div class="absolute inset-0 bg-primary/20 w-full"></div>
+        <div class="absolute inset-0 ${b.color} h-full transition-all duration-700" style="width:${Math.min(b.pct,100)}%"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Search ─────────────────────────────────────────────
+function handleSearch(q) {
+  q = q.trim().toLowerCase();
+  if (q.length < 2) {
+    document.querySelectorAll('[data-searchable]').forEach(el => el.closest('.bento-card, .glass-card')?.classList.remove('ring-2','ring-primary'));
+    return;
+  }
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    const match = el.textContent.toLowerCase().includes(q);
+    const card = el.closest('.bento-card, .glass-card');
+    if (card) card.classList.toggle('ring-2', match);
+    if (card) card.classList.toggle('ring-primary', match);
+  });
+  showToast(`Recherche : "${q}"`, 'search');
+}
+
+// ── Toast ──────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, icon = 'check_circle') {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast-icon').textContent = icon;
+  toast.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+// ── Sync animation ─────────────────────────────────────
+setInterval(() => {
+  const dot = document.querySelector('.animate-pulse');
+  if (dot) {
+    dot.classList.replace('bg-secondary', 'bg-primary');
+    setTimeout(() => dot.classList.replace('bg-primary', 'bg-secondary'), 800);
+  }
+}, 30000);
+</script>
+<div id="ia-panel" class="hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[55] border-l border-outline-variant flex flex-col">
+<div class="p-4 bg-primary text-white flex justify-between items-center"><div class="flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span><div><p class="font-bold text-body-md">Alvéole IA</p><p class="text-[10px] opacity-70">Assistant financier intelligent</p></div></div><button onclick="document.getElementById('ia-panel').classList.add('hidden')" class="p-1 hover:bg-white/20 rounded-full"><span class="material-symbols-outlined">close</span></button></div>
+<div id="ia-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-container-low"></div>
+<div class="p-3 border-t border-outline-variant bg-white"><div class="flex gap-2 mb-2 flex-wrap"><button onclick="iaAsk('synthèse')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Synthèse globale</button><button onclick="iaAsk('alertes')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Alertes</button><button onclick="iaAsk('contrats')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Contrats</button></div><div class="flex gap-2"><input id="ia-input" type="text" placeholder="Posez une question…" onkeydown="if(event.key==='Enter')iaSend()" class="flex-1 border border-outline-variant rounded-lg px-3 py-2 text-body-md text-[13px] focus:outline-none focus:ring-1 focus:ring-primary"><button onclick="iaSend()" class="p-2 bg-primary text-white rounded-lg hover:bg-primary-container"><span class="material-symbols-outlined text-[18px]">send</span></button></div></div>
+</div>
+<button onclick="toggleIA()" class="fixed bottom-8 right-8 w-12 h-12 bg-secondary text-on-secondary rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform z-50" title="Assistant IA"><span class="material-symbols-outlined">smart_toy</span></button>
+<script src="/static/js/context_bar.js"></script>
+<script>
+function updateMetierSidebar(code){
+  const ids=['sidebar-immobilier','sidebar-production','sidebar-hotellerie','sidebar-conseil'];
+  const map={'AC':'sidebar-immobilier','TC':'sidebar-production','SW':'sidebar-hotellerie','IC':'sidebar-conseil'};
+  ids.forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){ids.forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{const tid=map[code];if(tid){const e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+window.addEventListener('alveole:contexte',e=>updateMetierSidebar(e.detail.entite_code));
+fetch('/api/contexte').then(r=>r.json()).then(ctx=>updateMetierSidebar(ctx.entite_code)).catch(()=>{});
+</script>
+</body></html>

@@ -1,0 +1,1206 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gestion des Immobilisations – Alvéole</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{
+colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#ffffff","surface-container-lowest":"#ffffff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#ffffff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#ffffff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#ffffff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},
+borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},
+fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"],"mono-data":["Geist"]},
+fontSize:{"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}],"mono-data":["14px",{"lineHeight":"20px","fontWeight":"400"}]}
+}}}
+</script>
+<style>
+body{font-family:'Geist',sans-serif}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.hide-scrollbar::-webkit-scrollbar{display:none}
+.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#00355f;border-radius:10px}
+.modal-enter{animation:fadeUp .18s ease-out}
+.panel-enter{animation:fadeDown .15s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.asset-card{transition:transform .15s ease,box-shadow .15s ease}
+.asset-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,76,129,0.12)}
+</style>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+<div class="p-gutter">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Alvéole</h1>
+<p class="font-label-md text-label-md text-on-primary/70 mt-1">Conforme OHADA</p>
+</div>
+<nav class="flex-1 mt-2 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Tableau-de-bord.html"><span class="material-symbols-outlined">dashboard</span><span>Tableau de bord</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilite-Generale.html"><span class="material-symbols-outlined">account_balance</span><span>Comptabilité</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-secondary-fixed font-bold border-l-4 border-secondary-fixed bg-on-primary-fixed-variant/10" href="gestion-des-immobiliers.html"><span class="material-symbols-outlined">account_balance_wallet</span><span>Immobilisations</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Gestion-des-contrats.html"><span class="material-symbols-outlined">description</span><span>Contrats</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="cockpit-tresorie.html"><span class="material-symbols-outlined">account_tree</span><span>Trésorerie</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilité-analytics.html"><span class="material-symbols-outlined">analytics</span><span>Analytique</span></a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Budget.html"><span class="material-symbols-outlined">query_stats</span><span>Budget</span></a>
+
+<div id="sidebar-immobilier" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+  <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+  <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets &amp; chantiers</a>
+  <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+  <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+</div>
+<div id="sidebar-production" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+  <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles &amp; familles</a>
+  <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+  <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks &amp; valorisation</a>
+</div>
+<div id="sidebar-hotellerie" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">H&#244;tellerie SW</span></div>
+  <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+  <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pr&#233;-&#233;critures</a>
+  <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+</div>
+<div id="sidebar-conseil" class="hidden">
+  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+  <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+  <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs &amp; KYC</a>
+  <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+  <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+</div>
+</nav>
+<div class="mt-auto border-t border-on-primary/10 p-4 space-y-2">
+<button onclick="openModal('modal-module')" class="w-full py-2 px-4 bg-on-primary-fixed-variant/20 text-on-primary rounded-lg font-label-md text-label-md font-bold transition-all hover:bg-on-primary-fixed-variant/30 active:scale-95">Changer de module</button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#"><span class="material-symbols-outlined">settings</span><span>Paramètres</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#"><span class="material-symbols-outlined">help</span><span>Assistance</span></a>
+</div>
+</aside>
+
+<!-- Header -->
+<header class="fixed top-0 right-0 left-64 flex justify-between items-center px-gutter h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<span class="font-title-lg text-title-lg font-black text-primary">Alvéole</span>
+<div class="flex items-center bg-surface-container-low border border-outline-variant rounded-full px-4 py-1.5">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input id="search-input" oninput="searchAssets(this.value)" class="bg-transparent border-none focus:ring-0 text-body-md placeholder:text-outline w-56" placeholder="Rechercher une immobilisation..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 pr-gutter mr-gutter border-r border-outline-variant">
+<a class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md" href="Tableau-de-bord.html">Tableau de bord</a>
+<button onclick="openModal('modal-rapports')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Rapports</button>
+<button onclick="openModal('modal-audit-full')" class="text-on-surface-variant hover:text-primary transition-all font-body-md text-body-md">Logs d'audit</button>
+</div>
+<button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors" title="Mode sombre">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<button onclick="togglePanel('notif-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span id="notif-dot" class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button onclick="togglePanel('apps-panel')" class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">apps</span>
+</button>
+<img onclick="togglePanel('profile-panel')" alt="User" class="w-9 h-9 rounded-full border border-outline-variant object-cover cursor-pointer hover:ring-2 hover:ring-primary/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnf8UzSPUVM5lImYm-Cvl7vN8-cH6Tn_gg9r-eZcpG2fHklosF3VClpvJFFA7ZNV3hrr-YZQ9kCfctr8dfN2TLL46re69yGhqKBNnKXb4YkJEAM6X9tNvduZXRtb0hIW0i7XRRXdKO97NYfv6gwLbl7WU15qvxiDiFoapMQy1y4325JbTV1tIbWvhMzWzz2jHoCSagbGHSIqwb1TKmLk1s_3y2qVyBcmu9FSUoXqlVMMxF08e_ddE1">
+</div>
+</header>
+
+<!-- Main -->
+<main class="ml-64 mt-16 p-margin-page min-h-screen">
+
+<!-- Page header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary">Gestion des Immobilisations</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Suivi du cycle de vie et amortissements OHADA.</p>
+</div>
+<div class="flex gap-stack-md">
+<button onclick="openModal('modal-import')" class="flex items-center gap-2 border border-secondary text-secondary px-5 py-2.5 rounded-lg font-bold hover:bg-secondary/5 transition-all">
+<span class="material-symbols-outlined">file_upload</span>Importer
+</button>
+<button onclick="openModal('modal-add-asset')" class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-lg font-bold shadow-md hover:bg-primary-container hover:shadow-lg transition-all">
+<span class="material-symbols-outlined">add</span>Nouvelle acquisition
+</button>
+<button onclick="openModal('modal-amortissement')" class="flex items-center gap-2 bg-secondary text-on-secondary px-5 py-2.5 rounded-lg font-bold shadow-md hover:shadow-lg transition-all">
+<span class="material-symbols-outlined">calculate</span>Générer Amortissement
+</button>
+<button onclick="openModal('modal-cession')" class="flex items-center gap-2 bg-error text-on-error px-5 py-2.5 rounded-lg font-bold shadow-md hover:shadow-lg transition-all">
+<span class="material-symbols-outlined">delete_sweep</span>Cession d'Actif
+</button>
+</div>
+</div>
+
+<!-- KPI cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div onclick="filterStatus('actif')" class="bg-white p-container-padding rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border border-outline-variant cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Valeur Totale des Actifs</span>
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">account_balance</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">1 245 800 FCFA</span>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="bg-on-secondary-container/10 text-on-secondary-container px-2 py-1 rounded text-label-md flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">trending_up</span>+4.2%</span>
+<span class="text-on-surface-variant font-label-md text-[10px]">Mis à jour il y a 5 min</span>
+</div>
+</div>
+<div onclick="filterStatus('amorti')" class="bg-white p-container-padding rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border border-outline-variant cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Amortissement Cumulé</span>
+<span class="material-symbols-outlined text-error bg-error-container p-2 rounded-lg">trending_down</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">482 150 FCFA</span>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant font-label-md text-body-md">38.7% de la valeur brute</span>
+<span class="text-on-surface-variant font-label-md text-[10px]">Exo 2024</span>
+</div>
+</div>
+<div onclick="switchView('list')" class="bg-white p-container-padding rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border border-outline-variant cursor-pointer hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Durée de Vie Moy. Restante</span>
+<span class="material-symbols-outlined text-secondary bg-secondary-container p-2 rounded-lg">hourglass_empty</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">6,4 Ans</span>
+</div>
+<div class="mt-4">
+<div class="w-full bg-surface-container rounded-full h-2"><div class="bg-secondary h-2 rounded-full w-[64%]"></div></div>
+</div>
+</div>
+</div>
+
+<!-- View toggle + status filter -->
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<div class="flex bg-surface-container p-1 rounded-lg gap-1">
+<button id="btn-kanban" onclick="switchView('kanban')" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md font-bold bg-white shadow-sm text-primary transition-all">
+<span class="material-symbols-outlined text-[16px]">view_kanban</span>Kanban
+</button>
+<button id="btn-list" onclick="switchView('list')" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md text-on-surface-variant hover:bg-white/50 transition-all">
+<span class="material-symbols-outlined text-[16px]">table_rows</span>Liste
+</button>
+</div>
+<div class="flex items-center gap-2 ml-4 flex-wrap">
+<button onclick="filterStatus('')" id="f-all" class="status-filter-btn px-3 py-1 rounded-full text-label-md font-bold bg-primary text-on-primary">Tous (27)</button>
+<button onclick="filterStatus('nouveau')" id="f-nouveau" class="status-filter-btn px-3 py-1 rounded-full text-label-md bg-surface-container text-on-surface-variant hover:bg-tertiary/10 transition-all">Nouveau (3)</button>
+<button onclick="filterStatus('actif')" id="f-actif" class="status-filter-btn px-3 py-1 rounded-full text-label-md bg-surface-container text-on-surface-variant hover:bg-secondary/10 transition-all">Actif (14)</button>
+<button onclick="filterStatus('amorti')" id="f-amorti" class="status-filter-btn px-3 py-1 rounded-full text-label-md bg-surface-container text-on-surface-variant hover:bg-surface-tint/10 transition-all">Amorti (8)</button>
+<button onclick="filterStatus('sorti')" id="f-sorti" class="status-filter-btn px-3 py-1 rounded-full text-label-md bg-surface-container text-on-surface-variant hover:bg-error/10 transition-all">Sorti (2)</button>
+</div>
+</div>
+</div>
+
+<!-- ── KANBAN VIEW ── -->
+<div id="view-kanban" class="flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
+
+<!-- Column: Nouveau -->
+<div class="min-w-[300px] flex-1" id="col-nouveau">
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>Nouveau<span class="text-on-surface-variant">(3)</span>
+</h3>
+<button onclick="openColMenu(event,'nouveau')" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_horiz</button>
+</div>
+<div class="space-y-4">
+<div onclick="openAssetDetail('IMMO-2024-001')" data-status="nouveau" data-name="macbook pro m3 design" class="asset-card bg-white p-4 rounded-xl shadow-sm border border-outline-variant cursor-pointer group">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Matériel Info</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity text-[18px]">open_in_new</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">MacBook Pro M3 Max – Équipe Design</h4>
+<p class="text-on-surface-variant text-body-md mb-4">Code : IMMO-2024-001</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">4 200 FCFA</span>
+<span class="text-on-surface-variant flex items-center gap-1 text-[12px]"><span class="material-symbols-outlined text-[14px]">location_on</span>CC:102 (Créa)</span>
+</div>
+</div>
+<div onclick="openAssetDetail('IMMO-2024-004')" data-status="nouveau" data-name="chaises ergonomiques rh" class="asset-card bg-white p-4 rounded-xl shadow-sm border border-outline-variant cursor-pointer group">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Mobilier</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity text-[18px]">open_in_new</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">Chaises Ergonomiques (x12)</h4>
+<p class="text-on-surface-variant text-body-md mb-4">Code : IMMO-2024-004</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">8 450 FCFA</span>
+<span class="text-on-surface-variant flex items-center gap-1 text-[12px]"><span class="material-symbols-outlined text-[14px]">location_on</span>CC:400 (RH)</span>
+</div>
+</div>
+<div onclick="openAssetDetail('IMMO-2024-011')" data-status="nouveau" data-name="imprimante laser a3 marketing" class="asset-card bg-white p-4 rounded-xl shadow-sm border border-outline-variant cursor-pointer group">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Matériel Info</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity text-[18px]">open_in_new</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">Imprimante Laser A3 – Marketing</h4>
+<p class="text-on-surface-variant text-body-md mb-4">Code : IMMO-2024-011</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">1 800 FCFA</span>
+<span class="text-on-surface-variant flex items-center gap-1 text-[12px]"><span class="material-symbols-outlined text-[14px]">location_on</span>CC:150 (Mkt)</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Column: Actif -->
+<div class="min-w-[300px] flex-1" id="col-actif">
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>Actif<span class="text-on-surface-variant">(14)</span>
+</h3>
+<button onclick="openColMenu(event,'actif')" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_horiz</button>
+</div>
+<div class="space-y-4">
+<div onclick="openAssetDetail('IMMO-2023-002')" data-status="actif" data-name="tesla model 3 direction véhicule" class="asset-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-l-secondary border border-outline-variant cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-secondary-container text-on-secondary-container text-[10px] px-2 py-1 rounded font-bold uppercase">Véhicules</span>
+<span class="text-secondary text-[10px] font-bold">En Service</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">Tesla Model 3 – Direction</h4>
+<p class="text-on-surface-variant text-body-md mb-2">Mode : Linéaire / 5 Ans</p>
+<div class="w-full bg-surface-container rounded-full h-1.5 mb-4"><div class="bg-primary h-1.5 rounded-full w-[40%]"></div></div>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">45 000 FCFA</span>
+<span class="text-on-surface-variant text-[12px]">Reste : 3,2 ans</span>
+</div>
+</div>
+<div onclick="openAssetDetail('IMMO-2021-007')" data-status="actif" data-name="fraiseuse cnc x-500 industriel" class="asset-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-l-secondary border border-outline-variant cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Industriel</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">Fraiseuse CNC X-500</h4>
+<p class="text-on-surface-variant text-body-md mb-2">Mode : Dégressif / 8 Ans</p>
+<div class="w-full bg-surface-container rounded-full h-1.5 mb-4"><div class="bg-primary h-1.5 rounded-full w-[75%]"></div></div>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">120 000 FCFA</span>
+<span class="text-on-surface-variant text-[12px]">Reste : 2,0 ans</span>
+</div>
+</div>
+<div onclick="openAssetDetail('IMMO-2022-015')" data-status="actif" data-name="serveur dell poweredge r750 it" class="asset-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-l-secondary border border-outline-variant cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Matériel Info</span>
+</div>
+<h4 class="font-body-lg font-bold text-primary mb-1">Serveur Dell PowerEdge R750</h4>
+<p class="text-on-surface-variant text-body-md mb-2">Mode : Linéaire / 5 Ans</p>
+<div class="w-full bg-surface-container rounded-full h-1.5 mb-4"><div class="bg-primary h-1.5 rounded-full w-[60%]"></div></div>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-primary font-bold">35 000 FCFA</span>
+<span class="text-on-surface-variant text-[12px]">Reste : 2,0 ans</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Column: Amorti -->
+<div class="min-w-[300px] flex-1" id="col-amorti">
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>Amorti<span class="text-on-surface-variant">(8)</span>
+</h3>
+<button onclick="openColMenu(event,'amorti')" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_horiz</button>
+</div>
+<div class="space-y-4">
+<div onclick="openAssetDetail('IMMO-2018-003')" data-status="amorti" data-name="cluster serveur 2018 matériel" class="asset-card bg-white p-4 rounded-xl shadow-sm border border-outline-variant opacity-80 cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Matériel Info</span>
+</div>
+<h4 class="font-body-lg font-bold text-on-surface-variant mb-1">Cluster Serveur – 2018</h4>
+<p class="text-on-surface-variant text-body-md mb-4">VNC : 1,00 FCFA (Rebut)</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-on-surface-variant line-through">24 000 FCFA</span>
+<button onclick="event.stopPropagation();openModal('modal-reevaluer')" class="text-primary text-label-md font-bold hover:underline">Réévaluer</button>
+</div>
+</div>
+<div onclick="openAssetDetail('IMMO-2017-002')" data-status="amorti" data-name="photocopieur canon ir bureau" class="asset-card bg-white p-4 rounded-xl shadow-sm border border-outline-variant opacity-80 cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container text-on-surface-variant text-[10px] px-2 py-1 rounded font-bold uppercase">Mobilier</span>
+</div>
+<h4 class="font-body-lg font-bold text-on-surface-variant mb-1">Photocopieur Canon iR-ADV</h4>
+<p class="text-on-surface-variant text-body-md mb-4">VNC : 1,00 FCFA (Rebut)</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-on-surface-variant line-through">8 000 FCFA</span>
+<button onclick="event.stopPropagation();openModal('modal-reevaluer')" class="text-primary text-label-md font-bold hover:underline">Réévaluer</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Column: Sorti -->
+<div class="min-w-[300px] flex-1" id="col-sorti">
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="font-title-lg text-title-lg text-primary flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>Sorti<span class="text-on-surface-variant">(2)</span>
+</h3>
+<button onclick="openColMenu(event,'sorti')" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_horiz</button>
+</div>
+<div class="space-y-4">
+<div onclick="openAssetDetail('IMMO-2022-009')" data-status="sorti" data-name="peugeot 508 voiture cédée vendu" class="asset-card bg-surface-container-low p-4 rounded-xl border border-dashed border-outline-variant cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-error-container text-on-error-container text-[10px] px-2 py-1 rounded font-bold uppercase">Vendu</span>
+</div>
+<h4 class="font-body-lg font-bold text-on-surface-variant mb-1">Voiture de Fonction – Peugeot 508</h4>
+<p class="text-on-surface-variant text-body-md mb-4">Cédé le : 12/01/2024</p>
+<div class="flex justify-between items-center text-body-md border-t border-outline-variant pt-3">
+<span class="font-mono-data text-on-surface-variant text-[12px]">Prix de vente : 15 500 FCFA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ── LIST VIEW ── -->
+<div id="view-list" class="hidden">
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-[0px_4px_20px_rgba(15,76,129,0.05)]">
+<div class="p-4 bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<span id="list-count" class="text-label-md text-on-surface-variant">7 actifs affichés</span>
+<div class="flex gap-2">
+<select onchange="sortList(this.value)" class="border border-outline-variant rounded-lg text-body-md py-1.5 px-3 bg-white text-[12px]">
+<option value="">Trier par...</option>
+<option value="name">Nom</option>
+<option value="val">Valeur</option>
+<option value="status">Statut</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-body-md">
+<thead class="bg-surface-container-high"><tr>
+<th class="text-left p-4 font-label-md text-on-surface-variant uppercase">Code</th>
+<th class="text-left p-4 font-label-md text-on-surface-variant uppercase">Désignation</th>
+<th class="text-left p-4 font-label-md text-on-surface-variant uppercase">Catégorie</th>
+<th class="text-right p-4 font-label-md text-on-surface-variant uppercase">Valeur Brute</th>
+<th class="text-right p-4 font-label-md text-on-surface-variant uppercase">Amort. Cumulé</th>
+<th class="text-right p-4 font-label-md text-on-surface-variant uppercase">VNC</th>
+<th class="text-center p-4 font-label-md text-on-surface-variant uppercase">Statut</th>
+<th class="p-4 font-label-md text-on-surface-variant uppercase">Action</th>
+</tr></thead>
+<tbody id="list-body" class="divide-y divide-outline-variant"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- Cycle de Vie + Audit -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mt-12">
+<div class="xl:col-span-2 bg-white p-container-padding rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border border-outline-variant">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">Cycle de Vie de l'Actif</h2>
+<select id="lifecycle-select" onchange="renderLifecycle(this.value)" class="bg-surface border border-outline-variant rounded-lg text-body-md font-bold text-primary focus:ring-2 focus:ring-primary/30 px-3 py-1.5">
+<option value="tesla">Tesla Model 3 – Direction</option>
+<option value="cnc">Fraiseuse CNC X-500</option>
+<option value="macbook">MacBook Pro M3 Max</option>
+</select>
+</div>
+<div id="lifecycle-timeline" class="relative pl-8 border-l-2 border-outline-variant space-y-10"></div>
+</div>
+<div class="space-y-6">
+<div class="bg-white p-container-padding rounded-xl shadow-[0px_4px_20px_rgba(15,76,129,0.05)] border border-outline-variant">
+<h3 class="font-title-lg text-title-lg text-primary mb-6">Piste d'Audit Récente</h3>
+<div class="space-y-4">
+<div onclick="openModal('modal-audit-full')" class="flex gap-3 cursor-pointer hover:bg-surface-container-low rounded-lg p-2 transition-colors">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px] text-primary">person</span></div>
+<div><p class="text-body-md"><span class="font-bold">Jean Dupont</span> a modifié le taux d'amortissement de <span class="text-primary font-medium">Fraiseuse CNC</span></p><span class="font-mono-data text-[12px] text-on-surface-variant">Aujourd'hui, 09:42</span></div>
+</div>
+<div onclick="openModal('modal-audit-full')" class="flex gap-3 cursor-pointer hover:bg-surface-container-low rounded-lg p-2 transition-colors">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span></div>
+<div><p class="text-body-md"><span class="font-bold">Système</span> a généré automatiquement les rapports T3</p><span class="font-mono-data text-[12px] text-on-surface-variant">Hier, 18:00</span></div>
+</div>
+<div onclick="openModal('modal-audit-full')" class="flex gap-3 cursor-pointer hover:bg-surface-container-low rounded-lg p-2 transition-colors">
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px] text-error">logout</span></div>
+<div><p class="text-body-md"><span class="font-bold">Admin</span> a sorti l'actif <span class="text-error font-medium">IMMO-2022-09</span></p><span class="font-mono-data text-[12px] text-on-surface-variant">24 Oct, 14:15</span></div>
+</div>
+</div>
+<button onclick="openModal('modal-audit-full')" class="w-full mt-6 py-2 text-primary font-bold border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors">Voir tout l'historique</button>
+</div>
+<div class="bg-primary p-container-padding rounded-xl shadow-lg relative overflow-hidden text-on-primary">
+<div class="relative z-10">
+<h3 class="font-title-lg text-title-lg mb-2">Audit d'Inventaire</h3>
+<p class="text-on-primary/80 text-body-md mb-6">Prochain inventaire physique dans <strong>14 jours</strong> pour l'Usine A.</p>
+<button onclick="openModal('modal-checklist')" class="bg-secondary text-on-secondary px-4 py-2 rounded-lg font-bold w-full shadow-md hover:shadow-lg transition-all">Démarrer la Checklist</button>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10"><span class="material-symbols-outlined text-[140px]">fact_check</span></div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- FAB -->
+<button onclick="openModal('modal-add-asset')" class="fixed bottom-10 right-10 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform z-50 group">
+<span class="material-symbols-outlined text-[28px]">add</span>
+<span class="absolute right-16 bg-primary text-on-primary px-3 py-1 rounded text-body-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Nouvelle Acquisition</span>
+</button>
+
+<!-- Column context menu -->
+<div id="col-menu" class="hidden fixed z-[70] bg-white rounded-xl shadow-2xl border border-outline-variant w-48 py-1 panel-enter">
+<button onclick="colMenuAction('exporter')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-surface-container-low flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">download</span>Exporter la colonne</button>
+<button onclick="colMenuAction('valider-tous')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-secondary-container/30 text-secondary flex items-center gap-3"><span class="material-symbols-outlined text-[18px]">checklist</span>Valider tous</button>
+<button onclick="colMenuAction('filtrer')" class="w-full text-left px-4 py-2.5 text-body-md hover:bg-surface-container-low flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">filter_alt</span>Filtrer</button>
+</div>
+
+<!-- ═══════════ MODALS ═══════════ -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+
+<!-- Import Modal -->
+<div id="modal-import" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-title-lg font-bold text-primary">Importer des immobilisations</h2>
+      <p class="text-body-sm text-on-surface-variant mt-1">PDF, Excel (.xlsx .xls) ou CSV</p>
+    </div>
+    <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+  </div>
+  <div id="import-dropzone" ondragover="event.preventDefault();this.classList.add('border-primary','bg-primary/5')" ondragleave="this.classList.remove('border-primary','bg-primary/5')" ondrop="event.preventDefault();this.classList.remove('border-primary','bg-primary/5');handleImportFile(event.dataTransfer.files[0])" onclick="document.getElementById('import-file-input').click()" class="border-2 border-dashed border-outline-variant rounded-xl p-10 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+    <span class="material-symbols-outlined text-[48px] text-primary/40">cloud_upload</span>
+    <p class="text-title-sm font-bold text-on-surface mt-2">Glisser-déposer un fichier ici</p>
+    <p class="text-body-sm text-on-surface-variant mt-1">ou cliquer pour parcourir</p>
+    <p class="text-[11px] text-outline mt-3">PDF · Excel (.xlsx .xls) · CSV</p>
+    <input id="import-file-input" type="file" accept=".pdf,.xlsx,.xls,.csv" class="hidden" onchange="handleImportFile(this.files[0])">
+  </div>
+  <div id="import-preview" class="hidden mt-5"></div>
+  <div id="import-actions" class="hidden mt-4 flex gap-3">
+    <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-label-md hover:bg-surface-container transition-all">Annuler</button>
+    <button id="import-confirm-btn" onclick="confirmImport()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-label-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">check</span>
+      <span id="import-confirm-label">Importer</span>
+    </button>
+  </div>
+</div>
+
+<!-- Add Asset -->
+<div id="modal-add-asset" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Nouvelle Acquisition d'Actif</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<form onsubmit="submitAsset(event)" class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Désignation <span class="text-error">*</span></label><input type="text" required placeholder="Ex: Laptop Dell XPS 15" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Catégorie</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Matériel Informatique</option><option>Mobilier</option><option>Véhicules</option><option>Industriel</option><option>Immobilier</option><option>Incorporel</option>
+</select></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date d'acquisition <span class="text-error">*</span></label><input type="date" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Valeur d'acquisition (FCFA) <span class="text-error">*</span></label><input type="number" min="0" required placeholder="0" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Mode d'amortissement</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Linéaire</option><option>Dégressif</option><option>Unités de production</option>
+</select></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Durée d'utilité (ans)</label><input type="number" min="1" max="50" placeholder="5" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Fournisseur</label><input type="text" placeholder="Ex: Dell Technologies" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Centre de coût</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>CC:100 – Direction</option><option>CC:102 – Création</option><option>CC:150 – Marketing</option><option>CC:200 – IT</option><option>CC:300 – Production</option><option>CC:400 – RH</option>
+</select></div>
+</div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">N° de facture / référence</label><input type="text" placeholder="Ex: FAC-DELL-2024-089" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div class="flex gap-3 pt-2">
+<button type="button" onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button type="submit" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container hover:shadow-lg transition-all">Enregistrer</button>
+</div>
+</form>
+</div>
+
+<!-- Amortissement -->
+<div id="modal-amortissement" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Générer les Amortissements</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="space-y-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Exercice comptable</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Exercice 2024 (en cours)</option><option>T3 2024 (Juil–Sep)</option><option>T2 2024 (Avr–Jun)</option>
+</select></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Périmètre</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="perimetre" value="all" checked class="text-primary"><span class="text-body-md">Tous les actifs (27)</span></label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="perimetre" value="new" class="text-primary"><span class="text-body-md">Nouvelles acquisitions uniquement (3)</span></label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg cursor-pointer hover:border-primary transition-all"><input type="radio" name="perimetre" value="select" class="text-primary"><span class="text-body-md">Sélection manuelle</span></label>
+</div></div>
+<div class="p-4 bg-primary/5 border border-primary/20 rounded-xl">
+<div class="flex justify-between text-body-md mb-2"><span class="text-on-surface-variant">Total dotation estimée</span><span class="font-mono-data font-bold text-primary">48 750 FCFA</span></div>
+<div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Écritures comptables à générer</span><span class="font-mono-data font-bold text-primary">27 lignes</span></div>
+</div>
+<div class="flex gap-3">
+<button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button onclick="closeModal();showToast('Amortissements générés avec succès','calculate')" class="flex-1 py-2.5 bg-secondary text-on-secondary rounded-lg font-label-md font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calculate</span>Générer
+</button>
+</div>
+</div>
+</div>
+
+<!-- Cession -->
+<div id="modal-cession" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-error font-bold">Cession d'Actif</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<form onsubmit="submitCession(event)" class="space-y-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Actif à céder <span class="text-error">*</span></label>
+<select required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option value="">Sélectionner un actif...</option>
+<option>IMMO-2024-001 – MacBook Pro M3</option>
+<option>IMMO-2023-002 – Tesla Model 3</option>
+<option>IMMO-2021-007 – Fraiseuse CNC X-500</option>
+<option>IMMO-2022-015 – Serveur Dell R750</option>
+<option>IMMO-2018-003 – Cluster Serveur 2018</option>
+</select></div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Date de cession <span class="text-error">*</span></label><input type="date" required class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Mode de cession</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Vente</option><option>Don / Rebut</option><option>Mise au rebut</option><option>Échange</option>
+</select></div>
+</div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Prix de cession (FCFA)</label><input type="number" min="0" placeholder="0" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Motif</label><textarea rows="2" placeholder="Ex: Vente à un tiers, matériel obsolète..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"></textarea></div>
+<div class="flex gap-3 pt-2">
+<button type="button" onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button type="submit" class="flex-1 py-2.5 bg-error text-white rounded-lg font-label-md font-bold hover:bg-error/80 hover:shadow-lg transition-all">Confirmer la cession</button>
+</div>
+</form>
+</div>
+
+<!-- Réévaluer -->
+<div id="modal-reevaluer" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Réévaluation d'Actif</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+<p class="text-label-md text-on-surface-variant mb-1">Actif sélectionné</p>
+<p class="text-body-md font-bold text-primary">Cluster Serveur – 2018 (IMMO-2018-003)</p>
+<p class="text-[12px] text-outline mt-1">Valeur nette comptable actuelle : 1,00 FCFA</p>
+</div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Nouvelle valeur estimée (FCFA) <span class="text-error">*</span></label><input type="number" min="0" placeholder="Ex: 5 000" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Méthode de réévaluation</label>
+<select class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+<option>Valeur de marché</option><option>Valeur d'utilité</option><option>Expertise externe</option>
+</select></div>
+<div><label class="text-label-md font-label-md text-on-surface-variant block mb-1">Justification</label><textarea rows="2" placeholder="Raison de la réévaluation..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"></textarea></div>
+<div class="flex gap-3 pt-2">
+<button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Annuler</button>
+<button onclick="closeModal();showToast('Réévaluation enregistrée','check_circle')" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Enregistrer</button>
+</div>
+</div>
+</div>
+
+<!-- Checklist -->
+<div id="modal-checklist" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Checklist d'Inventaire – Usine A</h2>
+<p class="text-label-md text-on-surface-variant mt-1">Inventaire physique prévu le 02/07/2024</p>
+</div>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div id="checklist-items" class="space-y-3 mb-6">
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<input type="checkbox" onchange="toggleCheck(this)" class="h-4 w-4 rounded text-primary cursor-pointer">
+<div class="flex-1"><p class="text-body-md font-medium">Fraiseuse CNC X-500 (IMMO-2021-007)</p><p class="text-[11px] text-outline">Atelier production – Vérifier numéro de série</p></div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<input type="checkbox" onchange="toggleCheck(this)" class="h-4 w-4 rounded text-primary cursor-pointer">
+<div class="flex-1"><p class="text-body-md font-medium">Cluster Serveur 2018 (IMMO-2018-003)</p><p class="text-[11px] text-outline">Salle serveur – Vérifier état physique</p></div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<input type="checkbox" onchange="toggleCheck(this)" class="h-4 w-4 rounded text-primary cursor-pointer">
+<div class="flex-1"><p class="text-body-md font-medium">Tesla Model 3 (IMMO-2023-002)</p><p class="text-[11px] text-outline">Parking direction – Vérifier kilométrage</p></div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<input type="checkbox" onchange="toggleCheck(this)" class="h-4 w-4 rounded text-primary cursor-pointer">
+<div class="flex-1"><p class="text-body-md font-medium">Serveur Dell R750 (IMMO-2022-015)</p><p class="text-[11px] text-outline">Datacenter – Vérifier uptime et intégrité</p></div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<input type="checkbox" checked onchange="toggleCheck(this)" class="h-4 w-4 rounded text-primary cursor-pointer">
+<div class="flex-1 opacity-60"><p class="text-body-md font-medium line-through">Photocopieur Canon iR-ADV (IMMO-2017-002)</p><p class="text-[11px] text-secondary font-bold">Vérifié ✓</p></div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<span id="checklist-progress" class="text-label-md text-on-surface-variant">1 / 5 vérifiés</span>
+<div class="flex-1 mx-4 bg-surface-container h-2 rounded-full overflow-hidden"><div id="checklist-bar" class="bg-secondary h-full transition-all duration-500" style="width:20%"></div></div>
+</div>
+<div class="flex gap-3">
+<button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container transition-all">Sauvegarder</button>
+<button onclick="finishChecklist()" class="flex-1 py-2.5 bg-secondary text-on-secondary rounded-lg font-label-md font-bold hover:shadow-lg transition-all">Terminer l'inventaire</button>
+</div>
+</div>
+
+<!-- Audit Full -->
+<div id="modal-audit-full" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Historique d'Audit</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="overflow-y-auto max-h-96 divide-y divide-outline-variant">
+<div class="flex gap-3 p-4 hover:bg-surface-container-low"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px] text-primary">person</span></div><div><p class="text-body-md font-bold">Jean Dupont</p><p class="text-body-md text-on-surface">Modification taux amort. Fraiseuse CNC : 25% → 20%</p><span class="font-mono-data text-[11px] text-outline">Aujourd'hui 09:42</span></div></div>
+<div class="flex gap-3 p-4 hover:bg-surface-container-low"><div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span></div><div><p class="text-body-md font-bold">Système</p><p class="text-body-md text-on-surface">Génération automatique rapports T3 2024 – 27 actifs traités</p><span class="font-mono-data text-[11px] text-outline">Hier 18:00</span></div></div>
+<div class="flex gap-3 p-4 hover:bg-surface-container-low"><div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px] text-error">logout</span></div><div><p class="text-body-md font-bold">Admin</p><p class="text-body-md text-on-surface">Sortie actif IMMO-2022-09 (Peugeot 508) – cession 15 500 FCFA</p><span class="font-mono-data text-[11px] text-outline">24 Oct 14:15</span></div></div>
+<div class="flex gap-3 p-4 hover:bg-surface-container-low"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px] text-primary">add</span></div><div><p class="text-body-md font-bold">Jean Dupont</p><p class="text-body-md text-on-surface">Ajout actif IMMO-2024-011 – Imprimante Laser A3 (1 800 FCFA)</p><span class="font-mono-data text-[11px] text-outline">22 Oct 11:30</span></div></div>
+<div class="flex gap-3 p-4 hover:bg-surface-container-low"><div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px] text-secondary">calculate</span></div><div><p class="text-body-md font-bold">Système</p><p class="text-body-md text-on-surface">Amortissement T2 généré – dotation totale 48 750 FCFA</p><span class="font-mono-data text-[11px] text-outline">30 Juin 23:59</span></div></div>
+</div>
+</div>
+
+<!-- Rapports -->
+<div id="modal-rapports" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="text-title-lg font-title-lg text-primary font-bold">Rapports Immobilisations</h2>
+<button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+</div>
+<div class="divide-y divide-outline-variant">
+<button onclick="closeModal();showToast('Téléchargement du tableau d\'amortissement...','download')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">table_chart</span></div><div><p class="text-body-md font-bold">Tableau d'Amortissement</p><p class="text-[11px] text-outline">Exercice 2024 – 27 actifs</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</button>
+<button onclick="closeModal();showToast('Téléchargement du registre...','download')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">inventory</span></div><div><p class="text-body-md font-bold">Registre des Immobilisations</p><p class="text-[11px] text-outline">Complet OHADA</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</button>
+<button onclick="openModal('modal-checklist')" class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low group text-left">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">fact_check</span></div><div><p class="text-body-md font-bold">Rapport d'Inventaire Physique</p><p class="text-[11px] text-outline">Usine A – Prochain : 02/07/2024</p></div></div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">arrow_forward</span>
+</button>
+</div>
+</div>
+
+<!-- Module switcher -->
+<div id="modal-module" class="hidden modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+<div class="flex justify-between items-center mb-6"><h2 class="text-title-lg font-title-lg text-primary font-bold">Changer de Module</h2><button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button></div>
+<div class="grid grid-cols-2 gap-3">
+<a href="Tableau-de-bord.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">dashboard</span><span class="text-body-md">Tableau de bord</span></a>
+<a href="Comptabilite-Generale.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-body-md">Comptabilité</span></a>
+<a href="gestion-des-immobiliers.html" class="flex items-center gap-3 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all"><span class="material-symbols-outlined text-primary">account_balance_wallet</span><span class="text-body-md font-bold text-primary">Immobilisations</span></a>
+<a href="Gestion-des-contrats.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">description</span><span class="text-body-md">Contrats</span></a>
+<a href="cockpit-tresorie.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-body-md">Trésorerie</span></a>
+<a href="Comptabilité-analytics.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all"><span class="material-symbols-outlined text-on-surface-variant">analytics</span><span class="text-body-md">Analytique</span></a>
+<a href="Budget.html" class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all col-span-2"><span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-body-md">Budget</span></a>
+</div>
+</div>
+
+</div><!-- end modal-overlay -->
+
+<!-- Notif panel -->
+<div id="notif-panel" class="hidden panel-enter fixed top-[68px] right-16 w-80 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="text-body-md font-bold text-primary">Notifications <span class="ml-1 px-1.5 py-0.5 bg-error text-white text-[10px] rounded-full">2</span></h3>
+<button onclick="document.getElementById('notif-dot').classList.add('hidden');closeAllPanels();showToast('Tout marqué comme lu','check_circle')" class="text-label-md text-primary hover:underline">Tout lire</button>
+</div>
+<div class="divide-y divide-outline-variant">
+<div onclick="openModal('modal-amortissement');closeAllPanels()" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3 bg-primary/3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[16px]">calculate</span></div>
+<div class="flex-1"><p class="text-body-md font-bold">Amortissements T3 en attente</p><p class="text-[11px] text-outline">27 actifs · Exercice 2024</p></div>
+<div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+</div>
+<div onclick="openModal('modal-checklist');closeAllPanels()" class="p-4 hover:bg-surface-container-low cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-secondary-fixed-variant text-[16px]">fact_check</span></div>
+<div class="flex-1"><p class="text-body-md font-bold">Inventaire physique dans 14 jours</p><p class="text-[11px] text-outline">Usine A · 02/07/2024</p></div>
+<div class="w-2 h-2 rounded-full bg-error flex-shrink-0 mt-2"></div>
+</div>
+</div>
+</div>
+
+<!-- Apps panel -->
+<div id="apps-panel" class="hidden panel-enter fixed top-[68px] right-6 w-64 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant p-4">
+<p class="text-label-md text-on-surface-variant font-bold mb-3">MODULES</p>
+<div class="grid grid-cols-3 gap-2">
+<a href="Tableau-de-bord.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">dashboard</span><span class="text-[11px] text-on-surface">Dashboard</span></a>
+<a href="Comptabilite-Generale.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_balance</span><span class="text-[11px] text-on-surface">Compta.</span></a>
+<a href="gestion-des-immobiliers.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-primary/5"><span class="material-symbols-outlined text-primary">account_balance_wallet</span><span class="text-[11px] text-primary font-bold">Immo.</span></a>
+<a href="Gestion-des-contrats.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">description</span><span class="text-[11px] text-on-surface">Contrats</span></a>
+<a href="cockpit-tresorie.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">account_tree</span><span class="text-[11px] text-on-surface">Trésor.</span></a>
+<a href="Budget.html" class="flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-primary/5"><span class="material-symbols-outlined text-on-surface-variant">query_stats</span><span class="text-[11px] text-on-surface">Budget</span></a>
+</div>
+</div>
+
+<!-- Profile panel -->
+<div id="profile-panel" class="hidden panel-enter fixed top-[68px] right-4 w-56 bg-white rounded-2xl shadow-2xl z-50 border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex items-center gap-3">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnf8UzSPUVM5lImYm-Cvl7vN8-cH6Tn_gg9r-eZcpG2fHklosF3VClpvJFFA7ZNV3hrr-YZQ9kCfctr8dfN2TLL46re69yGhqKBNnKXb4YkJEAM6X9tNvduZXRtb0hIW0i7XRRXdKO97NYfv6gwLbl7WU15qvxiDiFoapMQy1y4325JbTV1tIbWvhMzWzz2jHoCSagbGHSIqwb1TKmLk1s_3y2qVyBcmu9FSUoXqlVMMxF08e_ddE1" class="w-10 h-10 rounded-full border border-outline-variant object-cover" alt="">
+<div><p class="text-body-md font-bold">Fatoumata Bah</p><p class="text-[11px] text-outline">Resp. Immobilisations</p></div>
+</div>
+<div class="divide-y divide-outline-variant">
+<button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">manage_accounts</span><span class="text-body-md">Mon Profil</span></button>
+<button class="w-full flex items-center gap-3 p-3 hover:bg-surface-container-low text-left transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">settings</span><span class="text-body-md">Paramètres</span></button>
+<button onclick="showToast('Déconnexion...','logout');closeAllPanels()" class="w-full flex items-center gap-3 p-3 hover:bg-error-container/20 text-left transition-colors"><span class="material-symbols-outlined text-error text-[20px]">logout</span><span class="text-body-md text-error font-bold">Déconnexion</span></button>
+</div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-5 py-3 bg-on-surface text-inverse-on-surface rounded-full text-body-md font-bold shadow-2xl flex items-center gap-2 whitespace-nowrap">
+<span id="toast-icon" class="material-symbols-outlined text-[18px]">check_circle</span>
+<span id="toast-msg">Enregistré</span>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────
+const ASSETS_DATA = {
+  'IMMO-2024-001':{name:'MacBook Pro M3 Max – Équipe Design',cat:'Matériel Informatique',status:'nouveau',val:4200,amort:0,vnc:4200,mode:'Linéaire',duree:5,date:'15/01/2024',fournisseur:'Apple France',cc:'CC:102 (Création)'},
+  'IMMO-2024-004':{name:'Chaises Ergonomiques (x12)',cat:'Mobilier',status:'nouveau',val:8450,amort:0,vnc:8450,mode:'Linéaire',duree:10,date:'20/02/2024',fournisseur:'Office Pro',cc:'CC:400 (RH)'},
+  'IMMO-2024-011':{name:'Imprimante Laser A3 – Marketing',cat:'Matériel Informatique',status:'nouveau',val:1800,amort:0,vnc:1800,mode:'Linéaire',duree:5,date:'10/03/2024',fournisseur:'Canon Afrique',cc:'CC:150 (Marketing)'},
+  'IMMO-2023-002':{name:'Tesla Model 3 – Direction',cat:'Véhicules',status:'actif',val:45000,amort:18000,vnc:27000,mode:'Linéaire / 5 Ans',duree:5,date:'15/03/2023',fournisseur:'Tesla Motors',cc:'CC:100 (Direction)'},
+  'IMMO-2021-007':{name:'Fraiseuse CNC X-500',cat:'Industriel',status:'actif',val:120000,amort:90000,vnc:30000,mode:'Dégressif / 8 Ans',duree:8,date:'01/06/2021',fournisseur:'Siemens AG',cc:'CC:300 (Production)'},
+  'IMMO-2022-015':{name:'Serveur Dell PowerEdge R750',cat:'Matériel Informatique',status:'actif',val:35000,amort:21000,vnc:14000,mode:'Linéaire / 5 Ans',duree:5,date:'10/01/2022',fournisseur:'Dell Technologies',cc:'CC:200 (IT)'},
+  'IMMO-2018-003':{name:'Cluster Serveur – 2018',cat:'Matériel Informatique',status:'amorti',val:24000,amort:24000,vnc:1,mode:'Linéaire / 5 Ans',duree:5,date:'05/05/2018',fournisseur:'HP Enterprise',cc:'CC:200 (IT)'},
+  'IMMO-2017-002':{name:'Photocopieur Canon iR-ADV',cat:'Mobilier',status:'amorti',val:8000,amort:8000,vnc:1,mode:'Linéaire / 5 Ans',duree:5,date:'10/03/2017',fournisseur:'Canon',cc:'CC:100 (Direction)'},
+  'IMMO-2022-009':{name:'Voiture de Fonction – Peugeot 508',cat:'Véhicules',status:'sorti',val:32000,amort:22000,vnc:0,mode:'Linéaire / 5 Ans',duree:5,date:'20/01/2020',fournisseur:'Peugeot',cc:'CC:100 (Direction)'},
+};
+
+const STATUS_LABELS = {nouveau:'Nouveau',actif:'Actif',amorti:'Amorti',sorti:'Sorti'};
+const STATUS_COLORS = {nouveau:'bg-tertiary/10 text-tertiary',actif:'bg-secondary-container text-on-secondary-container',amorti:'bg-surface-container-highest text-on-surface-variant',sorti:'bg-error-container text-on-error-container'};
+function fmt(n){return Number(n).toLocaleString('fr-FR')}
+
+// ── Asset detail ──────────────────────────────────────
+function openAssetDetail(id){
+  const a = ASSETS_DATA[id];
+  if(!a) return;
+  const pct = a.val>0?Math.round(a.amort/a.val*100):0;
+  const overlay = document.getElementById('modal-overlay');
+  const existing = document.getElementById('modal-asset-detail');
+  if(existing) existing.remove();
+  const div = document.createElement('div');
+  div.id='modal-asset-detail';
+  div.className='modal-enter bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8';
+  div.innerHTML=`
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <span class="${STATUS_COLORS[a.status]||''} text-[10px] font-bold px-2 py-1 rounded uppercase mb-2 inline-block">${STATUS_LABELS[a.status]||a.status}</span>
+        <h2 class="text-title-lg font-title-lg text-primary font-bold">${a.name}</h2>
+        <p class="text-label-md text-on-surface-variant">${id} · ${a.cat}</p>
+      </div>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full flex-shrink-0"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-5">
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Valeur brute</p><p class="font-mono-data font-bold text-on-surface">${fmt(a.val)} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Amort. cumulé</p><p class="font-mono-data font-bold text-error">${fmt(a.amort)} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Valeur nette (VNC)</p><p class="font-mono-data font-bold text-secondary">${fmt(a.vnc)} FCFA</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Mode amortissement</p><p class="text-body-md font-bold text-on-surface">${a.mode}</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Date acquisition</p><p class="font-mono-data text-on-surface">${a.date}</p></div>
+      <div class="p-3 bg-surface-container-low rounded-lg"><p class="text-label-md text-on-surface-variant">Fournisseur</p><p class="text-body-md text-on-surface">${a.fournisseur}</p></div>
+    </div>
+    ${pct>0?`<div class="mb-5"><div class="flex justify-between text-label-md mb-1"><span class="text-on-surface-variant">Progression amortissement</span><span class="font-bold text-primary">${pct}%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary transition-all" style="width:${pct}%"></div></div></div>`:''}
+    <div class="flex gap-3">
+      <button onclick="amortirAsset('${id}')" class="flex-1 py-2.5 border border-secondary text-secondary rounded-lg font-label-md font-bold hover:bg-secondary/5 transition-all">Amortir</button>
+      <button onclick="openCessionModal('${id}')" class="flex-1 py-2.5 border border-error text-error rounded-lg font-label-md font-bold hover:bg-error/5 transition-all">Céder</button>
+      <button onclick="closeModal();openModal('modal-add-asset')" class="flex-1 py-2.5 bg-primary text-white rounded-lg font-label-md font-bold hover:bg-primary-container transition-all">Modifier</button>
+    </div>`;
+  overlay.classList.remove('hidden');
+  overlay.appendChild(div);
+  activeModal='modal-asset-detail';
+}
+
+// ── Lifecycle timeline ────────────────────────────────
+const LIFECYCLE = {
+  tesla:[
+    {dot:'bg-primary ring-primary-fixed',date:'15 MAR 2023',title:'Acquisition Initiale',desc:'Mise en service. Coût : 45 000 FCFA. Fournisseur : Tesla Motors Corp. Durée : 60 mois.',done:true},
+    {dot:'bg-secondary ring-secondary-container',date:'31 DÉC 2023',title:'Amortissement Exo 2023',desc:'Dotation linéaire : 7 500 FCFA. Cumulé : 7 500 FCFA.',done:true},
+    {dot:'bg-surface-tint ring-primary-fixed',date:'20 JUIL 2024',title:'Maintenance Majeure',desc:'Nouveau pack batterie. Valeur ajoutée : 5 000 FCFA. Cycle ajusté (+1 an).',done:true},
+    {dot:'bg-outline-variant border-2 border-white',date:'31 DÉC 2024',title:'Amortissement Programmé',desc:'Dotation prévue : 7 500 FCFA (estimé).',done:false},
+  ],
+  cnc:[
+    {dot:'bg-primary ring-primary-fixed',date:'01 JUN 2021',title:'Acquisition Initiale',desc:'Fraiseuse CNC X-500. Coût : 120 000 FCFA. Mode dégressif 8 ans.',done:true},
+    {dot:'bg-secondary ring-secondary-container',date:'31 DÉC 2021',title:'Amortissement Exo 2021',desc:'Dotation dégressif : 30 000 FCFA. Cumulé : 30 000 FCFA.',done:true},
+    {dot:'bg-secondary ring-secondary-container',date:'31 DÉC 2023',title:'Amortissement Exo 2023',desc:'Dotation : 22 500 FCFA. Cumulé : 90 000 FCFA.',done:true},
+    {dot:'bg-outline-variant border-2 border-white',date:'31 DÉC 2025',title:'Fin de vie estimée',desc:'VNC résiduelle estimée : 5 000 FCFA.',done:false},
+  ],
+  macbook:[
+    {dot:'bg-primary ring-primary-fixed',date:'15 JAN 2024',title:'Acquisition Initiale',desc:'MacBook Pro M3 Max. Coût : 4 200 FCFA. Linéaire 5 ans.',done:true},
+    {dot:'bg-outline-variant border-2 border-white',date:'31 DÉC 2024',title:'Premier Amortissement',desc:'Dotation prévue : 840 FCFA.',done:false},
+    {dot:'bg-outline-variant border-2 border-white',date:'31 DÉC 2029',title:'Fin d\'amortissement',desc:'VNC résiduelle : 1 FCFA.',done:false},
+  ],
+};
+
+function renderLifecycle(key){
+  const events = LIFECYCLE[key]||LIFECYCLE.tesla;
+  document.getElementById('lifecycle-timeline').innerHTML = events.map(e=>`
+    <div class="relative ${e.done?'':'opacity-60'}">
+      <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full ${e.dot} ring-4"></div>
+      <div class="flex flex-col">
+        <span class="font-mono-data text-label-md text-on-surface-variant ${!e.done?'italic':''}">${!e.done?'À VENIR : ':''}${e.date}</span>
+        <span class="font-body-lg font-bold ${e.done?'text-primary':'text-on-surface'} mt-0.5">${e.title}</span>
+        ${e.done?`<p class="text-body-md text-on-surface-variant mt-1">${e.desc}</p>`:''}
+      </div>
+    </div>`).join('');
+}
+
+// ── Search / filter ───────────────────────────────────
+function searchAssets(q){
+  q = q.toLowerCase();
+  document.querySelectorAll('[data-name]').forEach(card=>{
+    const match = !q || card.dataset.name.includes(q);
+    card.style.display = match?'':'none';
+  });
+}
+
+let activeStatusFilter = '';
+function filterStatus(status){
+  activeStatusFilter = status;
+  document.querySelectorAll('[data-status]').forEach(card=>{
+    const match = !status || card.dataset.status===status;
+    card.style.display = match?'':'none';
+  });
+  // Update filter buttons
+  document.querySelectorAll('.status-filter-btn').forEach(b=>{
+    b.className='status-filter-btn px-3 py-1 rounded-full text-label-md bg-surface-container text-on-surface-variant hover:opacity-80 transition-all';
+  });
+  const activeBtn = document.getElementById('f-'+(status||'all'));
+  if(activeBtn) activeBtn.className='status-filter-btn px-3 py-1 rounded-full text-label-md font-bold bg-primary text-on-primary';
+  // Also update list view
+  renderListView();
+}
+
+// ── View switch ───────────────────────────────────────
+function switchView(v){
+  document.getElementById('view-kanban').classList.toggle('hidden', v!=='kanban');
+  document.getElementById('view-list').classList.toggle('hidden', v!=='list');
+  document.getElementById('btn-kanban').className = v==='kanban'
+    ? 'flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md font-bold bg-white shadow-sm text-primary transition-all'
+    : 'flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md text-on-surface-variant hover:bg-white/50 transition-all';
+  document.getElementById('btn-list').className = v==='list'
+    ? 'flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md font-bold bg-white shadow-sm text-primary transition-all'
+    : 'flex items-center gap-2 px-3 py-1.5 rounded-md text-label-md text-on-surface-variant hover:bg-white/50 transition-all';
+  if(v==='list') renderListView();
+}
+
+function renderListView(){
+  const rows = Object.entries(ASSETS_DATA).filter(([,a])=>!activeStatusFilter||a.status===activeStatusFilter);
+  document.getElementById('list-count').textContent = rows.length+' actifs affichés';
+  document.getElementById('list-body').innerHTML = rows.map(([id,a])=>`
+    <tr onclick="openAssetDetail('${id}')" class="hover:bg-[#F0F7FF] transition-colors cursor-pointer group">
+      <td class="p-4 font-mono-data text-primary font-bold text-[12px]">${id}</td>
+      <td class="p-4 font-medium text-on-surface">${a.name}</td>
+      <td class="p-4 text-on-surface-variant">${a.cat}</td>
+      <td class="p-4 text-right font-mono-data">${fmt(a.val)}</td>
+      <td class="p-4 text-right font-mono-data text-error">${a.amort>0?fmt(a.amort):'—'}</td>
+      <td class="p-4 text-right font-mono-data font-bold text-secondary">${fmt(a.vnc)}</td>
+      <td class="p-4 text-center"><span class="${STATUS_COLORS[a.status]||''} text-[10px] font-bold px-2 py-0.5 rounded-full">${STATUS_LABELS[a.status]||a.status}</span></td>
+      <td class="p-4"><button onclick="event.stopPropagation();openAssetDetail('${id}')" class="text-primary text-label-md font-bold hover:underline opacity-0 group-hover:opacity-100 transition-opacity">Détail</button></td>
+    </tr>`).join('');
+}
+
+function sortList(col){
+  if(!col) return;
+  const body = document.getElementById('list-body');
+  const rows = Array.from(body.querySelectorAll('tr'));
+  rows.sort((a,b)=>{
+    const cells = {name:1,val:3,status:6};
+    const i = cells[col]??1;
+    const av=a.cells[i].textContent.trim(), bv=b.cells[i].textContent.trim();
+    return isNaN(av.replace(/\s/g,''))?av.localeCompare(bv):(parseFloat(av.replace(/\s/g,''))-parseFloat(bv.replace(/\s/g,'')));
+  });
+  rows.forEach(r=>body.appendChild(r));
+}
+
+// ── Column menu ───────────────────────────────────────
+let colMenuTarget='';
+function openColMenu(e,col){
+  e.stopPropagation();
+  colMenuTarget=col;
+  const menu=document.getElementById('col-menu');
+  menu.style.top=(e.clientY+8)+'px';
+  menu.style.left=(e.clientX-180)+'px';
+  menu.classList.remove('hidden');
+}
+function colMenuAction(action){
+  document.getElementById('col-menu').classList.add('hidden');
+  const msgs={exporter:'Colonne exportée','valider-tous':'Actifs validés',filtrer:'Filtre appliqué'};
+  showToast(msgs[action]||action,'check_circle');
+}
+document.addEventListener('click',e=>{if(!e.target.closest('#col-menu')&&!e.target.closest('[onclick*="openColMenu"]'))document.getElementById('col-menu').classList.add('hidden');});
+
+// ── Checklist ─────────────────────────────────────────
+function toggleCheck(cb){
+  const row=cb.closest('.flex');
+  const texts=row.querySelectorAll('p');
+  if(cb.checked){row.querySelector('.flex-1').classList.add('opacity-60');texts[0].classList.add('line-through');texts[1].textContent='Vérifié ✓';texts[1].className='text-[11px] text-secondary font-bold';}
+  else{row.querySelector('.flex-1').classList.remove('opacity-60');texts[0].classList.remove('line-through');texts[1].textContent='En attente';texts[1].className='text-[11px] text-on-surface-variant';}
+  updateChecklistProgress();
+}
+function updateChecklistProgress(){
+  const all=document.querySelectorAll('#checklist-items input[type=checkbox]');
+  const done=document.querySelectorAll('#checklist-items input[type=checkbox]:checked').length;
+  const pct=Math.round(done/all.length*100);
+  document.getElementById('checklist-progress').textContent=`${done} / ${all.length} vérifiés`;
+  document.getElementById('checklist-bar').style.width=pct+'%';
+}
+function finishChecklist(){closeModal();showToast('Inventaire clôturé avec succès','fact_check');}
+
+// ── Cession modal helper ──────────────────────────────
+function openCessionModal(id){
+  closeModal();
+  const el=document.getElementById('modal-cession');
+  if(el){
+    let inp=document.getElementById('cession-asset-id');
+    if(!inp){inp=document.createElement('input');inp.type='hidden';inp.id='cession-asset-id';el.appendChild(inp);}
+    inp.value=id;
+  }
+  openModal('modal-cession');
+}
+
+// ── Storage ───────────────────────────────────────────
+const SK_IM='alveole_immo_v1';
+function saveIM(){localStorage.setItem(SK_IM,JSON.stringify(ASSETS_DATA));}
+function loadIM(){const d=localStorage.getItem(SK_IM);if(d){const p=JSON.parse(d);Object.assign(ASSETS_DATA,p);}}
+loadIM();
+
+// ── Amortissement ────────────────────────────────────
+function amortirAsset(id){
+  const a=ASSETS_DATA[id];if(!a) return;
+  const annualAmort=Math.round(a.val/a.duree);
+  a.amort=Math.min(a.amort+annualAmort,a.val);
+  a.vnc=Math.max(a.val-a.amort,1);
+  if(a.amort>=a.val) a.status='amorti';
+  saveIM();renderListView();closeModal();
+  showToast(`Amortissement de ${annualAmort.toLocaleString('fr-FR')} FCFA appliqué`,'trending_down');
+}
+
+// ── Cession ───────────────────────────────────────────
+function submitCession(e){
+  e.preventDefault();
+  const id=document.getElementById('cession-asset-id')?.value;
+  if(id&&ASSETS_DATA[id]){
+    ASSETS_DATA[id].status='sorti';
+    ASSETS_DATA[id].vnc=0;
+    saveIM();renderListView();
+    if(activeStatusFilter) filterStatus(activeStatusFilter);
+    showToast('Cession enregistrée','delete_sweep');
+  } else {
+    showToast('Cession enregistrée','delete_sweep');
+  }
+  closeModal();
+}
+
+// ── Add / Edit asset ──────────────────────────────────
+function submitAsset(e){
+  e.preventDefault();
+  const form=e.target;
+  const name=form.querySelector('[name="asset-name"]')?.value||form.querySelectorAll('input[type="text"]')[0]?.value;
+  const valBrute=Number(form.querySelector('[name="asset-val"]')?.value||form.querySelectorAll('input[type="number"]')[0]?.value||0);
+  const duree=Number(form.querySelector('[name="asset-duree"]')?.value||5);
+  if(!name||!valBrute){closeModal();showToast('Actif enregistré','check_circle');return;}
+  const year=new Date().getFullYear();
+  const keys=Object.keys(ASSETS_DATA);
+  const newId=`IMMO-${year}-${String(keys.length+1).padStart(3,'0')}`;
+  ASSETS_DATA[newId]={name,cat:'Matériel Informatique',status:'nouveau',val:valBrute,amort:0,vnc:valBrute,mode:'Linéaire',duree,date:new Date().toLocaleDateString('fr-FR'),fournisseur:'—',cc:'CC:100'};
+  saveIM();renderListView();
+  closeModal();showToast('Actif ajouté au registre','check_circle');
+}
+
+// ── Export ────────────────────────────────────────────
+function exportAssets(format){
+  const rows=Object.entries(ASSETS_DATA);
+  if(format==='csv'){
+    const header='ID,Nom,Catégorie,Statut,Valeur Brute,Amort. Cumulé,VNC\n';
+    const body=rows.map(([id,a])=>`"${id}","${a.name}","${a.cat}","${STATUS_LABELS[a.status]||a.status}",${a.val},${a.amort},${a.vnc}`).join('\n');
+    const blob=new Blob(['﻿'+header+body],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');link.href=url;link.download='immobilisations_alveole.csv';link.click();
+    URL.revokeObjectURL(url);showToast('Export CSV téléchargé','download');
+  } else {
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF('l');
+    doc.setFontSize(16);doc.setTextColor(0,53,95);doc.text('Registre des Immobilisations – Alvéole',14,20);
+    doc.setFontSize(10);doc.setTextColor(100);doc.text(`Exercice 2024 · OHADA · ${new Date().toLocaleDateString('fr-FR')}`,14,28);
+    doc.autoTable({
+      startY:34,
+      head:[['ID','Désignation','Catégorie','Statut','Valeur Brute (FCFA)','Amort. Cumulé','VNC']],
+      body:rows.map(([id,a])=>[id,a.name,a.cat,STATUS_LABELS[a.status]||a.status,fmt(a.val),fmt(a.amort),fmt(a.vnc)]),
+      headStyles:{fillColor:[0,53,95],textColor:255,fontSize:7},
+      bodyStyles:{fontSize:7},alternateRowStyles:{fillColor:[240,247,252]},
+    });
+    doc.save('immobilisations_alveole.pdf');showToast('Export PDF téléchargé','picture_as_pdf');
+  }
+}
+
+// ── Modal ─────────────────────────────────────────────
+let activeModal=null;
+function openModal(id){
+  closeAllPanels();
+  const overlay=document.getElementById('modal-overlay');
+  if(activeModal&&document.getElementById(activeModal)) document.getElementById(activeModal).classList.add('hidden');
+  activeModal=id;
+  overlay.classList.remove('hidden');
+  const el=document.getElementById(id);
+  if(el){el.classList.remove('hidden');el.classList.add('modal-enter');}
+}
+function closeModal(){
+  if(activeModal&&document.getElementById(activeModal)) document.getElementById(activeModal).classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');
+  activeModal=null;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeAllPanels();document.getElementById('col-menu').classList.add('hidden');}});
+
+// ── Panels ────────────────────────────────────────────
+const PANELS=['notif-panel','apps-panel','profile-panel'];
+function togglePanel(id){const open=!document.getElementById(id).classList.contains('hidden');closeAllPanels();if(!open)document.getElementById(id).classList.remove('hidden');}
+function closeAllPanels(){PANELS.forEach(p=>document.getElementById(p).classList.add('hidden'));}
+if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.replace('light','dark');
+function toggleDark(){const d=document.documentElement;const isDark=d.classList.toggle('dark');d.classList.toggle('light',!isDark);localStorage.setItem('alveole_theme',isDark?'dark':'light');}
+function toggleIA(){const p=document.getElementById('ia-panel');p.classList.toggle('hidden');if(!p.classList.contains('hidden')&&document.getElementById('ia-messages').children.length===0)iaMsg('bot','Bonjour ! Je suis Alvéole IA. Essayez : **résumé**, **contrats**, **budget**, **trésorerie**, **alertes**.');}
+function iaSend(){const inp=document.getElementById('ia-input');const q=inp.value.trim();if(!q)return;iaMsg('user',q);inp.value='';setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaAsk(q){iaMsg('user',q);setTimeout(()=>iaMsg('bot',iaResponse(q)),700);}
+function iaMsg(role,text){const msgs=document.getElementById('ia-messages');const isBot=role==='bot';msgs.innerHTML+=`<div class="flex ${isBot?'justify-start':'justify-end'}"><div class="max-w-[85%] px-3 py-2 rounded-xl text-[12px] leading-relaxed ${isBot?'bg-white border border-outline-variant text-on-surface':'bg-primary text-white'}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div></div>`;msgs.scrollTop=msgs.scrollHeight;}
+function iaResponse(q){const ql=q.toLowerCase();const cr=JSON.parse(localStorage.getItem('alveole_contracts_v2')||'{}');const ct=[...(cr.clients||[]),...(cr.fournisseurs||[])];const bu=JSON.parse(localStorage.getItem('alveole_budget_v1')||'[]');const im=JSON.parse(localStorage.getItem('alveole_immo_v1')||'[]');const tr=(JSON.parse(localStorage.getItem('alveole_tresorerie_v1')||'{}')).transactions||[];const enc=tr.filter(t=>t.type==='encaissement').reduce((s,t)=>s+t.montant,0);const dec=tr.filter(t=>t.type==='decaissement').reduce((s,t)=>s+t.montant,0);if(ql.includes('résumé')||ql.includes('synthèse')||ql.includes('global')){return `**Synthèse Alvéole :**\n• Contrats actifs : **${ct.filter(c=>c.statut==='Actif').length}** / ${ct.length}\n• Budget : **${bu.filter(r=>r.reel>r.alloue).length} dépassement(s)**\n• Trésorerie nette : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**\n• Actifs immo : **${im.length}**`;}if(ql.includes('contrat')){const exp=ct.filter(c=>{try{const p=c.renewal?.split('/');if(!p||p.length<3)return false;const d=new Date(+p[2],+p[1]-1,+p[0]);return(d-new Date())/(864e5)<=30&&(d-new Date())>0;}catch{return false;}});return `**Contrats :** ${ct.length} total | **${ct.filter(c=>c.statut==='Actif').length}** actifs | **${exp.length}** expirant`;}if(ql.includes('budget')||ql.includes('dépassement')){const ov=bu.filter(r=>r.reel>r.alloue);const tot=bu.reduce((s,r)=>s+r.alloue,0);const rel=bu.reduce((s,r)=>s+r.reel,0);if(!bu.length)return 'Aucune donnée budgétaire.';return `**Budget :** Consommé **${Math.round(rel/tot*100)}%** | **${ov.length}** dépassement(s)`;}if(ql.includes('trésor')||ql.includes('caisse')){if(!tr.length)return 'Aucune transaction.';return `**Trésorerie :**\n• Enc. : **${enc.toLocaleString('fr-FR')} FCFA** | Déc. : **${dec.toLocaleString('fr-FR')} FCFA**\n• Solde : **${(enc-dec)>=0?'+':''}${(enc-dec).toLocaleString('fr-FR')} FCFA**`;}if(ql.includes('immobil')||ql.includes('actif')||ql.includes('amortissement')){if(!im.length)return 'Aucun actif.';const act=im.filter(a=>['actif','Actif','en_service'].includes(a.statut));const totalVal=act.reduce((s,a)=>s+(a.val||a.valeur||a.prix||0),0);return `**Immobilisations :**\n• Total : **${im.length}** | En service : **${act.length}**\n• Valeur brute : **${totalVal.toLocaleString('fr-FR')} FCFA**`;}if(ql.includes('alerte')||ql.includes('risque')){const a=[];bu.filter(r=>r.reel>r.alloue).length&&a.push(`⚠️ ${bu.filter(r=>r.reel>r.alloue).length} dépassement(s) budget`);dec>enc&&a.push('⚠️ Décaissements > Encaissements');return a.length?`**Alertes :**\n${a.join('\n')}`:'✅ Aucune alerte critique.';}return 'Essayez : **résumé**, **immobilisations**, **budget**, **trésorerie**, **alertes**.';}
+
+document.addEventListener('click',e=>{if(!e.target.closest('[id$="-panel"]')&&!e.target.closest('[onclick*="togglePanel"]')&&!e.target.closest('[onclick*="Panel"]'))closeAllPanels();});
+
+// ── Toast ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg,icon='check_circle'){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  document.getElementById('toast-icon').textContent=icon;
+  t.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.add('hidden'),3000);
+}
+
+// ── Import PDF / Excel ────────────────────────────────
+let importedData=null;
+async function handleImportFile(file){
+  if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  const prev=document.getElementById('import-preview');
+  const acts=document.getElementById('import-actions');
+  prev.innerHTML='<div class="flex items-center justify-center gap-3 py-6 text-on-surface-variant"><span class="material-symbols-outlined">progress_activity</span><span class="text-body-md">Analyse en cours…</span></div>';
+  prev.classList.remove('hidden');acts.classList.add('hidden');
+  try{
+    if(['csv','xlsx','xls'].includes(ext))await importFromExcel(file);
+    else if(ext==='pdf')await importFromPDF(file);
+    else prev.innerHTML='<p class="text-error text-body-md text-center py-4">Format non supporté.</p>';
+  }catch(e){prev.innerHTML=`<p class="text-error text-body-md text-center py-4">Erreur : ${e.message}</p>`;}
+}
+async function importFromExcel(file){
+  const data=await file.arrayBuffer();
+  const wb=XLSX.read(data);
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+  if(rows.length<2){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">Fichier vide.</p>';return;}
+  const headers=rows[0].map(h=>String(h));
+  const dataRows=rows.slice(1).filter(r=>r.some(c=>c!==''));
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3"><strong>${dataRows.length}</strong> ligne(s) dans <em>${file.name}</em></p>
+    <div class="overflow-x-auto max-h-44 border border-outline-variant rounded-lg">
+      <table class="w-full text-[11px]"><thead class="bg-surface-container-low sticky top-0"><tr>${headers.map(h=>`<th class="px-3 py-2 text-left text-on-surface-variant font-semibold whitespace-nowrap">${h||'—'}</th>`).join('')}</tr></thead>
+      <tbody class="divide-y divide-outline-variant">${dataRows.slice(0,6).map(r=>`<tr class="hover:bg-surface-container-lowest">${headers.map((_,i)=>`<td class="px-3 py-1.5 whitespace-nowrap">${r[i]??''}</td>`).join('')}</tr>`).join('')}${dataRows.length>6?`<tr><td colspan="${headers.length}" class="px-3 py-2 text-center text-outline">… et ${dataRows.length-6} lignes de plus</td></tr>`:''}</tbody></table>
+    </div>`;
+  importedData={type:'excel',headers,rows:dataRows};
+  document.getElementById('import-confirm-label').textContent=`Importer ${dataRows.length} immobilisation(s)`;
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+async function importFromPDF(file){
+  if(!window.pdfjsLib){document.getElementById('import-preview').innerHTML='<p class="text-error text-body-md text-center py-4">PDF.js non disponible.</p>';return;}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const data=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data}).promise;
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n';}
+  const mM=text.match(/(?:prix\s*unitaire|valeur\s*d'achat|prix\s*d'achat|total\s*ttc|net\s*à\s*payer)[^\d]*(\d[\d\s]{0,12}[,\.]\d{2})/i)||text.match(/(\d[\d\s]{0,12}[,\.]\d{2})\s*(?:fcfa|eur|€|xof)/i);
+  const dM=text.match(/(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})/);
+  const sM=text.match(/(?:désignation|description|article|matériel)[^\w]*([A-Z][^\n,]{3,60})/i);
+  const foM=text.match(/(?:fournisseur|vendeur|société|émetteur)[^\w]*([A-Z][^\n,]{3,40})/i);
+  const montant=mM?mM[1].replace(/\s/g,'').replace(',','.'):'';
+  const today=new Date();
+  const dateF=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+  document.getElementById('import-preview').innerHTML=`
+    <p class="text-label-md text-on-surface-variant mb-3">Champs extraits de <em>${file.name}</em></p>
+    <div class="space-y-3">
+      <div><label class="text-label-sm text-on-surface-variant block mb-1">Désignation</label><input id="pdf-libelle" type="text" value="${((sM?sM[1]:file.name.replace('.pdf','')).trim()).replace(/"/g,'&quot;')}" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Valeur d'acquisition (FCFA)</label><input id="pdf-montant" type="number" value="${montant?Math.round(parseFloat(montant)):''}" placeholder="0" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Date d'acquisition</label><input id="pdf-date" type="text" value="${dM?dM[1]:dateF}" placeholder="JJ/MM/AAAA" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Fournisseur</label><input id="pdf-fourn" type="text" value="${(foM?foM[1]:'').trim().replace(/"/g,'&quot;')}" placeholder="Nom du fournisseur" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"></div>
+        <div><label class="text-label-sm text-on-surface-variant block mb-1">Catégorie</label>
+          <select id="pdf-cat" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+            <option>Matériel Informatique</option><option>Mobilier</option><option>Véhicules</option><option>Industriel</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <details class="mt-3"><summary class="text-[11px] text-outline cursor-pointer">Texte brut extrait</summary><pre class="mt-2 p-3 bg-surface-container-low rounded-lg text-[10px] text-on-surface-variant max-h-20 overflow-y-auto whitespace-pre-wrap">${text.substring(0,500).replace(/</g,'&lt;')}…</pre></details>`;
+  importedData={type:'pdf'};
+  document.getElementById('import-confirm-label').textContent="Créer l'immobilisation";
+  document.getElementById('import-actions').classList.remove('hidden');
+}
+function confirmImport(){
+  if(!importedData)return;
+  const today=new Date();
+  const dateF=`${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+  if(importedData.type==='pdf'){
+    const name=document.getElementById('pdf-libelle').value||'Actif importé';
+    const val=Math.abs(parseFloat(document.getElementById('pdf-montant').value)||0);
+    const date=document.getElementById('pdf-date').value||dateF;
+    const fourn=document.getElementById('pdf-fourn').value||'Import PDF';
+    const cat=document.getElementById('pdf-cat').value||'Matériel Informatique';
+    const id=`IMMO-${today.getFullYear()}-IMP${String(Object.keys(ASSETS_DATA).length+1).padStart(2,'0')}`;
+    ASSETS_DATA[id]={name,cat,status:'nouveau',val,amort:0,vnc:val,mode:'Linéaire',duree:5,date,fournisseur:fourn,cc:'CC:100 (Import)'};
+    saveIM();renderListView();
+    closeModal();showToast('Immobilisation créée depuis PDF','picture_as_pdf');
+  } else if(importedData.type==='excel'){
+    const{headers,rows}=importedData;
+    const iName=headers.findIndex(h=>/désign|nom|name|libel/i.test(h));
+    const iCat=headers.findIndex(h=>/catég|cat|type/i.test(h));
+    const iVal=headers.findIndex(h=>/val|montant|coût|cout/i.test(h));
+    const iDate=headers.findIndex(h=>/date/i.test(h));
+    const iFourn=headers.findIndex(h=>/fourni|vendeur|supplier/i.test(h));
+    const iDuree=headers.findIndex(h=>/durée|duree|amort/i.test(h));
+    let count=0;
+    rows.forEach((r,i)=>{
+      const name=String(r[iName>=0?iName:0]||'').trim();
+      if(!name)return;
+      const val=parseFloat(String(r[iVal>=0?iVal:2]||'0').replace(',','.'))||0;
+      const cat=String(r[iCat>=0?iCat:1]||'Matériel Informatique').trim();
+      const date=String(r[iDate>=0?iDate:3]||dateF);
+      const fourn=String(r[iFourn>=0?iFourn:4]||'Import').trim();
+      const duree=parseInt(String(r[iDuree>=0?iDuree:5]||'5'))||5;
+      const id=`IMMO-${today.getFullYear()}-IMP${String(i+1).padStart(2,'0')}`;
+      ASSETS_DATA[id]={name,cat,status:'nouveau',val,amort:0,vnc:val,mode:'Linéaire',duree,date,fournisseur:fourn,cc:'CC:100 (Import)'};
+      count++;
+    });
+    saveIM();renderListView();
+    closeModal();showToast(`${count} immobilisation(s) importée(s)`,'table_view');
+  }
+  importedData=null;
+}
+
+// ── Init ─────────────────────────────────────────────
+renderLifecycle('tesla');
+</script>
+<div id="ia-panel" class="hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[55] border-l border-outline-variant flex flex-col">
+<div class="p-4 bg-primary text-white flex justify-between items-center"><div class="flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span><div><p class="font-bold text-body-md">Alvéole IA</p><p class="text-[10px] opacity-70">Assistant financier intelligent</p></div></div><button onclick="document.getElementById('ia-panel').classList.add('hidden')" class="p-1 hover:bg-white/20 rounded-full"><span class="material-symbols-outlined">close</span></button></div>
+<div id="ia-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-container-low"></div>
+<div class="p-3 border-t border-outline-variant bg-white"><div class="flex gap-2 mb-2 flex-wrap"><button onclick="iaAsk('immobilisations')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Immobilisations</button><button onclick="iaAsk('alertes')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Alertes</button><button onclick="iaAsk('trésorerie')" class="px-2 py-1 bg-primary/10 text-primary text-[11px] rounded-full hover:bg-primary/20">Trésorerie</button></div><div class="flex gap-2"><input id="ia-input" type="text" placeholder="Posez une question…" onkeydown="if(event.key==='Enter')iaSend()" class="flex-1 border border-outline-variant rounded-lg px-3 py-2 text-body-md text-[13px] focus:outline-none focus:ring-1 focus:ring-primary"><button onclick="iaSend()" class="p-2 bg-primary text-white rounded-lg hover:bg-primary-container"><span class="material-symbols-outlined text-[18px]">send</span></button></div></div>
+</div>
+<button onclick="toggleIA()" class="fixed bottom-28 right-10 w-12 h-12 bg-secondary text-on-secondary rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform z-50" title="Assistant IA"><span class="material-symbols-outlined">smart_toy</span></button>
+<script src="/static/js/context_bar.js"></script>
+<script>
+function updateMetierSidebar(code){
+  var ids=['sidebar-immobilier','sidebar-production','sidebar-hotellerie','sidebar-conseil'];
+  var map={AC:'sidebar-immobilier',TC:'sidebar-production',SW:'sidebar-hotellerie',IC:'sidebar-conseil'};
+  ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  if(code==='CONSOLIDE'||code==='MDP'){ids.forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('hidden');});}
+  else{var tid=map[code];if(tid){var e=document.getElementById(tid);if(e)e.classList.remove('hidden');}}
+}
+window.addEventListener('alveole:contexte',function(ev){updateMetierSidebar(ev.detail.entite_code);});
+fetch('/api/contexte').then(function(r){return r.json();}).then(function(ctx){updateMetierSidebar(ctx.entite_code);}).catch(function(){});
+</script>
+</body></html>

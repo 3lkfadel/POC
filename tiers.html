@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiers — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Modules</span></div>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Immobilisations</a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">contract</span>Contrats</a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie</a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">donut_large</span>Budget</a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div><span class="font-black text-[20px] text-primary">Alvéole</span></div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div class="mb-6">
+    <h1 class="text-[28px] font-bold text-primary">Gestion des Tiers</h1>
+    <p class="text-[14px] text-on-surface-variant mt-1">Gérez vos clients et fournisseurs, leurs statuts et leurs informations</p>
+  </div>
+
+  <div id="blocked-banner" class="hidden"></div>
+
+  <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="flex items-center border-b border-outline-variant px-2">
+      <button id="tab-client" onclick="switchTab('client')" class="px-6 py-2.5 text-[13px] font-semibold text-primary border-b-2 border-primary transition-all">
+        Clients
+      </button>
+      <button id="tab-fournisseur" onclick="switchTab('fournisseur')" class="px-6 py-2.5 text-[13px] text-on-surface-variant hover:text-primary border-b-2 border-transparent transition-all">
+        Fournisseurs
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant gap-4">
+      <div class="relative flex-1 max-w-sm">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+        <input type="text" id="search-input" placeholder="Rechercher par nom ou code…" oninput="filterTiers(this.value)"
+          class="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white">
+      </div>
+      <button onclick="openNewTiers()" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-colors">
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        Nouveau tiers
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Code</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Nom</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Partage</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Entité</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div id="modal-new" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-[20px] font-bold text-primary">Nouveau tiers</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-4">
+      <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Type</label>
+        <select id="new-type" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary"><option value="client">Client</option><option value="fournisseur">Fournisseur</option></select></div>
+      <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Code *</label>
+        <input id="new-code" type="text" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] font-mono focus:outline-none focus:ring-1 focus:ring-primary"></div>
+      <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Nom *</label>
+        <input id="new-nom" type="text" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary"></div>
+      <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Partage</label>
+        <select id="new-partage" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary"><option value="entite">Entité (privé)</option><option value="groupe">Groupe (partagé)</option></select></div>
+      <div><label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Statut initial</label>
+        <select id="new-statut" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary"><option value="actif">Actif</option><option value="agree">Agréé</option><option value="en_attente">En attente</option><option value="suspendu">Suspendu</option><option value="bloque">Bloqué</option></select></div>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px] hover:bg-surface-container">Annuler</button>
+      <button onclick="createTiers()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Créer</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-statut" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-[18px] font-bold text-primary">Modifier le statut</h2>
+      <button onclick="closeModal()" class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <select id="mod-statut" class="w-full border border-outline-variant rounded-lg px-3 py-2 text-[14px] focus:outline-none focus:ring-1 focus:ring-primary mb-4">
+      <option value="actif">Actif</option><option value="agree">Agréé</option><option value="en_attente">En attente</option><option value="suspendu">Suspendu</option><option value="bloque">Bloqué</option>
+    </select>
+    <div class="flex gap-3">
+      <button onclick="closeModal()" class="flex-1 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-[13px]">Annuler</button>
+      <button onclick="saveStatut()" class="flex-1 py-2.5 bg-primary text-white rounded-lg text-[13px] font-bold hover:bg-primary-container">Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+let currentTab = 'client';
+let allTiers = [];
+let modifyingTiersId = null;
+
+async function loadTiers(){
+  const res = await fetch(`/api/tiers?type=${currentTab}`);
+  allTiers = await res.json();
+  renderTiers(allTiers);
+
+  const bloqués = allTiers.filter(t=>t.statut==='bloque');
+  const banner = document.getElementById('blocked-banner');
+  if(bloqués.length && currentTab==='fournisseur'){
+    banner.innerHTML = `<div class="mb-4 px-4 py-3 bg-error-container text-on-error-container rounded-xl flex items-center gap-3"><span class="material-symbols-outlined">block</span><span class="text-[13px] font-semibold">${bloqués.length} fournisseur(s) bloqué(s) : ${bloqués.map(t=>t.nom).join(', ')}</span></div>`;
+    banner.classList.remove('hidden');
+  } else { banner.classList.add('hidden'); }
+}
+
+function switchTab(tab){
+  currentTab = tab;
+  document.getElementById('tab-client').className = tab==='client'
+    ? 'px-6 py-2.5 text-[13px] font-semibold text-primary border-b-2 border-primary transition-all'
+    : 'px-6 py-2.5 text-[13px] text-on-surface-variant hover:text-primary border-b-2 border-transparent transition-all';
+  document.getElementById('tab-fournisseur').className = tab==='fournisseur'
+    ? 'px-6 py-2.5 text-[13px] font-semibold text-primary border-b-2 border-primary transition-all'
+    : 'px-6 py-2.5 text-[13px] text-on-surface-variant hover:text-primary border-b-2 border-transparent transition-all';
+  loadTiers();
+}
+
+function filterTiers(q){
+  const f = q.toLowerCase();
+  renderTiers(allTiers.filter(t=>t.nom.toLowerCase().includes(f)||t.code.toLowerCase().includes(f)));
+}
+
+const STATUT_BADGE = {
+  actif: 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-secondary/10 text-secondary',
+  agree: 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container',
+  bloque: 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-error-container text-on-error-container flex items-center gap-1',
+  suspendu: 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-surface-container-highest text-on-surface-variant',
+  en_attente: 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-tertiary/10 text-tertiary',
+};
+const STATUT_LABEL = {actif:'Actif',agree:'Agréé',bloque:'Bloqué',suspendu:'Suspendu',en_attente:'En attente'};
+
+function renderTiers(list){
+  const tbody = document.getElementById('tbody');
+  if(!list.length){
+    tbody.innerHTML=`<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">Aucun ${currentTab} trouvé</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(t=>{
+    const partageBadge = t.partage==='groupe'
+      ? '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary">🌐 Groupe</span>'
+      : '<span class="px-2 py-0.5 rounded-full text-[11px] bg-surface-container text-on-surface-variant">Entité</span>';
+    const statutIcon = t.statut==='bloque' ? '<span class="material-symbols-outlined text-[14px]">block</span>' : '';
+    const statutBadge = `<span class="${STATUT_BADGE[t.statut]||'px-2 py-0.5 rounded-full text-[11px] bg-surface-container text-on-surface-variant'}">${statutIcon}${STATUT_LABEL[t.statut]||t.statut}</span>`;
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low ${t.statut==='bloque'?'bg-error-container/5':''}">
+      <td class="px-4 py-3 font-mono text-[12px] text-primary">${t.code}</td>
+      <td class="px-4 py-3 text-[14px] font-medium text-on-surface">${t.nom}</td>
+      <td class="px-4 py-3">${partageBadge}</td>
+      <td class="px-4 py-3">${statutBadge}</td>
+      <td class="px-4 py-3 text-[12px] text-on-surface-variant">${t.entite_code||'—'}</td>
+      <td class="px-4 py-3">
+        <button onclick="openModifyStatut(${t.id},'${t.statut}')" class="px-3 py-1 border border-outline-variant rounded-lg text-[12px] hover:bg-surface-container transition-colors">Modifier statut</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function openNewTiers(){
+  const code = currentTab==='client'?`CLI-NEW-${String(Date.now()).slice(-3)}`:`FOURN-NEW-${String(Date.now()).slice(-3)}`;
+  document.getElementById('new-type').value = currentTab;
+  document.getElementById('new-code').value = code;
+  document.getElementById('new-nom').value = '';
+  document.getElementById('new-statut').value = 'actif';
+  document.getElementById('modal-new').classList.remove('hidden');
+}
+
+function closeModal(){ document.getElementById('modal-new').classList.add('hidden'); document.getElementById('modal-statut').classList.add('hidden'); }
+
+async function createTiers(){
+  const payload = {
+    type: document.getElementById('new-type').value,
+    code: document.getElementById('new-code').value,
+    nom: document.getElementById('new-nom').value,
+    partage: document.getElementById('new-partage').value,
+    statut: document.getElementById('new-statut').value,
+  };
+  if(!payload.nom||!payload.code){showToast('Code et nom requis','warning');return;}
+  const res = await fetch('/api/tiers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data = await res.json();
+  if(!res.ok){showToast(data.error||'Erreur','error');return;}
+  showToast(`${data.nom} créé`,'check_circle');
+  closeModal();
+  loadTiers();
+}
+
+function openModifyStatut(id, currentStatut){
+  modifyingTiersId = id;
+  document.getElementById('mod-statut').value = currentStatut;
+  document.getElementById('modal-statut').classList.remove('hidden');
+}
+
+async function saveStatut(){
+  const newStatut = document.getElementById('mod-statut').value;
+  const res = await fetch(`/api/tiers/${modifyingTiersId}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({statut:newStatut})});
+  if(res.ok){ showToast('Statut mis à jour','check_circle'); closeModal(); loadTiers(); }
+  else showToast('Erreur','error');
+}
+
+window.addEventListener('alveole:contexte', ()=>loadTiers());
+switchTab('client');
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>

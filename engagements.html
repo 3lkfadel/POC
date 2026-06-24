@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engagements — Alvéole</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#2d6197","on-primary-fixed":"#001c37","surface-variant":"#e0e3e6","on-tertiary":"#fff","surface-container-lowest":"#fff","on-tertiary-fixed-variant":"#2e4b57","on-primary":"#fff","surface-container-high":"#e6e8eb","on-secondary-container":"#007147","surface-container":"#eceef1","on-error":"#fff","secondary-fixed":"#78fbb6","on-secondary-fixed-variant":"#005232","on-secondary-fixed":"#002111","error-container":"#ffdad6","on-background":"#191c1e","outline":"#727780","inverse-surface":"#2d3133","surface":"#f7f9fc","error":"#ba1a1a","surface-container-low":"#f2f4f7","secondary-fixed-dim":"#59de9b","primary":"#00355f","on-tertiary-fixed":"#001f2a","on-surface":"#191c1e","primary-fixed":"#d2e4ff","inverse-primary":"#a0c9ff","secondary":"#006d43","on-surface-variant":"#42474f","on-primary-fixed-variant":"#07497d","on-error-container":"#93000a","surface-dim":"#d8dadd","primary-container":"#0f4c81","outline-variant":"#c2c7d1","tertiary-container":"#314e5b","tertiary-fixed":"#c9e7f7","tertiary":"#193743","on-primary-container":"#8ebdf9","secondary-container":"#75f8b3","tertiary-fixed-dim":"#adcbda","surface-bright":"#f7f9fc","background":"#f7f9fc","on-secondary":"#fff","inverse-on-surface":"#eff1f4","surface-container-highest":"#e0e3e6","primary-fixed-dim":"#a0c9ff","on-tertiary-container":"#a0bece"},spacing:{"gutter":"24px","stack-md":"16px","margin-page":"40px","container-padding":"24px","base":"4px","stack-sm":"8px"},fontFamily:{"display-lg":["Geist"],"body-md":["Geist"],"title-lg":["Geist"],"headline-lg":["Geist"],"headline-md":["Geist"],"label-md":["Geist"],"body-lg":["Geist"]},fontSize:{"display-lg":["40px",{"lineHeight":"48px","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px"}],"body-md":["14px",{"lineHeight":"20px"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{font-family:'Geist',sans-serif;background:#f7f9fc}
+</style>
+</head>
+<body>
+
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+    <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+    <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+    <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+    <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+    <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+    <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+    <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+    <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+    <a href="/bons-commande.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Bons de commande</a>
+    <a href="/receptions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory</span>Réceptions</a>
+    <a href="/factures-fournisseurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt</span>Factures fourn.</a>
+    <a href="/engagements.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">trending_up</span>Engagements</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Modules</span></div>
+    <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">real_estate_agent</span>Immobilisations</a>
+    <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">contract</span>Contrats</a>
+    <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance</span>Trésorerie</a>
+    <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">donut_large</span>Budget</a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-64 h-16 flex justify-between items-center px-6 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+  <div><span class="font-black text-[20px] text-primary">Alvéole</span></div>
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDark()" class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button>
+  </div>
+</header>
+
+<main class="ml-64 mt-16 p-10 min-h-screen">
+  <div class="mb-6">
+    <h1 class="text-[28px] font-bold text-primary">Suivi des engagements</h1>
+    <p class="text-[14px] text-on-surface-variant mt-1">Bons de commande non soldés — vue par entité et consolidée</p>
+  </div>
+
+  <!-- KPI cards -->
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-6 hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary text-[20px]">shopping_bag</span>
+        </div>
+        <span class="text-[13px] font-semibold text-on-surface-variant">Total engagé</span>
+      </div>
+      <p id="kpi-engage" class="text-[24px] font-bold text-primary">—</p>
+      <p class="text-[12px] text-on-surface-variant mt-1">BC envoyés non clôturés</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-6 hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-secondary text-[20px]">inventory</span>
+        </div>
+        <span class="text-[13px] font-semibold text-on-surface-variant">Total reçu</span>
+      </div>
+      <p id="kpi-recu" class="text-[24px] font-bold text-secondary">—</p>
+      <p class="text-[12px] text-on-surface-variant mt-1">Montant réceptionné</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-outline-variant shadow-sm p-6 hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-amber-600 text-[20px]">pending</span>
+        </div>
+        <span class="text-[13px] font-semibold text-on-surface-variant">Solde en attente</span>
+      </div>
+      <p id="kpi-restant" class="text-[24px] font-bold text-amber-600">—</p>
+      <p class="text-[12px] text-on-surface-variant mt-1">Commandé non encore reçu</p>
+    </div>
+  </div>
+
+  <!-- Bandeau consolidé -->
+  <div id="consolide-banner" class="hidden mb-4 px-4 py-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary text-[18px]">corporate_fare</span>
+    <span class="text-[13px] font-semibold text-primary">Vue consolidée — toutes entités du groupe</span>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-surface-container-low">
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">BC</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Entité</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fournisseur</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Date</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Statut</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Engagé HT</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Reçu HT</th>
+            <th class="px-4 py-3 text-right text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Solde</th>
+            <th class="px-4 py-3 text-left text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Avancement</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="9" class="px-6 py-12 text-center text-on-surface-variant">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-primary text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 z-[100]">
+  <span id="toast-icon" class="material-symbols-outlined text-[20px]"></span>
+  <span id="toast-msg" class="text-[14px] font-medium"></span>
+</div>
+
+<script>
+const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(+n||0)) + ' FCFA';
+function showToast(msg,icon='check_circle'){const t=document.getElementById('toast');document.getElementById('toast-icon').textContent=icon;document.getElementById('toast-msg').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500);}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('alveole_theme',document.documentElement.classList.contains('dark')?'dark':'light');}
+(()=>{if(localStorage.getItem('alveole_theme')==='dark')document.documentElement.classList.add('dark')})();
+
+window.addEventListener('alveole:contexte', ()=>loadEngagements());
+
+const BADGE={
+  envoye:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800',
+  recu_partiel:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800',
+  facture:'px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary',
+};
+const LABEL={envoye:'Envoyé',recu_partiel:'Reçu partiel',facture:'Facturé'};
+
+async function loadEngagements(){
+  try{
+    const r=await fetch('/api/engagements');
+    const d=await r.json();
+    renderEngagements(d);
+  } catch(_){ showToast('Erreur de chargement','error'); }
+}
+
+function renderEngagements(data){
+  // KPIs
+  const totalEngage=data.total_engage||0;
+  const totalRecu=data.bcs?.reduce((s,b)=>s+(b.montant_recu||0),0)||0;
+  const totalRestant=totalEngage-totalRecu;
+
+  document.getElementById('kpi-engage').textContent=fmt(totalEngage);
+  document.getElementById('kpi-recu').textContent=fmt(totalRecu);
+  document.getElementById('kpi-restant').textContent=fmt(totalRestant);
+
+  // Bandeau consolidé
+  document.getElementById('consolide-banner').classList.toggle('hidden',!data.consolide);
+
+  // Table
+  const tb=document.getElementById('tbody');
+  const list=data.bcs||[];
+  if(!list.length){
+    tb.innerHTML=`<tr><td colspan="9" class="px-6 py-12 text-center text-on-surface-variant">Aucun engagement en cours</td></tr>`;
+    return;
+  }
+  tb.innerHTML=list.map(bc=>{
+    const engage=bc.montant_engage||0, recu=bc.montant_recu||0, restant=bc.montant_restant||0;
+    const pct=engage>0?Math.min(100,Math.round(recu/engage*100)):0;
+    const badge=`<span class="${BADGE[bc.statut]||''}">${LABEL[bc.statut]||bc.statut}</span>`;
+    return `<tr class="border-b border-outline-variant/40 hover:bg-surface-container-low">
+      <td class="px-4 py-3 font-mono text-[12px] text-primary font-semibold">${bc.numero}</td>
+      <td class="px-4 py-3">
+        <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary">${bc.entite_code||'—'}</span>
+      </td>
+      <td class="px-4 py-3 text-[13px]">${bc.fournisseur_nom||'—'}</td>
+      <td class="px-4 py-3 text-[13px]">${bc.date||'—'}</td>
+      <td class="px-4 py-3">${badge}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right font-semibold">${fmt(engage)}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right text-secondary">${fmt(recu)}</td>
+      <td class="px-4 py-3 text-[13px] font-mono text-right ${restant>0?'text-amber-600 font-semibold':'text-secondary'}">${fmt(restant)}</td>
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-2 min-w-[100px]">
+          <div class="flex-1 bg-surface-container-high rounded-full h-2">
+            <div class="rounded-full h-2 transition-all ${pct>=100?'bg-secondary':'bg-primary'}" style="width:${pct}%"></div>
+          </div>
+          <span class="text-[11px] text-on-surface-variant w-8 text-right">${pct}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+loadEngagements();
+</script>
+<script src="/static/js/context_bar.js"></script>
+</body>
+</html>
