@@ -136,78 +136,56 @@
 <body class="bg-background text-on-surface">
 <!-- Sidebar -->
 <aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-primary w-64 shadow-md">
-<div class="p-gutter">
-<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Alvéole</h1>
-<p class="font-label-md text-label-md text-on-primary/70 mt-1">Conforme OHADA</p>
-</div>
-<nav class="flex-1 mt-2 px-4 space-y-1 overflow-y-auto">
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Tableau-de-bord.html">
-<span class="material-symbols-outlined">dashboard</span>
-<span>Tableau de bord</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilite-Generale.html">
-<span class="material-symbols-outlined">account_balance</span>
-<span>Comptabilité</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="gestion-des-immobiliers.html">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span>Immobilisations</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Gestion-des-contrats.html">
-<span class="material-symbols-outlined">description</span>
-<span>Contrats</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="cockpit-tresorie.html">
-<span class="material-symbols-outlined">account_tree</span>
-<span>Trésorerie</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="Comptabilité-analytics.html">
-<span class="material-symbols-outlined">analytics</span>
-<span>Analytique</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 font-label-md text-label-md text-secondary-fixed font-bold border-l-4 border-secondary-fixed bg-on-primary-fixed-variant/10" href="Budget.html">
-<span class="material-symbols-outlined">query_stats</span>
-<span>Budget</span>
-</a>
-
-<div id="sidebar-immobilier" class="hidden">
-  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
-  <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
-  <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets &amp; chantiers</a>
-  <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
-  <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
-</div>
-<div id="sidebar-production" class="hidden">
-  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
-  <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles &amp; familles</a>
-  <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
-  <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks &amp; valorisation</a>
-</div>
-<div id="sidebar-hotellerie" class="hidden">
-  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">H&#244;tellerie SW</span></div>
-  <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
-  <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pr&#233;-&#233;critures</a>
-  <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
-</div>
-<div id="sidebar-conseil" class="hidden">
-  <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
-  <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
-  <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs &amp; KYC</a>
-  <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
-  <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
-</div>
-</nav>
-<div class="mt-auto border-t border-on-primary/10 p-4 space-y-2">
-<button class="w-full py-2 px-4 bg-on-primary-fixed-variant/20 text-on-primary rounded-lg font-label-md text-label-md font-bold transition-all hover:bg-on-primary-fixed-variant/30 active:scale-95">Changer de module</button>
-<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Paramètres</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">help</span>
-<span>Assistance</span>
-</a>
-</div>
+  <div class="p-6"><h1 class="text-[20px] font-black text-on-primary">Alvéole</h1><p class="text-[12px] text-on-primary/70 mt-0.5">Conforme OHADA</p></div>
+  <nav class="flex-1 px-4 overflow-y-auto space-y-0.5 pb-4">
+      <a href="/Tableau-de-bord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">dashboard</span>Tableau de bord</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Comptabilité</span></div>
+      <a href="/plan-comptable.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">format_list_numbered</span>Plan comptable</a>
+      <a href="/saisie-ecriture.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">edit_note</span>Saisie écriture</a>
+      <a href="/compta-journal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Journal</a>
+      <a href="/compta-grand-livre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">menu_book</span>Grand livre</a>
+      <a href="/compta-balance.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">balance</span>Balance</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Référentiels</span></div>
+      <a href="/tiers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">people</span>Tiers</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Achats</span></div>
+      <a href="/demandes-achat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">request_quote</span>Demandes d'achat</a>
+      <a href="/bons-commande.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">shopping_cart</span>Bons de commande</a>
+      <a href="/receptions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">inventory</span>Réceptions</a>
+      <a href="/factures-fournisseurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">receipt</span>Factures fourn.</a>
+      <a href="/engagements.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">pending_actions</span>Engagements</a>
+    <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Pilotage</span></div>
+      <a href="/cockpit-tresorie.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_tree</span>Trésorerie</a>
+      <a href="/Budget.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary font-semibold bg-on-primary-fixed-variant/10 border-l-4 border-secondary-fixed transition-colors"><span class="material-symbols-outlined text-[20px]">query_stats</span>Budget</a>
+      <a href="/Comptabilité-analytics.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Analytique</a>
+      <a href="/gestion-des-immobiliers.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Immobilisations</a>
+      <a href="/Gestion-des-contrats.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">description</span>Contrats</a>
+    <div id="sidebar-immobilier" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Immobilier AC</span></div>
+      <a href="/ac-prospects.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">person_search</span>Prospects</a>
+      <a href="/ac-projets.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">apartment</span>Projets & chantiers</a>
+      <a href="/ac-vefa.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">home_work</span>Programme VEFA</a>
+      <a href="/ac-reporting.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">analytics</span>Reporting projet</a>
+    </div>
+    <div id="sidebar-production" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Production TC</span></div>
+      <a href="/tc-articles.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">category</span>Articles & familles</a>
+      <a href="/tc-ordres-production.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>Ordres de production</a>
+      <a href="/tc-stocks.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">warehouse</span>Stocks & valorisation</a>
+    </div>
+    <div id="sidebar-hotellerie" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Hôtellerie SW</span></div>
+      <a href="/sw-import-pms.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">upload_file</span>Import PMS/POS</a>
+      <a href="/sw-pre-ecritures.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">fact_check</span>Pré-écritures</a>
+      <a href="/sw-reporting-usali.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">hotel</span>Reporting USALI</a>
+    </div>
+    <div id="sidebar-conseil" class="hidden">
+      <div class="pt-3 pb-1 px-2"><span class="text-[9px] font-bold text-on-primary/40 uppercase tracking-widest">Conseil IC</span></div>
+      <a href="/ic-pipeline.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">view_kanban</span>Pipeline dossiers</a>
+      <a href="/ic-apporteurs.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">verified_user</span>Apporteurs & KYC</a>
+      <a href="/ic-commissions.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">payments</span>Commissions</a>
+      <a href="/ic-reporting-amf.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] text-on-primary/70 hover:bg-on-primary-fixed-variant/10 transition-colors"><span class="material-symbols-outlined text-[20px]">gavel</span>Reporting AMF-UMOA</a>
+    </div>
+  </nav>
 </aside>
 <!-- Top Navigation Bar -->
 <header class="fixed top-0 right-0 left-64 flex justify-between items-center px-gutter h-16 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
@@ -937,5 +915,47 @@ function updateMetierSidebar(code){
 }
 window.addEventListener('alveole:contexte',function(ev){updateMetierSidebar(ev.detail.entite_code);});
 fetch('/api/contexte').then(function(r){return r.json();}).then(function(ctx){updateMetierSidebar(ctx.entite_code);}).catch(function(){});
+</script>
+<script>
+(function(){
+  var _busy=false;
+  async function loadBudgetAPI(){
+    if(_busy) return; _busy=true;
+    try {
+      var [balRes,daRes,factRes]=await Promise.all([fetch('/api/balance'),fetch('/api/da'),fetch('/api/factures')]);
+      if(!balRes.ok){_busy=false;return;}
+      var bal=await balRes.json();
+      var daList=daRes.ok?await daRes.json():[];
+      var factList=factRes.ok?await factRes.json():[];
+
+      var comptes=bal.comptes||[];
+      var charges=comptes.filter(function(c){return c.numero.startsWith('6')&&Math.abs(c.solde)>0;});
+      var totalDA=daList.reduce(function(s,d){return s+(parseFloat(d.montant_estime)||0);},0);
+      var totalFact=factList.reduce(function(s,f){return s+(parseFloat(f.montant_ttc)||0);},0);
+
+      if(charges.length>0||totalDA>0){
+        var newData=[];
+        // Ligne achats : DA (budget demandé) vs facturé (réalisé)
+        if(totalDA>0||totalFact>0){
+          newData.push({dept:'Achats & Approvisionnements',projet:'DA → Factures fournisseurs',alloue:Math.max(totalDA,totalFact*1.05,1),reel:totalFact});
+        }
+        // Lignes par compte de charges (classe 6)
+        charges.forEach(function(c){
+          newData.push({dept:c.libelle,projet:c.numero,alloue:Math.abs(c.solde)*1.2,reel:Math.abs(c.solde)});
+        });
+        if(newData.length>0){
+          BUDGET_DATA.splice(0,BUDGET_DATA.length);
+          newData.forEach(function(r){BUDGET_DATA.push(r);});
+          updateKPIs();
+          renderBudgetTable();
+          if(typeof updateChart==='function') updateChart();
+        }
+      }
+    } catch(err){}
+    _busy=false;
+  }
+  window.addEventListener('alveole:contexte',loadBudgetAPI);
+  loadBudgetAPI();
+})();
 </script>
 </body></html>

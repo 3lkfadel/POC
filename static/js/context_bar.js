@@ -38,6 +38,8 @@
       }
 
       inject();
+      // Notifier toutes les pages du contexte courant dès le chargement
+      window.dispatchEvent(new CustomEvent('alveole:contexte', { detail: _ctx }));
     } catch (_) {
       // Flask non démarré → pas de sélecteurs, HTML reste fonctionnel en standalone
     }
